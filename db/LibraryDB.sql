@@ -23,9 +23,7 @@ create table BOOKS (
     ISBN INT(13) NOT NULL,
     Title VARCHAR(100),
     Year INT(4),
-    Borrower INT(4), #will be the member ID of who has it
     Count INT(2), #how many total of this book is owned by library
-    FOREIGN KEY (Borrower) REFERENCES MEMBERS (MemberID),
     PRIMARY KEY (ISBN)
 );
 
