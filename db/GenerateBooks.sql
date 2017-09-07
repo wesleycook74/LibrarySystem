@@ -6,6 +6,11 @@ INSERT INTO keywords VALUES(0192835084, 'Crime Fiction');
 INSERT INTO keywords VALUES(0192835084, 'Detective fiction');
 
 INSERT INTO BOOKS VALUES (0307346617,'World War Z: An Oral History of the Zombie War', 2006,2);
+INSERT INTO AUTHORS VALUES (0307346617, 'Max Brooks');
+INSERT INTO keywords VALUES(0307346617, 'Literature & Fiction');
+INSERT INTO keywords VALUES(0307346617, ' Thrillers');
+INSERT INTO keywords VALUES(0307346617, ' Suspense');
+
 INSERT INTO BOOKS VALUES (978-0062024039,'Divergent', 2012,3);
 INSERT INTO BOOKS VALUES (978-0006499589,'A Secret Affair', 2007,4);
 
