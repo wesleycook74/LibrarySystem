@@ -20,7 +20,7 @@ create table EMPLOYEES (
 );
 
 create table BOOKS (
-    ISBN INT(13) NOT NULL,
+    ISBN VARCHAR(13) NOT NULL,
     Title VARCHAR(100),
     Year INT(4),
     Count INT(2), #how many total of this book is owned by library
@@ -29,14 +29,14 @@ create table BOOKS (
 
 
 create table AUTHORS (
-    ISBN INT(13) NOT NULL,
+    ISBN VARCHAR(13) NOT NULL,
     AName VARCHAR(50) NOT NULL,
     FOREIGN KEY (ISBN) REFERENCES BOOKS (ISBN),
     PRIMARY KEY (ISBN, AName)
 );
 
 create table checkout_log (
-    ISBN INT(13) NOT NULL,
+    ISBN VARCHAR(13) NOT NULL,
 	MemberID INT(4) NOT NULL,
     Date_out DATE,
     Date_in DATE,
@@ -46,7 +46,7 @@ create table checkout_log (
 );
 
 create table keywords (
-    ISBN INT(13) NOT NULL,
+    ISBN VARCHAR(13) NOT NULL,
     keyword VARCHAR(200),
     FOREIGN KEY (ISBN) REFERENCES BOOKS (ISBN),
     PRIMARY KEY (ISBN, keyword)
