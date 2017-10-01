@@ -7,8 +7,8 @@ create table MEMBERS (
     MemberID INT(4) NOT NULL,
     Address VARCHAR(50),
     PhoneNumber INT(10),
-    Username CHAR(15),
-    Password CHAR(15),
+    Username VARCHAR(15),
+    Password VARCHAR(15),
     PRIMARY KEY (MemberID)
 );
 
