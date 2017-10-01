@@ -1,7 +1,7 @@
 create schema library;
 
 create table MEMBERS (
-	Fname VARCHAR(20),
+	  Fname VARCHAR(20),
     Minit CHAR(1),
     Lname VARCHAR(20),
     MemberID INT(4) NOT NULL,
@@ -13,9 +13,9 @@ create table MEMBERS (
 );
 
 create table EMPLOYEES (
-	MemberID INT(4) NOT NULL,
+	  MemberID INT(4) NOT NULL,
     Type char (1) NOT NULL,  #associate or manager a or m
-	PRIMARY KEY (MemberID),
+	  PRIMARY KEY (MemberID),
     FOREIGN KEY (MemberID) REFERENCES MEMBERS (MemberID)
 );
 
@@ -37,11 +37,11 @@ create table AUTHORS (
 
 create table checkout_log (
     ISBN VARCHAR(13) NOT NULL,
-	MemberID INT(4) NOT NULL,
+	  MemberID INT(4) NOT NULL,
     Date_out DATE,
     Date_in DATE,
     FOREIGN KEY (ISBN) REFERENCES BOOKS (ISBN),
-	FOREIGN KEY (MemberID) REFERENCES MEMBERS (MemberID),
+	  FOREIGN KEY (MemberID) REFERENCES MEMBERS (MemberID),
     PRIMARY KEY (ISBN, MemberID)
 );
 
