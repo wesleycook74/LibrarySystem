@@ -8,3 +8,4 @@ out
 
 #Ignore Compiled Java files
 *.class
+/bin/
