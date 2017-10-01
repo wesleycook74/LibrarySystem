@@ -23,15 +23,14 @@ create table BOOKS (
     ISBN VARCHAR(13) NOT NULL,
     Title VARCHAR(100),
     Year VARCHAR(4),
-    Count INT(2), #how many total of this book is owned by library
     PRIMARY KEY (ISBN)
 );
 
-# create table INVENTORY (
-#     id INT(10) NOT NULL,
-#     ISBN VARCHAR(13),
-#     checkedout BINARY
-# );
+create table INVENTORY (
+    id INT(10) NOT NULL,
+    ISBN VARCHAR(13),
+    checkedout BINARY
+);
 
 create table AUTHORS (
     ISBN VARCHAR(13) NOT NULL,
