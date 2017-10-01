@@ -1,12 +1,13 @@
 public class Book {
-	private String ISBN;
+	private String isbn;
+   private int id;
 	private String year;
 	private String title;
 	private int count;
 	private String[] authors;
 	private String[] keywords;
 
-	public Book[] searchBooks(){
+	public static Book[] searchBooks(){
 		return null;
 	}
 
