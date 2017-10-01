@@ -12,7 +12,7 @@ create table MEMBERS (
     PRIMARY KEY (MemberID)
 );
 
-create table EMPLOYEES (
+create table ASSOCIATES (
 	  MemberID INT(4) NOT NULL,
     Type char (1) NOT NULL,  #associate or manager a or m
 	  PRIMARY KEY (MemberID),
