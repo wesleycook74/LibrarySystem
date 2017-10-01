@@ -27,9 +27,10 @@ create table BOOKS (
 );
 
 create table INVENTORY (
-    id INT(10) NOT NULL,
-    ISBN VARCHAR(13),
-    checkedout BINARY
+    ID INT(10) NOT NULL AUTO_INCREMENT,
+    ISBN VARCHAR(13) NOT NULL,
+    checkedout BINARY,
+    PRIMARY KEY (ID)
 );
 
 create table AUTHORS (
