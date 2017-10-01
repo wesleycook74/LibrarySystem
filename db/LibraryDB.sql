@@ -22,7 +22,7 @@ create table EMPLOYEES (
 create table BOOKS (
     ISBN VARCHAR(13) NOT NULL,
     Title VARCHAR(100),
-    Year INT(4),
+    Year VARCHAR(4),
     Count INT(2), #how many total of this book is owned by library
     PRIMARY KEY (ISBN)
 );
