@@ -27,6 +27,11 @@ create table BOOKS (
     PRIMARY KEY (ISBN)
 );
 
+# create table INVENTORY (
+#     id INT(10) NOT NULL,
+#     ISBN VARCHAR(13),
+#     checkedout BINARY
+# );
 
 create table AUTHORS (
     ISBN VARCHAR(13) NOT NULL,
@@ -38,11 +43,11 @@ create table AUTHORS (
 create table checkout_log (
     ISBN VARCHAR(13) NOT NULL,
 	  MemberID INT(4) NOT NULL,
-    Date_out DATE,
+    Date_out DATE NOT NULL,
     Date_in DATE,
     FOREIGN KEY (ISBN) REFERENCES BOOKS (ISBN),
 	  FOREIGN KEY (MemberID) REFERENCES MEMBERS (MemberID),
-    PRIMARY KEY (ISBN, MemberID)
+    PRIMARY KEY (ISBN, MemberID, Date_out)
 );
 
 create table keywords (
