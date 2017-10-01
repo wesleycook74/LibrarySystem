@@ -1,7 +1,7 @@
 create schema library;
 
 create table MEMBERS (
-	  Fname VARCHAR(20),
+	Fname VARCHAR(20),
     Minit CHAR(1),
     Lname VARCHAR(20),
     MemberID INT(4) NOT NULL,
