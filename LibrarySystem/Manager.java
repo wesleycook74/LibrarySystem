@@ -24,15 +24,15 @@ public class Manager extends Associate {
 
 	}
 
-	public void addBooks(){
-
+	public void addBooks(String title, String isbn, String year, String[] authors, String[] keywords, int count){
+      
 	}
 
 	public void removeBooks(){
 
 	}
 
-	public void editBooks(){
+	public void editBooks(String isbn){
 
 	}
 }
