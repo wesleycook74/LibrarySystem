@@ -1,7 +1,7 @@
 create schema library;
 
 create table MEMBERS (
-	  Fname VARCHAR(20),
+	Fname VARCHAR(20),
     Minit CHAR(1),
     Lname VARCHAR(20),
     MemberID INT(4) NOT NULL,
@@ -13,7 +13,7 @@ create table MEMBERS (
 );
 
 create table EMPLOYEES (
-	  MemberID INT(4) NOT NULL,
+	MemberID INT(4) NOT NULL,
     Type char (1) NOT NULL,  #associate or manager a or m
 	  PRIMARY KEY (MemberID),
     FOREIGN KEY (MemberID) REFERENCES MEMBERS (MemberID)
