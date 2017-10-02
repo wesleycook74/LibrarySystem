@@ -41,17 +41,17 @@ create table AUTHORS (
     PRIMARY KEY (ISBN, AName)
 );
 
-create table checkout_log (
-    ISBN VARCHAR(13) NOT NULL,
+create table CHECKOUT_LOG (
+    BookID INT(10) NOT NULL,
 	  MemberID INT(4) NOT NULL,
     Date_out DATE NOT NULL,
     Date_in DATE,
-    FOREIGN KEY (ISBN) REFERENCES BOOKS (ISBN),
+    FOREIGN KEY (BookID) REFERENCES INVENTORY (ID),
 	  FOREIGN KEY (MemberID) REFERENCES MEMBERS (MemberID),
-    PRIMARY KEY (ISBN, MemberID, Date_out)
+    PRIMARY KEY (BookID, MemberID, Date_out)
 );
 
-create table keywords (
+create table KEYWORDS (
     ISBN VARCHAR(13) NOT NULL,
     keyword VARCHAR(200),
     FOREIGN KEY (ISBN) REFERENCES BOOKS (ISBN),
