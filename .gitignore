@@ -11,3 +11,5 @@ out
 #Ignore Compiled Java files
 *.class
 /bin/
+
+mysql-connector-java-5.1.41/*
