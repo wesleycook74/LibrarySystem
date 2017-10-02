@@ -28,7 +28,13 @@ public class Manager extends Associate {
       
 	}
 
-	public void removeBooks(){
+	// Removes a physical copy of the book from inventory
+	public void removeBooks(Book book){
+
+	}
+
+	// Removes book detail and all corresponding books from library database
+	public void removeAllBooks(BookDetail bookDetail) {
 
 	}
 

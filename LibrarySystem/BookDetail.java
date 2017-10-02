@@ -1,5 +1,6 @@
 import java.sql.*;
 
+// Represents all book information when at least one copy of the book is in inventory
 public class BookDetail {
 	private String isbn;
 	private String year;
