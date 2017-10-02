@@ -1,10 +1,23 @@
 public class Member {
-	private String firstName, lastName, middleInitial;
-	private String memberID;
-	private String phoneNumber;
-	private String userName, password;
-	private Book[] checkedOut;
+	 String firstName, lastName, middleInitial;
+	 String memberID;
+	 String phoneNumber;
+	 String userName, password;
+	 Book[] checkedOut;
+	 String address;
 
+	public Member(String firstName, String lastName, String middleInitial, String address,
+            String memberID, String phoneNumber, String userName, String password){
+		this.firstName = firstName;
+        this.lastName = lastName;
+        this.middleInitial = middleInitial;
+        this.address = address;
+        this.memberID = memberID;
+        this.phoneNumber = phoneNumber;
+        this.userName = userName;
+        this.password = password;
+         
+	}
 	public void checkOut (Book[] books){
       
 	}
