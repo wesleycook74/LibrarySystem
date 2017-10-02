@@ -24,9 +24,15 @@ public class Manager extends Associate {
 
 	}
 
+	public void addBooks(String isbn) {
+
+	}
+
 	public void addBooks(String title, String isbn, String year, String[] authors, String[] keywords, int count){
       
 	}
+
+
 
 	// Removes a physical copy of the book from inventory
 	public void removeBooks(Book book){
