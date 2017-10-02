@@ -1,17 +1,16 @@
 import java.sql.*;
 
-public class Book {
+public class BookDetail {
 	private String isbn;
-	private int id;
 	private String year;
 	private String title;
 	private String[] authors;
 	private int count;
 	private String[] keywords;
 
-	public Book(int id, String isbn, String year, String title, String[] authors, String[] keywords) {
+	public BookDetail(String isbn, String year, String title, String[] authors, String[] keywords, int count) {
 		this.isbn = isbn;
-		this.id = id;
+		this.count = count;
 		this.year = year;
 		this.title = title;
 		this.authors = authors;
@@ -19,7 +18,7 @@ public class Book {
 	}
 
 
-	public static Book[] searchBooksByTitle(String title) {
+	public static BookDetail[] searchBooksByTitle(String title) {
 		Connection con = Database.getConnection();
 		String query = "";
 		try {
@@ -38,11 +37,11 @@ public class Book {
 		return null;
 	}
 
-	public static Book[] searchBooksByYear(String year) {
+	public static BookDetail[] searchBooksByYear(String year) {
 		return null;
 	}
 
-	public static Book[] searchBooksByAuthor(String author) {
+	public static BookDetail[] searchBooksByAuthor(String author) {
 		return null;
 	}
 
@@ -51,10 +50,6 @@ public class Book {
 	}
 	public String getIsbn() {
 		return isbn;
-	}
-
-	public int getId() {
-		return id;
 	}
 
 	public String getYear() {

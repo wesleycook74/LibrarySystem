@@ -4,23 +4,23 @@ public class Member {
 	private String phoneNumber;
 	private String userName, password;
 
-	public void checkOut (Book[] books){
+	public void checkOut (BookDetail[] bookDetails){
 
 	}
 
-	public void returnBooks (Book[] books){
+	public void returnBooks (BookDetail[] bookDetails){
 
 	}
 
-	public void renewBooks (Book[] books){
+	public void renewBooks (BookDetail[] bookDetails){
 
 	}
 
-	public void placeHold (Book[] books){
+	public void placeHold (BookDetail[] bookDetails){
 
 	}
 
-	public void reportLost (Book[] books){
+	public void reportLost (BookDetail[] bookDetails){
 
 	}
 }
