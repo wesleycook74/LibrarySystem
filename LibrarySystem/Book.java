@@ -5,9 +5,17 @@ public class Book {
 	private int id;
 	private String year;
 	private String title;
-	private int count;
 	private String[] authors;
 	private String[] keywords;
+
+	public Book(String isbn, int id, String year, String title, String[] authors, String[] keywords) {
+		this.isbn = isbn;
+		this.id = id;
+		this.year = year;
+		this.title = title;
+		this.authors = authors;
+		this.keywords = keywords;
+	}
 
 	public static Book[] searchBooksByTitle(String query) {
 		return null;
