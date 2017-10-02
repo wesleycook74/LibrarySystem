@@ -27,14 +27,17 @@ public class Tester {
 		
       BookDetail[] bookDetails = Search.searchBooksByTitle("The");
   
-      
-      //insert statement for creating members, not really sure where it should go, but anyhoo.
-      // opening database connection to MySQL server
+      //I just feel like this has to  be here
+         //insert statement for creating members, not really sure where it should go, but anyhoo.
+         // opening database connection to MySQL server
 			con = DriverManager.getConnection(url, user, password);
 			System.out.println("Database connected successfully");
 
 			// getting Statement object to execute query
 			stmt = con.createStatement();
+         
+         //testing members
+         Member cakimble = new Member("Chloe", "Kimble", "A", "1", "123456789", "cakimble", "password");
         
 
 
