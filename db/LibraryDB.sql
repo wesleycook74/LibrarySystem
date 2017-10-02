@@ -4,18 +4,19 @@ create table MEMBERS (
 	Fname VARCHAR(20),
     Minit CHAR(1),
     Lname VARCHAR(20),
-    MemberID INT(4) NOT NULL,
+    MemberID INT(4) UNSIGNED NOT NULL AUTO_INCREMENT,
     Address VARCHAR(50),
-    PhoneNumber INT(10),
+    PhoneNumber VARCHAR(10),
     Username VARCHAR(15),
     Password VARCHAR(15),
+    Is_active BINARY NOT NULL, #0 for inactive, 1 for active
     PRIMARY KEY (MemberID)
 );
 
 create table ASSOCIATES (
-	  MemberID INT(4) NOT NULL,
-    Type char (1) NOT NULL,  #associate or manager a or m
-	  PRIMARY KEY (MemberID),
+	MemberID INT(4) UNSIGNED NOT NULL,
+    Manager BINARY NOT NULL,  #0 for Ass., 1 for Manager
+	PRIMARY KEY (MemberID),
     FOREIGN KEY (MemberID) REFERENCES MEMBERS (MemberID)
 );
 
@@ -27,7 +28,7 @@ create table BOOK_DETAILS (
 );
 
 create table BOOKS (
-    ID INT(10) NOT NULL AUTO_INCREMENT,
+    ID INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
     ISBN VARCHAR(13) NOT NULL,
     checkedout BINARY,
     PRIMARY KEY (ID),
@@ -42,8 +43,8 @@ create table AUTHORS (
 );
 
 create table CHECKOUT_LOG (
-    BookID INT(10) NOT NULL,
-	  MemberID INT(4) NOT NULL,
+    BookID INT(10) UNSIGNED NOT NULL,
+	  MemberID INT(4) UNSIGNED NOT NULL,
     Date_out DATE NOT NULL,
     Date_in DATE,
     FOREIGN KEY (BookID) REFERENCES BOOKS (ID),

@@ -9,6 +9,31 @@ public class BookDetail {
 	private int count;
 	private String[] keywords;
 
+	public BookDetail(String isbn) {
+		//Pulls book data from database
+
+		Connection con = Database.getConnection();
+		String query = "SELECT Title, Year\n" +
+				"FROM BOOK_DETAILS BD\n" +
+				"WHERE BD.ISBN=" + isbn;
+		try {
+			//create the prepared statement
+			PreparedStatement ps = con.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				this.title = rs.getString("Title");
+				this.year = rs.getString("Year");
+			}
+
+
+			rs.close();
+			ps.close();
+		}
+		catch (SQLException se) {
+			se.printStackTrace();
+		}
+	}
+
 	public BookDetail(String isbn, String year, String title, String[] authors, String[] keywords, int count) {
 		this.isbn = isbn;
 		this.count = count;
