@@ -3,16 +3,17 @@ public class Member {
 	private String memberID;
 	private String phoneNumber;
 	private String userName, password;
+	private Book[] checkedOut;
 
-	public void checkOut (BookDetail[] bookDetails){
-
-	}
-
-	public void returnBooks (BookDetail[] bookDetails){
+	public void checkOut (Book[] books){
 
 	}
 
-	public void renewBooks (BookDetail[] bookDetails){
+	public void returnBooks (Book[] books){
+
+	}
+
+	public void renewBooks (Book[] books){
 
 	}
 
@@ -20,7 +21,7 @@ public class Member {
 
 	}
 
-	public void reportLost (BookDetail[] bookDetails){
+	public void reportLost (Book[] book){
 
 	}
 }
