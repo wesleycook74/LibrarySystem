@@ -8,6 +8,17 @@ public class Associate extends Member {
            this.phoneNumber = phoneNumber;
            this.userName = userName;
            this.password = password;
+            String query = "INSERT INTO members VALUES(";
+				query += firstName;
+            query += lastName;
+            query += middleInitial;
+            query += memberID;
+            query += phoneNumber;
+            query += userName;
+            query += password;
+				query += ");";
+				System.out.println(query);
+				stmt.execute(query);
 	}
 
 	}

@@ -6,7 +6,7 @@ public class Member {
 	private Book[] checkedOut;
 
 	public void checkOut (Book[] books){
-
+      
 	}
 
 	public void returnBooks (Book[] books){
