@@ -18,6 +18,7 @@ public class Book {
 		this.keywords = keywords;
 	}
 
+
 	public static Book[] searchBooksByTitle(String title) {
 		Connection con = Database.getConnection();
 		String query = "";
@@ -47,5 +48,32 @@ public class Book {
 
 	public boolean isAvailable() {
 		return false;
+	}
+	public String getIsbn() {
+		return isbn;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public String[] getAuthors() {
+		return authors;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public String[] getKeywords() {
+		return keywords;
 	}
 }
