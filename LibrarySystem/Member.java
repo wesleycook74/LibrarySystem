@@ -1,3 +1,7 @@
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class Member {
 	 String firstName, lastName, middleInitial;
 	 String memberID;
@@ -6,8 +10,8 @@ public class Member {
 	 Book[] checkedOut;
 	 String address;
 
-	public Member(String firstName, String lastName, String middleInitial, String address,
-            String memberID, String phoneNumber, String userName, String password){
+	public Member(String firstName, String lastName, String middleInitial, String memberID,
+            String address, String phoneNumber, String userName, String password) throws SQLException{
 		this.firstName = firstName;
         this.lastName = lastName;
         this.middleInitial = middleInitial;
@@ -16,7 +20,7 @@ public class Member {
         this.phoneNumber = phoneNumber;
         this.userName = userName;
         this.password = password;
-         
+
 	}
 	public void checkOut (Book[] books){
       
