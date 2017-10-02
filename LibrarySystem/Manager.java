@@ -1,19 +1,28 @@
+import java.sql.SQLException;
 
 public class Manager extends Associate {
-	public void createAccount(){
+	
+	public Manager(String firstName, String lastName, String middleInitial, String address, String memberID,
+			String phoneNumber, String userName, String password) throws SQLException {
+		super(firstName, lastName, middleInitial, address, memberID, phoneNumber, userName, password);
+	}
+
+	public void createAssociate (String firstName, String lastName, String middleInitial, String address, String memberID,
+			String phoneNumber, String userName, String password) throws SQLException{
+		Associate associate = new Associate(firstName, lastName, middleInitial, address, memberID,
+			phoneNumber, userName, password);
+	}
+
+	public void editMember(){
 
 	}
 
-	public void editAccount(){
-
-	}
-
-	public void deleteAccount(){
+	public void deleteMember(){
 
 	}
 
 	public void suspendAccount(){
-
+		
 	}
 
 	public void activateAccount(){
