@@ -105,7 +105,31 @@ public class BookDetail {
 	}
 
 	public String toString() {
-		return "";
+		String retval ="ISBN: " + isbn + "\n";
+		retval += "Title: " + title + "\n";
+		retval += "No. of Copies: " + count + "\n";
+		retval += "Author(s): ";
+
+		for(int i=0; i<authors.size(); i++) {
+			if(i< authors.size() -1) {
+				retval += authors.get(i) + ", ";
+			}
+			else {
+				retval += authors.get(i) + "\n";
+			}
+		}
+
+		retval += "KeyWords(s): ";
+		for(int i=0; i<keywords.size(); i++) {
+			if(i< keywords.size() -1) {
+				retval += keywords.get(i) + ", ";
+			}
+			else {
+				retval += keywords.get(i) + "\n";
+			}
+		}
+		retval += "Year: " + year + "\n";
+		return retval;
 	}
 
 	private void extractAuthors() {
