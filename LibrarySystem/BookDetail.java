@@ -42,15 +42,6 @@ public class BookDetail {
 
 	}
 
-	public BookDetail(String isbn, String year, String title, ArrayList<String> authors, ArrayList<String> keywords, int count) {
-		this.isbn = isbn;
-		this.count = count;
-		this.year = year;
-		this.title = title;
-		this.authors = authors;
-		this.keywords = keywords;
-	}
-
 	public boolean isAvailable() {
 		return false;
 	}
