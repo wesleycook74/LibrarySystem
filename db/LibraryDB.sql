@@ -1,10 +1,10 @@
 create schema library;
 
 create table MEMBERS (
+    MemberID INT(4) UNSIGNED NOT NULL AUTO_INCREMENT,
 	Fname VARCHAR(20),
     Minit CHAR(1),
     Lname VARCHAR(20),
-    MemberID INT(4) UNSIGNED NOT NULL AUTO_INCREMENT,
     Address VARCHAR(50),
     PhoneNumber VARCHAR(10),
     Username VARCHAR(15),
@@ -12,6 +12,8 @@ create table MEMBERS (
     Is_active BINARY NOT NULL, #0 for inactive, 1 for active
     PRIMARY KEY (MemberID)
 );
+
+INSERT INTO MEMBERS VALUES ('Chloe', 'A', 'kimble', 0001, 'address', '123466789', 'cakimble', 'password', 1);
 
 create table ASSOCIATES (
 	MemberID INT(4) UNSIGNED NOT NULL,
