@@ -13,7 +13,7 @@ create table MEMBERS (
     PRIMARY KEY (MemberID)
 );
 
-INSERT INTO MEMBERS VALUES ('Chloe', 'A', 'kimble', 0001, 'address', '123466789', 'cakimble', 'password', 1);
+#INSERT INTO MEMBERS VALUES ('Chloe', 'A', 'Kimble', 'Address', '1234567890', 'cakimble', 'password', 1);
 
 create table ASSOCIATES (
 	MemberID INT(4) UNSIGNED NOT NULL,
