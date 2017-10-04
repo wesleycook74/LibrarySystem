@@ -134,6 +134,7 @@ public class BookDetail {
 
 	private void extractAuthors() {
 		ArrayList<String> authors = new ArrayList<String>();
+
 		Connection con = Database.getConnection();
 		String query = "SELECT AName\n" +
 				       "FROM AUTHORS A\n" +
@@ -143,10 +144,10 @@ public class BookDetail {
 			//create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
+
 			while(rs.next()) {
 				authors.add(rs.getString("AName"));
 			}
-
 			this.authors = authors;
 
 			rs.close();
