@@ -3,13 +3,13 @@ import java.sql.SQLException;
 public class Manager extends Associate {
 	
 	public Manager(String firstName, String lastName, String middleInitial, String address, String memberID,
-			String phoneNumber, String userName, String password) throws SQLException {
-		super(firstName, lastName, middleInitial, address, memberID, phoneNumber, userName, password);
+			String phoneNumber, String userName, String password) {
+		super(firstName, lastName, middleInitial, address, phoneNumber, userName, password);
 	}
 
 	public void createAssociate (String firstName, String lastName, String middleInitial, String address, String memberID,
-			String phoneNumber, String userName, String password) throws SQLException{
-		Associate associate = new Associate(firstName, lastName, middleInitial, address, memberID,
+			String phoneNumber, String userName, String password) {
+		Associate associate = new Associate(firstName, lastName, middleInitial, address,
 			phoneNumber, userName, password);
 	}
 
@@ -40,7 +40,6 @@ public class Manager extends Associate {
 	public void addBooks(String title, String isbn, String year, String[] authors, String[] keywords, int count){
       
 	}
-
 
 
 	// Removes a physical copy of the book from inventory

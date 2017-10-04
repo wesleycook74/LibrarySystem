@@ -2,7 +2,7 @@ create schema library;
 
 create table MEMBERS (
     MemberID INT(4) UNSIGNED NOT NULL AUTO_INCREMENT,
-	Fname VARCHAR(20),
+    Fname VARCHAR(20),
     Minit CHAR(1),
     Lname VARCHAR(20),
     Address VARCHAR(50),
@@ -13,12 +13,12 @@ create table MEMBERS (
     PRIMARY KEY (MemberID)
 );
 
-#INSERT INTO MEMBERS VALUES ('Chloe', 'A', 'Kimble', 'Address', '1234567890', 'cakimble', 'password', 1);
+# INSERT INTO MEMBERS VALUES ('Chloe', 'A', 'kimble', 0001, 'address', '123466789', 'cakimble', 'password', 1);
 
 create table ASSOCIATES (
-	MemberID INT(4) UNSIGNED NOT NULL,
+	  MemberID INT(4) UNSIGNED NOT NULL,
     Manager BINARY NOT NULL,  #0 for Ass., 1 for Manager
-	PRIMARY KEY (MemberID),
+	  PRIMARY KEY (MemberID),
     FOREIGN KEY (MemberID) REFERENCES MEMBERS (MemberID)
 );
 
