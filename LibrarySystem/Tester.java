@@ -1,12 +1,5 @@
 import java.util.ArrayList;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Tester {
 
@@ -15,10 +8,10 @@ public class Tester {
 		Associate ass1 = new Associate ("Arron", "T", "Croft", "123 Croft Rd Valdosta GA", "9998885555", "atcroft" , "somepassword" );
 		Member mem2 = new Member("Dominique", "S", "Adkins", "555 Forest Rd Valdosta GA", "5552223333", "dsadkins", "diffpassword");
 
-		
-		ArrayList<BookDetail> bookDetails = Search.searchBooksByTitle("The");
+		ArrayList<BookDetail> bookDetails = Search.searchBooksByTitle("");
+
 		for(BookDetail bd : bookDetails) {
-			System.out.println(bd.getTitle());
+			System.out.println(bd);
 		}
 	}
 

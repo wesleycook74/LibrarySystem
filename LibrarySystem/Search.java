@@ -19,11 +19,13 @@ public class Search {
 			PreparedStatement ps = con.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
+
 				bookDetails.add(new BookDetail(rs.getString("ISBN")));
 			}
 
 			rs.close();
 			ps.close();
+			con.close();
 		}
 		catch (SQLException se) {
 			se.printStackTrace();

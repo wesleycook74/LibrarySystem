@@ -98,6 +98,7 @@ public class BookDetail {
 
 			rs.close();
 			ps.close();
+			con.close();
 		}
 		catch (SQLException se) {
 			se.printStackTrace();
@@ -152,6 +153,7 @@ public class BookDetail {
 
 			rs.close();
 			ps.close();
+			con.close();
 		}
 		catch (SQLException se) {
 			se.printStackTrace();
@@ -177,6 +179,7 @@ public class BookDetail {
 			this.keywords = keywords;
 			rs.close();
 			ps.close();
+			con.close();
 		}
 		catch (SQLException se) {
 			se.printStackTrace();

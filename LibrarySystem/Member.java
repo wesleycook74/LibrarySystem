@@ -22,16 +22,9 @@ public class Member {
         this.userName = userName;
         this.password = password;
         
-      //JDBC URL, username and password of MySQL server
-    	final String url = "jdbc:mysql://localhost:3306/library?useSSL=false";
-    	final String user = "root";
-    	final String password1 = "root";
-    	// JDBC variables for opening and managing connection
-    	Connection con;
-		// opening database connection to MySQL server
-		con = DriverManager.getConnection(url, user, password1);
-		System.out.println("Database connected successfully");
-		String query = "insert into members (Fname, Minit, Lname, Address, PhoneNumber, Username, Password, Is_active)"
+		Connection con = Database.getConnection();
+
+		String query = "insert into MEMBERS (Fname, Minit, Lname, Address, PhoneNumber, Username, Password, Is_active)"
 				+ " values (?, ?, ?, ?, ?, ? ,?, ?)";
 		
 		PreparedStatement ps2 = con.prepareStatement(query);

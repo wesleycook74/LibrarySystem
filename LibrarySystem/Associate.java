@@ -11,16 +11,8 @@ public class Associate extends Member {
 		super(firstName, lastName, middleInitial, address, phoneNumber, userName, password);
 		// TODO Auto-generated constructor stub
 
-		//JDBC URL, username and password of MySQL server
-    	final String url = "jdbc:mysql://localhost:3306/library?useSSL=false";
-    	final String user = "root";
-    	final String password1 = "root";
-    	// JDBC variables for opening and managing connection
-    	Connection con;
-		// opening database connection to MySQL server
-		con = DriverManager.getConnection(url, user, password1);
-		System.out.println("Database connected successfully");
-		String query = "insert into associates (MemberID, Manager)"
+		Connection con = Database.getConnection();
+		String query = "insert into ASSOCIATES (MemberID, Manager)"
 				+ " values (?, ?)";
 
 		PreparedStatement ps2 = con.prepareStatement(query);
