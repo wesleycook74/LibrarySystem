@@ -6,9 +6,9 @@ import java.sql.SQLException;
 
 public class Associate extends Member {
 
-	public Associate(String firstName, String lastName, String middleInitial,  String address,
+	public Associate(String firstName, String middleInitial, String lastName,   String address,
 			String phoneNumber, String userName, String password) {
-		super(firstName, lastName, middleInitial, address, phoneNumber, userName, password);
+		super(firstName, middleInitial, lastName, address, phoneNumber, userName, password);
 		// TODO Auto-generated constructor stub
 
 		Connection con = Database.getConnection();

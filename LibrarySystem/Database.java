@@ -13,7 +13,8 @@ public class Database {
 			con = DriverManager.getConnection(url, user, password);
 		}
 		catch(Exception ex) {
-			System.out.println("Unable to connect to database");
+			ex.printStackTrace();
+			//System.out.println("Unable to connect to database");
 		}
 
 		return con;
