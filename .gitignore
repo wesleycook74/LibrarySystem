@@ -12,4 +12,6 @@ out
 *.class
 /bin/
 
+#Ignore JDBC Driver
 mysql-connector-java-5.1.41/*
+mysql-connector-java-5.1.44-bin
