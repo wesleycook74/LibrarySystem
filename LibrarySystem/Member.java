@@ -13,7 +13,7 @@ public class Member {
 	 String address;
 
 	public Member(String firstName, String middleInitial, String lastName,
-            String address, String phoneNumber, String userName, String password) throws SQLException{
+            String address, String phoneNumber, String userName, String password) {
 		this.firstName = firstName;
         this.lastName = lastName;
         this.middleInitial = middleInitial;
@@ -26,19 +26,25 @@ public class Member {
 
 		String query = "insert into MEMBERS (Fname, Minit, Lname, Address, PhoneNumber, Username, Password, Is_active)"
 				+ " values (?, ?, ?, ?, ?, ? ,?, ?)";
-		
-		PreparedStatement ps2 = con.prepareStatement(query);
-		ps2.setString(1, firstName);
-		ps2.setString(2, middleInitial);
-		ps2.setString(3, lastName);
-		ps2.setString(4, address);
-		ps2.setString(5, phoneNumber);
-		ps2.setString(6, userName);
-		ps2.setString(7, password);
-		ps2.setInt(8, 1);
-		
-		ps2.execute();
-		con.close();
+
+		PreparedStatement ps2 = null;
+		try {
+			ps2 = con.prepareStatement(query);
+			ps2.setString(1, firstName);
+			ps2.setString(2, middleInitial);
+			ps2.setString(3, lastName);
+			ps2.setString(4, address);
+			ps2.setString(5, phoneNumber);
+			ps2.setString(6, userName);
+			ps2.setString(7, password);
+			ps2.setInt(8, 1);
+
+			ps2.execute();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		
 	}
 

@@ -3,12 +3,12 @@ import java.sql.SQLException;
 public class Manager extends Associate {
 	
 	public Manager(String firstName, String lastName, String middleInitial, String address, String memberID,
-			String phoneNumber, String userName, String password) throws SQLException {
+			String phoneNumber, String userName, String password) {
 		super(firstName, lastName, middleInitial, address, phoneNumber, userName, password);
 	}
 
 	public void createAssociate (String firstName, String lastName, String middleInitial, String address, String memberID,
-			String phoneNumber, String userName, String password) throws SQLException{
+			String phoneNumber, String userName, String password) {
 		Associate associate = new Associate(firstName, lastName, middleInitial, address,
 			phoneNumber, userName, password);
 	}
