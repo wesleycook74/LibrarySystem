@@ -1,54 +1,52 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class Associate extends Member {
-	
-	public Associate(String firstName, String lastName, String middleInitial,  String address,
-			String phoneNumber, String userName, String password) throws SQLException {
-		super(firstName, lastName, middleInitial, address, phoneNumber, userName, password);
+
+	public Associate(String firstName, String middleInitial, String lastName,   String address,
+			String phoneNumber, String userName, String password) {
+		super(firstName, middleInitial, lastName, address, phoneNumber, userName, password);
 		// TODO Auto-generated constructor stub
-		
-		//JDBC URL, username and password of MySQL server
-    	final String url = "jdbc:mysql://localhost:3306/library?useSSL=false";
-    	final String user = "root";
-    	final String password1 = "root";
-    	// JDBC variables for opening and managing connection
-    	Connection con;
-		// opening database connection to MySQL server
-		con = DriverManager.getConnection(url, user, password1);
-		System.out.println("Database connected successfully");
-		String query = "insert into associates (MemberID, Manager)"
-				+ " values (?, ?)";
-		
-		PreparedStatement ps2 = con.prepareStatement(query);
-		ps2.setInt(1, 2);
-		ps2.setInt(2, 0);
-		
-		ps2.execute();
-		con.close();
-		
-	}
-	/*public void createMember(String firstName, String lastName, String middleInitial, 
-            String memberID, String phoneNumber, String userName, String password) throws SQLException{
-		
+
 		Connection con = Database.getConnection();
-		Statement stmt = con.createStatement();
-		String query = "INSERT INTO members VALUES(";
-		query += firstName;
-        query += middleInitial;
-        query += lastName;
-        query += memberID;
-        query += address;
-        query += phoneNumber;
-        query += userName;
-        query += password;
-				query += ");";
-				System.out.println(query);
-				stmt.execute(query);
-	}*/
+		String getmemid = "SELECT memberID\n" +
+			       "FROM Members BD\n" +
+			       "WHERE userName LIKE '%" + userName + "%'";
+		String query = "insert into ASSOCIATES (MemberID, Manager)"
+				+ " values (?, ?)";
+
+
+		try {
+			PreparedStatement mid = con.prepareStatement(getmemid);
+			ResultSet rs = mid.executeQuery();
+			
+			//int id =  ((Integer) rs.getObject(1)).intValue();
+			//int id = Integer.parseInt(rs.getObject(1).toString());
+			int id = 0;
+			while(rs.next()) {
+				System.out.println("here1");
+				id = rs.getInt(memberID);
+				System.out.println("here2");
+
+			}
+		
+			PreparedStatement ps2 = con.prepareStatement(query);
+			ps2.setInt(1, id);
+			ps2.setInt(2, 0);
+
+			ps2.execute();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+
+	}
+
 
 	
 }
