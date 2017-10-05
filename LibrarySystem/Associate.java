@@ -2,6 +2,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Associate extends Member {
@@ -12,13 +13,29 @@ public class Associate extends Member {
 		// TODO Auto-generated constructor stub
 
 		Connection con = Database.getConnection();
+		String getmemid = "SELECT memberID\n" +
+			       "FROM Members BD\n" +
+			       "WHERE userName LIKE '%" + userName + "%'";
 		String query = "insert into ASSOCIATES (MemberID, Manager)"
 				+ " values (?, ?)";
 
 
 		try {
+			PreparedStatement mid = con.prepareStatement(getmemid);
+			ResultSet rs = mid.executeQuery();
+			
+			//int id =  ((Integer) rs.getObject(1)).intValue();
+			//int id = Integer.parseInt(rs.getObject(1).toString());
+			int id = 0;
+			while(rs.next()) {
+				System.out.println("here1");
+				id = rs.getInt(memberID);
+				System.out.println("here2");
+
+			}
+		
 			PreparedStatement ps2 = con.prepareStatement(query);
-			ps2.setInt(1, 2);
+			ps2.setInt(1, id);
 			ps2.setInt(2, 0);
 
 			ps2.execute();
