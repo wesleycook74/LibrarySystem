@@ -35,9 +35,7 @@ public class Associate extends Member {
 			//int id = Integer.parseInt(rs.getObject(1).toString());
 			int id = 0;
 			while(rs.next()) {
-				System.out.println("here1");
 				id = rs.getInt("memberID");
-				System.out.println("here2");
 			}
 			rs.close();
 		
