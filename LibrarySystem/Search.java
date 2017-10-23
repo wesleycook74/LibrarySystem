@@ -58,8 +58,31 @@ public class Search {
 		return bookDetails;
 	}
 
-	public static BookDetail[] searchBooksByYear(String year) {
-		return null;
+	public static ArrayList<BookDetail> searchBooksByYear(String year) {
+		ArrayList<BookDetail> bookDetails = new ArrayList<>();
+
+		Connection con = Database.getConnection();
+		String query = "SELECT ISBN\n" +
+				"FROM BOOK_DETAILS BD\n" +
+				"WHERE BD.Year LIKE '%" + year + "%'";
+
+		try {
+			//create the prepared statement
+			PreparedStatement ps = con.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+
+				bookDetails.add(new BookDetail(rs.getString("ISBN")));
+			}
+
+			rs.close();
+			ps.close();
+			con.close();
+		}
+		catch (SQLException se) {
+			se.printStackTrace();
+		}
+		return bookDetails;
 	}
 
 	public static BookDetail[] searchBooksByAuthor(String author) {
