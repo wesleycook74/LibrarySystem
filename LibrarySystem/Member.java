@@ -181,6 +181,52 @@ public class Member {
 	}
 
 	public void suspendAccount () {
+		Connection con = Database.getConnection();
 
+		String query = "UPDATE BOOKS \n" +
+				       "SET Is_active=TRUE \n" +
+					   "WHERE MemberID=" + memberID + ";";
+
+		PreparedStatement ps2 = null;
+		try {
+			//create the prepared statement
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.executeUpdate();
+
+			ps.close();
+			con.close();
+		}
+		catch (SQLException se) {
+			se.printStackTrace();
+		}
+
+	}
+
+	public void reactivateAccount() {
+		Connection con = Database.getConnection();
+
+		String query = "UPDATE BOOKS \n" +
+				"SET Is_active=FALSE \n" +
+				"WHERE MemberID=" + memberID + ";";
+
+		PreparedStatement ps2 = null;
+		try {
+			//create the prepared statement
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.executeUpdate();
+
+			ps.close();
+			con.close();
+		}
+		catch (SQLException se) {
+			se.printStackTrace();
+		}
+
+	}
+
+	// Returns true if the memberID is valid (member exists in the database)
+	public boolean isValid() {
+		// Needs to be implemented
+		return false;
 	}
 }
