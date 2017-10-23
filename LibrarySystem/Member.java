@@ -204,4 +204,8 @@ public class Member {
 	public void suspendAccount () {
 
 	}
+
+	public void suspendAccount () {
+
+	}
 }
