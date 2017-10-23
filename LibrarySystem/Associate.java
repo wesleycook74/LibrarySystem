@@ -19,9 +19,9 @@ public class Associate extends Member {
         this.userName = userName;
         this.password = password;
 		Connection con = Database.getConnection();
-		String getmemid = "SELECT memberID\n" +
-			       "FROM Members BD\n" +
-			       "WHERE userName LIKE '%" + userName + "%'";
+		String getmemid = "SELECT MemberID\n" +
+			       "FROM MEMBERS BD\n" +
+			       "WHERE Username LIKE '%" + userName + "%'";
 		String query = "insert into ASSOCIATES (MemberID, Manager)"
 				+ " values (?, ?)";
 

@@ -49,9 +49,9 @@ public class Member {
 		}
 		
 		
-		String getmemid = "SELECT memberID\n" +
-			       "FROM Members BD\n" +
-			       "WHERE userName = '" + userName + "'";
+		String getmemid = "SELECT MemberID\n" +
+			       "FROM MEMBERS BD\n" +
+			       "WHERE Username = '" + userName + "'";
 
 		try {
 			PreparedStatement mid = con.prepareStatement(getmemid);
