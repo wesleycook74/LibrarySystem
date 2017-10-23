@@ -7,9 +7,10 @@ create table MEMBERS (
     Lname VARCHAR(20),
     Address VARCHAR(50),
     PhoneNumber VARCHAR(10),
-    Username VARCHAR(15),
+    Username VARCHAR(15) unique,
     Password VARCHAR(15),
-    Is_active BINARY NOT NULL, #0 for inactive, 1 for active
+    Fines decimal (5), 
+    Is_active BINARY NOT NULL, #0 for inactive, 1 for activeFines
     PRIMARY KEY (MemberID)
 );
 
