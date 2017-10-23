@@ -67,4 +67,8 @@ public class Member {
 	public void reportLost (Book[] book){
 
 	}
+
+	public void suspendAccount () {
+
+	}
 }
