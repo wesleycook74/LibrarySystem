@@ -28,6 +28,7 @@ public class Tester {
 		System.out.println(mem6.toString());
 		
 		
+		
 		System.out.println("\n\nNow for searches:");
 		ArrayList<BookDetail> bookDetails = Search.searchBooksByTitle("");
 
