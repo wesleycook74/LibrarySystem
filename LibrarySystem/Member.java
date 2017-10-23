@@ -4,6 +4,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Member {
@@ -141,6 +142,31 @@ public class Member {
 	}
 
 	public Book[] getCheckedOut() {
+		ArrayList<String> books = new ArrayList<String>();
+
+		Connection con = Database.getConnection();
+		String query = "SELECT Title\n" +
+				       "FROM BOOK_DETAILS D, BOOKS B\n" +
+				       "WHERE D.ISBN= B.ISBN AND B.MemberID = " + memberID;
+
+		try {
+			//create the prepared statement
+			PreparedStatement ps = con.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+
+			while(rs.next()) {
+				books.add(rs.getString("Title"));
+				System.out.println("Titles: " + rs.getString("Title"));
+			}
+			//this.books = books;
+
+			rs.close();
+			ps.close();
+			con.close();
+		}
+		catch (SQLException se) {
+			se.printStackTrace();
+		}
 		return checkedOut;
 	}
 
