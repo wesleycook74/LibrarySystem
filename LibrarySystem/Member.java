@@ -4,6 +4,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Member {
@@ -11,7 +12,7 @@ public class Member {
 	 int memberID;
 	 String phoneNumber;
 	 String userName, password;
-	 Book[] checkedOut;
+	 ArrayList<Book> checkedOut = new ArrayList<Book>();
 	 String address;
 	 double fines;
 
@@ -140,7 +141,7 @@ public class Member {
 		return password;
 	}
 
-	public Book[] getCheckedOut() {
+	public ArrayList<Book> getCheckedOut() {
 		return checkedOut;
 	}
 
@@ -157,26 +158,50 @@ public class Member {
 	public String toString() {
 		return "Member [firstName=" + firstName +  ", middleInitial=" + middleInitial + ", lastName=" + lastName 
 				+ ", memberID=" + memberID + ", phoneNumber=" + phoneNumber + ", address=" + address +", userName=" + userName + ", checkedOut="
-				+ Arrays.toString(checkedOut)  + ", fines=" + fines + "]";
+				+ checkedOut  + ", fines=" + fines + "]";
 	}
 
-	public void checkOut (Book[] books){
-      
+	public void checkOut (Book book){
+		if(checkedOut.size() < 10) {
+			checkedOut.add(book);
+			
+			try {
+				Connection con = Database.getConnection();
+				String query = "UPDATE BOOKS\n" +
+						"SET Checked_Out = '1'\n" +
+						"WHERE Checked_Out = '0' AND ID = ?;";
+				
+				//create the prepared statement
+				PreparedStatement ps = con.prepareStatement(query);
+				ps.setInt(1,book.getId());
+				ps.executeUpdate();
+	
+				ps.close();
+				con.close();
+			}
+			catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
 	}
 
-	public void returnBooks (Book[] books){
+	public void returnBooks (Book book){
+		
+	}
+
+	public void renewBooks (Book book){
 
 	}
 
-	public void renewBooks (Book[] books){
+	public void placeHold (BookDetail bookDetail){
 
 	}
 
-	public void placeHold (BookDetail[] bookDetails){
+	public void reportLost (Book book){
 
 	}
 
-	public void reportLost (Book[] book){
+	public void suspendAccount () {
 
 	}
 }
