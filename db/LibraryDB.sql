@@ -33,7 +33,8 @@ create table BOOK_DETAILS (
 create table BOOKS (
     ID INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
     ISBN VARCHAR(13) NOT NULL,
-    checkedout BINARY,
+    Checked_Out BINARY,
+    Date_Out DATE NOT NULL,
     PRIMARY KEY (ID),
     FOREIGN KEY (ISBN) REFERENCES BOOK_DETAILS (ISBN)
 );
@@ -45,20 +46,10 @@ create table AUTHORS (
     PRIMARY KEY (ISBN, AName)
 );
 
-create table CHECKOUT_LOG (
-    BookID INT(10) UNSIGNED NOT NULL,
-	  MemberID INT(4) UNSIGNED NOT NULL,
-    Date_out DATE NOT NULL,
-    Date_in DATE,
-    FOREIGN KEY (BookID) REFERENCES BOOKS (ID),
-	  FOREIGN KEY (MemberID) REFERENCES MEMBERS (MemberID),
-    PRIMARY KEY (BookID, MemberID, Date_out)
-);
-
 create table KEYWORDS (
     ISBN VARCHAR(13) NOT NULL,
-    keyword VARCHAR(200),
+    Keyword VARCHAR(200),
     FOREIGN KEY (ISBN) REFERENCES BOOK_DETAILS (ISBN),
-    PRIMARY KEY (ISBN, keyword)
+    PRIMARY KEY (ISBN, Keyword)
 );
 	
