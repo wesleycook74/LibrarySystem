@@ -178,7 +178,7 @@ public class Member {
 	}
 
 	public void suspendAccount () {
-		String update = "UPDATE BOOKS \n" +
+		String update = "UPDATE MEMBERS \n" +
 				       "SET Is_active=FALSE \n" +
 					   "WHERE MemberID=" + memberID + ";";
 
@@ -186,18 +186,43 @@ public class Member {
 
 	}
 
-	public void reactivateAccount() {
+	public void activateAccount() {
 
-		String update = "UPDATE BOOKS \n" +
-				"SET Is_active=FALSE \n" +
+		String update = "UPDATE MEMBERS \n" +
+				"SET Is_active=TRUE \n" +
 				"WHERE MemberID=" + memberID + ";";
 
 		Database.runUpdate(update);
 	}
 
-	// Returns true if the memberID is valid and the member account is not suspended
+	// Returns true if the memberID is valid
 	public boolean isValid() {
-		// Needs to be implemented
+		// Needs to be finished
+		return true;
+	}
+
+	// returns true if the member account is valid and is not suspended
+	public boolean isActive() {
+		if(isValid()) {
+			String query = "SELECT Is_active\n" +
+						   "FROM MEMBERS M\n" +
+						   "WHERE M.MemberID=" + this.memberID;
+			Connection con = Database.getConnection();
+			try {
+				PreparedStatement ps = con.prepareStatement(query);
+				ResultSet rs = ps.executeQuery();
+				if(rs.next()) {
+					return rs.getBoolean("Is_active");
+				}
+				rs.close();
+				ps.close();
+				con.close();
+
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
 		return false;
 	}
 }

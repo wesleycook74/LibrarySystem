@@ -39,7 +39,8 @@ public class Tester {
 
 		//Test suspend member accounts
 		Member m = new Member(1);
-		System.out.println(m);
+		m.activateAccount();
+		System.out.println(m.isActive());
 	}
 
 }
