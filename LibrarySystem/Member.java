@@ -7,13 +7,13 @@ import java.sql.SQLException;
 import java.util.Arrays;
 
 public class Member {
-	 String firstName, lastName, middleInitial;
-	 int memberID;
-	 String phoneNumber;
-	 String userName, password;
-	 Book[] checkedOut;
-	 String address;
-	 double fines;
+	 private String firstName, lastName, middleInitial;
+	 private int memberID;
+	 private String phoneNumber;
+	 private String userName, password;
+	 private Book[] checkedOut;
+	 private String address;
+	 private double fines;
 
 	public Member(String firstName, String middleInitial, String lastName,
             String address, String phoneNumber, String userName, String password) {
@@ -40,7 +40,7 @@ public class Member {
 			ps2.setString(5, phoneNumber);
 			ps2.setString(6, userName);
 			ps2.setString(7, password);
-			ps2.setInt(8, 1);
+			ps2.setBoolean(8, true);
 
 			ps2.execute();
 		} catch (SQLException e) {
@@ -49,13 +49,12 @@ public class Member {
 		
 		
 		String getmemid = "SELECT memberID\n" +
-			       "FROM Members BD\n" +
+			       "FROM MEMBERS BD\n" +
 			       "WHERE userName = '" + userName + "'";
 
 		try {
 			PreparedStatement mid = con.prepareStatement(getmemid);
 			ResultSet rs = mid.executeQuery();
-			System.out.println("rs = " + rs);
 			
 			//int id =  ((Integer) rs.getObject(1)).intValue();
 			//int id = Integer.parseInt(rs.getObject(1).toString());
@@ -78,7 +77,7 @@ public class Member {
 		
 		Connection con = Database.getConnection();
 
-		String query = "SELECT MemberID, Fname, Lname, Minit, Address, PhoneNumber, Username, Password, Fines\n" +
+		String query = "SELECT MemberID, Fname, Lname, Minit, Address, PhoneNumber, Username, Password, Fines, Is_active\n" +
 				"FROM MEMBERS \n" +
 				"WHERE MEMBERS.MemberID =" + memID + ";";
 
@@ -180,9 +179,8 @@ public class Member {
 
 	public void suspendAccount () {
 		Connection con = Database.getConnection();
-
 		String query = "UPDATE BOOKS \n" +
-				       "SET Is_active=TRUE \n" +
+				       "SET Is_active=FALSE \n" +
 					   "WHERE MemberID=" + memberID + ";";
 
 		PreparedStatement ps2 = null;
@@ -222,7 +220,7 @@ public class Member {
 
 	}
 
-	// Returns true if the memberID is valid (member exists in the database)
+	// Returns true if the memberID is valid and the member account is not suspended
 	public boolean isValid() {
 		// Needs to be implemented
 		return false;
