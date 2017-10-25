@@ -21,4 +21,22 @@ public class Database {
 
 		return con;
 	}
+
+	public static void runUpdate(String update) {
+
+		Connection con = getConnection();
+		PreparedStatement ps2 = null;
+		try {
+			//create the prepared statement
+			PreparedStatement ps = con.prepareStatement(update);
+			ps.executeUpdate();
+
+			ps.close();
+			con.close();
+		}
+		catch (SQLException se) {
+			se.printStackTrace();
+		}
+	}
+
 }
