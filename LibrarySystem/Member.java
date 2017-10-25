@@ -178,12 +178,13 @@ public class Member {
 		return fines;
 	}
 	
-	public void payFines (double amountpaid, int memID) {
+	public void payFines (double amountpaid) {
+		fines -= amountpaid;
 		Connection con = Database.getConnection();
 
 		String query = "UPDATE MEMBERS\n" +
-				"SET Fines = " + (fines-amountpaid) + 
-				"\nWHERE MEMBERS.MemberID =" + memID + ";";
+				"SET Fines=Fines - " + amountpaid +
+				"\nWHERE MEMBERS.MemberID =" + memberID + ";";
 		try {
 			//create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
@@ -194,6 +195,7 @@ public class Member {
 			se.printStackTrace();
 		}
 	}
+
 
 	
 	@Override
