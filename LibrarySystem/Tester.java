@@ -29,11 +29,7 @@ public class Tester {
 
 		Member mem6 = new Member("Dennis", "A", "Vegas", "999 Dum Rd Valdosta GA", "229688814", "dennisvegas", "dennispassword");
 		System.out.println(mem6.toString());
-		*/
 
-		//Testing search
-		/*
-		System.out.println("\n\nNow for searches: ");
 		ArrayList<BookDetail> bookDetails = Search.searchBooksByTitle("");
 
 		for(BookDetail bd : bookDetails) {
