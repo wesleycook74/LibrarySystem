@@ -4,10 +4,8 @@ public class Book {
 	int id;
 	String isbn;
 
-	public Book(int id, String isbn) {
-
-		this.id = id;
-		this.isbn = isbn;
+	public Book(int id) {
+      this.id = id;
 	}
 
 	public int getId() {

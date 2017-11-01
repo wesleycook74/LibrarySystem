@@ -8,6 +8,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Member {
+<<<<<<< HEAD
+	 String firstName, lastName, middleInitial;
+	 int memberID;
+	 String phoneNumber;
+	 String userName, password;
+	 ArrayList<Book> checkedOut = new ArrayList<Book>();
+	 String address;
+	 double fines;
 	 private String firstName, lastName, middleInitial;
 	 private int memberID;
 	 private String phoneNumber;
@@ -25,7 +33,6 @@ public class Member {
         this.phoneNumber = phoneNumber;
         this.userName = userName;
         this.password = password;
-        checkedOut = new Book[10];
         
 		Connection con = Database.getConnection();
 
@@ -140,22 +147,24 @@ public class Member {
 	}
 
 	public Book[] getCheckedOut() {
-		Book[] books = new Book[10];
+		ArrayList<String> books = new ArrayList<String>();
 
 		Connection con = Database.getConnection();
-		String query = "SELECT ID\n" +
-				       "FROM BOOKS B\n" +
-				       "WHERE B.MemberID = " + memberID;
+		String query = "SELECT Title\n" +
+				       "FROM BOOK_DETAILS D, BOOKS B\n" +
+				       "WHERE D.ISBN= B.ISBN AND B.MemberID = " + memberID;
 
 		try {
 			//create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
-         int i = 0;
+
 			while(rs.next()) {
-				books[i] = new Book(rs.getInt("ID"));
-            i++;
+				books.add(rs.getString("Title"));
+				System.out.println("Titles: " + rs.getString("Title"));
 			}
+			//this.books = books;
+
 			rs.close();
 			ps.close();
 			con.close();
@@ -163,7 +172,7 @@ public class Member {
 		catch (SQLException se) {
 			se.printStackTrace();
 		}
-		return books;
+		return checkedOut;
 	}
 
 	public String getAddress() {
@@ -202,30 +211,27 @@ public class Member {
 	}
 
 	public void checkOut (Book book){
-      //check to see if member account is not suspended
-      if(isActive()){
-         if(checkedOut.size() < 10) {
-   			checkedOut.add(book);
-   			
-   			try {
-   				Connection con = Database.getConnection();
-   				String query = "UPDATE BOOKS\n" +
-   						"SET Checked_Out = '1'\n" +
-   						"WHERE Checked_Out = '0' AND ID = ?;";
-   				
-   				//create the prepared statement
-   				PreparedStatement ps = con.prepareStatement(query);
-   				ps.setInt(1,book.getId());
-   				ps.executeUpdate();
-   	
-   				ps.close();
-   				con.close();
-   			}
-   			catch (SQLException se) {
-   				se.printStackTrace();
-   			}
-   		}
-      }
+		if(checkedOut.size() < 10) {
+			checkedOut.add(book);
+			
+			try {
+				Connection con = Database.getConnection();
+				String query = "UPDATE BOOKS\n" +
+						"SET Checked_Out = '1'\n" +
+						"WHERE Checked_Out = '0' AND ID = ?;";
+				
+				//create the prepared statement
+				PreparedStatement ps = con.prepareStatement(query);
+				ps.setInt(1,book.getId());
+				ps.executeUpdate();
+	
+				ps.close();
+				con.close();
+			}
+			catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
 	}
 
 	public void returnBooks (Book book){
@@ -253,8 +259,13 @@ public class Member {
 
 	}
 
+<<<<<<< HEAD
+	public void activateAccount () {
+
+=======
 	public void activateAccount() {
-      String update = "UPDATE MEMBERS \n" +
+
+		String update = "UPDATE MEMBERS \n" +
 				"SET Is_active=TRUE \n" +
 				"WHERE MemberID=" + memberID + ";";
 
@@ -290,5 +301,6 @@ public class Member {
 
 		}
 		return false;
+>>>>>>> 6790f76ae41dd5f61ecbd0bf7ec975b42045c918
 	}
 }
