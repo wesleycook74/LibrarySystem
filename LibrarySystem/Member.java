@@ -12,7 +12,7 @@ public class Member {
 	 private int memberID;
 	 private String phoneNumber;
 	 private String userName, password;
-	 private Book[] checkedOut;
+	 private ArrayList<Book> checkedOut;
 	 private String address;
 	 private double fines;
 
@@ -25,8 +25,8 @@ public class Member {
         this.phoneNumber = phoneNumber;
         this.userName = userName;
         this.password = password;
-        checkedOut = new Book[10];
-        
+        checkedOut = new ArrayList<Book>();
+
 		Connection con = Database.getConnection();
 
 		String query = "insert into MEMBERS (Fname, Minit, Lname, Address, PhoneNumber, Username, Password, Is_active)"
@@ -48,8 +48,8 @@ public class Member {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		
+
+
 		String getmemid = "SELECT MemberID\n" +
 			       "FROM MEMBERS BD\n" +
 			       "WHERE Username = '" + userName + "'";
@@ -57,26 +57,26 @@ public class Member {
 		try {
 			PreparedStatement mid = con.prepareStatement(getmemid);
 			ResultSet rs = mid.executeQuery();
-			
+
 			//int id =  ((Integer) rs.getObject(1)).intValue();
 			//int id = Integer.parseInt(rs.getObject(1).toString());
 			while(rs.next()) {
 				this.memberID = rs.getInt("MemberID");
 			}
 			rs.close();
-			con.close(); 
+			con.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		
+
 	}
-	
+
 	public Member(int memID) {
-		
-		this.memberID = memID; 
-		
+
+		this.memberID = memID;
+
 		Connection con = Database.getConnection();
 
 		String query = "SELECT MemberID, Fname, Lname, Minit, Address, PhoneNumber, Username, Password, Fines, Is_active\n" +
@@ -108,7 +108,7 @@ public class Member {
 		catch (SQLException se) {
 			se.printStackTrace();
 		}
-	
+
 	}
 
 	public String getFirstName() {
@@ -139,8 +139,8 @@ public class Member {
 		return password;
 	}
 
-	public Book[] getCheckedOut() {
-		Book[] books = new Book[10];
+	public ArrayList<Book> getCheckedOut() {
+		ArrayList<Book> books = new ArrayList<Book>();
 
 		Connection con = Database.getConnection();
 		String query = "SELECT ID\n" +
@@ -151,11 +151,7 @@ public class Member {
 			//create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
-         int i = 0;
-			while(rs.next()) {
-				books[i] = new Book(rs.getInt("ID"));
-            i++;
-			}
+			books.add(new Book(rs.getInt("ID")));
 			rs.close();
 			ps.close();
 			con.close();
@@ -173,7 +169,7 @@ public class Member {
 	public double getFines() {
 		return fines;
 	}
-	
+
 	public void payFines (double amountpaid) {
 		fines -= amountpaid;
 		Connection con = Database.getConnection();
@@ -193,10 +189,10 @@ public class Member {
 	}
 
 
-	
+
 	@Override
 	public String toString() {
-		return "Member [firstName=" + firstName +  ", middleInitial=" + middleInitial + ", lastName=" + lastName 
+		return "Member [firstName=" + firstName +  ", middleInitial=" + middleInitial + ", lastName=" + lastName
 				+ ", memberID=" + memberID + ", phoneNumber=" + phoneNumber + ", address=" + address +", userName=" + userName + ", checkedOut="
 				+ checkedOut  + ", fines=" + fines + "]";
 	}
@@ -206,18 +202,18 @@ public class Member {
       if(isActive()){
          if(checkedOut.size() < 10) {
    			checkedOut.add(book);
-   			
+
    			try {
    				Connection con = Database.getConnection();
    				String query = "UPDATE BOOKS\n" +
    						"SET Checked_Out = '1'\n" +
    						"WHERE Checked_Out = '0' AND ID = ?;";
-   				
+
    				//create the prepared statement
    				PreparedStatement ps = con.prepareStatement(query);
    				ps.setInt(1,book.getId());
    				ps.executeUpdate();
-   	
+
    				ps.close();
    				con.close();
    			}
@@ -229,7 +225,7 @@ public class Member {
 	}
 
 	public void returnBooks (Book book){
-		
+
 	}
 
 	public void renewBooks (Book book){
@@ -248,7 +244,6 @@ public class Member {
 		String update = "UPDATE MEMBERS \n" +
 				       "SET Is_active=FALSE \n" +
 					   "WHERE MemberID=" + memberID + ";";
-
 		Database.runUpdate(update);
 
 	}
@@ -257,8 +252,7 @@ public class Member {
       String update = "UPDATE MEMBERS \n" +
 				"SET Is_active=TRUE \n" +
 				"WHERE MemberID=" + memberID + ";";
-
-		Database.runUpdate(update);
+      Database.runUpdate(update);
 	}
 
 	// Returns true if the memberID is valid
@@ -284,10 +278,10 @@ public class Member {
 				ps.close();
 				con.close();
 
-			}catch(SQLException e) {
+			}
+			catch(SQLException e) {
 				e.printStackTrace();
 			}
-
 		}
 		return false;
 	}
