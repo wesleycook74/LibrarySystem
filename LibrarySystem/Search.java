@@ -76,7 +76,8 @@ public class Search {
 		return bookDetails;
 	}
 
-	public static BookDetail[] searchBooksByAuthor(String author) {
+	public static ArrayList<BookDetail> searchBooksByAuthor(String author) {
 		return null;
 	}
+
 }

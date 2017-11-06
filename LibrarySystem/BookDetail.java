@@ -40,8 +40,26 @@ public class BookDetail {
 
 	}
 
-	public boolean isAvailable() {
-		return false;
+	public Book getAvailableCopy() {
+		Book b = null;
+		Connection con = Database.getConnection();
+		String query = "SELECT ID " +
+				       "FROM BOOKS " +
+				       "WHERE ISBN=? AND Checked_out=False AND On_Hold=False";
+		try {
+			// create the prepared statement
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setString(1, this.isbn);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				b = new Book(rs.getInt("ID"));
+			}
+
+			con.close();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+		return b;
 	}
 
 	public String getIsbn() {
