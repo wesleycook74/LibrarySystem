@@ -1,55 +1,57 @@
 create schema library;
 
-create table MEMBERS (
+CREATE TABLE MEMBERS (
     MemberID INT(4) UNSIGNED NOT NULL AUTO_INCREMENT,
     Fname VARCHAR(20),
     Minit CHAR(1),
     Lname VARCHAR(20),
     Address VARCHAR(50),
     PhoneNumber VARCHAR(10),
-    Username VARCHAR(15) unique,
+    Username VARCHAR(15) UNIQUE,
     Password VARCHAR(15),
-    Fines decimal (5), 
-    Is_active BINARY NOT NULL, #0 for inactive, 1 for activeFines
+    Fines DECIMAL(5),
+    Is_active BINARY NOT NULL,
     PRIMARY KEY (MemberID)
 );
 
-# INSERT INTO MEMBERS VALUES ('Chloe', 'A', 'kimble', 0001, 'address', '123466789', 'cakimble', 'password', 1);
-
-create table ASSOCIATES (
-	  MemberID INT(4) UNSIGNED NOT NULL,
-    Manager BINARY NOT NULL,  #0 for Ass., 1 for Manager
-	  PRIMARY KEY (MemberID),
-    FOREIGN KEY (MemberID) REFERENCES MEMBERS (MemberID)
+CREATE TABLE ASSOCIATES (
+    MemberID INT(4) UNSIGNED NOT NULL,
+    Manager BINARY NOT NULL,
+    PRIMARY KEY (MemberID),
+    FOREIGN KEY (MemberID)
+        REFERENCES MEMBERS (MemberID)
 );
 
-create table BOOK_DETAILS (
+CREATE TABLE BOOK_DETAILS (
     ISBN VARCHAR(13) NOT NULL,
     Title VARCHAR(100),
     Year VARCHAR(4),
     PRIMARY KEY (ISBN)
 );
 
-create table BOOKS (
+CREATE TABLE BOOKS (
     ID INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
     ISBN VARCHAR(13) NOT NULL,
     Checked_Out BINARY,
     Date_Out DATE,
-	PRIMARY KEY (ID),
-    FOREIGN KEY (ISBN) REFERENCES BOOK_DETAILS (ISBN)
+    PRIMARY KEY (ID),
+    FOREIGN KEY (ISBN)
+        REFERENCES BOOK_DETAILS (ISBN)
 );
 
-create table AUTHORS (
+CREATE TABLE AUTHORS (
     ISBN VARCHAR(13) NOT NULL,
     AName VARCHAR(50) NOT NULL,
-    FOREIGN KEY (ISBN) REFERENCES BOOK_DETAILS (ISBN),
-    PRIMARY KEY (ISBN, AName)
+    FOREIGN KEY (ISBN)
+        REFERENCES BOOK_DETAILS (ISBN),
+    PRIMARY KEY (ISBN , AName)
 );
 
-create table KEYWORDS (
+CREATE TABLE KEYWORDS (
     ISBN VARCHAR(13) NOT NULL,
     Keyword VARCHAR(200),
-    FOREIGN KEY (ISBN) REFERENCES BOOK_DETAILS (ISBN),
-    PRIMARY KEY (ISBN, Keyword)
+    FOREIGN KEY (ISBN)
+        REFERENCES BOOK_DETAILS (ISBN),
+    PRIMARY KEY (ISBN , Keyword)
 );
 	

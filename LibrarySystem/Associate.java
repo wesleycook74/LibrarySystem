@@ -7,17 +7,16 @@ import java.sql.SQLException;
 
 public class Associate extends Member {
 
-	public Associate(String firstName, String middleInitial, String lastName,   String address,
-			String phoneNumber, String userName, String password) {
+	public Associate(String firstName, String middleInitial, String lastName, String address, String phoneNumber,
+			String userName, String password) {
 		super(firstName, middleInitial, lastName, address, phoneNumber, userName, password);
 
-		String query = "insert into ASSOCIATES (MemberID, Manager)"
-				+ " values (?, ?)";
+		String query = "insert into ASSOCIATES (MemberID, Manager)" + " values (?, ?)";
 
 		int id = this.getMemberID();
 		Connection con = Database.getConnection();
 		try {
-		
+
 			PreparedStatement ps2 = con.prepareStatement(query);
 			ps2.setInt(1, id);
 			ps2.setInt(2, 0);
@@ -28,9 +27,6 @@ public class Associate extends Member {
 			e.printStackTrace();
 		}
 
-
 	}
 
-
-	
 }
