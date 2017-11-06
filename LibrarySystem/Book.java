@@ -15,4 +15,11 @@ public class Book {
 	public String getIsbn() {
 		return isbn;
 	}
+
+	public boolean equals(Object o){
+		if(((Book)o).getId() == (this.id))
+			return true;
+		else
+			return false;
+	}
 }

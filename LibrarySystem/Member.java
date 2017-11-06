@@ -137,23 +137,24 @@ public class Member {
 	}
 
 	public ArrayList<Book> getCheckedOut() {
-		ArrayList<Book> books = new ArrayList<Book>();
+		checkedOut = new ArrayList<Book>();
 
 		Connection con = Database.getConnection();
-		String query = "SELECT ID\n" + "FROM BOOKS B\n" + "WHERE B.MemberID = " + memberID;
+		String query = "SELECT ID\n" + "FROM BOOKS\n" + "WHERE MemberID = " + memberID;
 
 		try {
 			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
-			books.add(new Book(rs.getInt("ID")));
+			while (rs.next())
+				checkedOut.add(new Book(rs.getInt("ID")));
 			rs.close();
 			ps.close();
 			con.close();
 		} catch (SQLException se) {
 			se.printStackTrace();
 		}
-		return books;
+		return checkedOut;
 	}
 
 	public String getAddress() {
@@ -188,11 +189,13 @@ public class Member {
 
 				try {
 					Connection con = Database.getConnection();
-					String query = "UPDATE BOOKS\n" + "SET Checked_Out = '1'\n" + "WHERE Checked_Out = '0' AND ID = ?;";
+					String query = "UPDATE BOOKS\n" + "SET Checked_Out = TRUE, MemberID = ?, Date_Out = NOW()\n"
+							+ "WHERE Checked_Out = FALSE AND ID = ?;";
 
 					// create the prepared statement
 					PreparedStatement ps = con.prepareStatement(query);
-					ps.setInt(1, book.getId());
+					ps.setInt(1, this.memberID);
+					ps.setInt(2, book.getId());
 					ps.executeUpdate();
 
 					ps.close();
@@ -204,11 +207,29 @@ public class Member {
 		}
 	}
 
-	public void returnBooks(Book book) {
+	public void returnBook(Book book) {
+		try {
+			System.out.println("checked out: " + checkedOut.size());//test line
+			checkedOut.remove(book);
+			Connection con = Database.getConnection();
+			String query = "UPDATE BOOKS\n" + "SET Checked_Out = FALSE, MemberID = NULL, Date_Out = NULL\n"
+					+ "WHERE Checked_Out = TRUE AND ID = ?;";
 
+			// create the prepared statement
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setInt(1, book.getId());
+			ps.executeUpdate();
+
+			ps.close();
+			con.close();
+			System.out.println("checked out: " + checkedOut.size());//test line
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
 	}
 
-	public void renewBooks(Book book) {
+
+	public void renewBook(Book book) {
 
 	}
 

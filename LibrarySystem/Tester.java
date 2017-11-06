@@ -12,15 +12,15 @@ import java.sql.SQLException;
 public class Tester {
 
 	public static void main(String[] args) {
-
 		/*
 		 * // Testing add members Member mem1 = new Member("Chloe", "A",
 		 * "Kimble", "1500 N Patterson St Valdosta GA", "123456789", "cakimble",
 		 * "password");
 		 *
-		 * Member mem2 = new Member ("Arron", "T", "Croft",
-		 * "123 Croft Rd Valdosta GA", "9998885555", "atcroft" ,
-		 * "somepassword"); Member mem3 = new Member("Dominique", "S", "Adkins",
+		 * Member mem2 = new Member("Arron", "T", "Croft",
+		 * "123 Croft Rd Valdosta GA", "9998885555", "atcroft", "somepassword");
+		 *
+		 * Member mem3 = new Member("Dominique", "S", "Adkins",
 		 * "555 Forest Rd Valdosta GA", "5552223333", "dsadkins",
 		 * "diffpassword");
 		 *
@@ -47,13 +47,21 @@ public class Tester {
 		 */
 
 		// Test suspend member accounts
-		// Member m = new Member(1);
 		Member m = new Member(1);
-		//m.activateAccount();
-		//System.out.println(m.isActive());
+		// Member m = mem1;
+		// m.activateAccount();
+		// System.out.println(m.isActive());
 
-		Book book1 = new Book(1);
-		m.checkOut(book1);
+		//Book book1 = new Book(1);
+		//m.checkOut(book1);
+
+		//Book book2 = new Book(2);
+		//m.checkOut(book2);
+
+		Book book3 = new Book(3);
+		m.checkOut(book3);
+		m.returnBook(book3);
+
 	}
 
 }
