@@ -1,11 +1,8 @@
-import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Member {
 	private String firstName, lastName, middleInitial;
@@ -209,7 +206,6 @@ public class Member {
 
 	public void returnBook(Book book) {
 		try {
-			System.out.println("checked out: " + checkedOut.size());//test line
 			checkedOut.remove(book);
 			Connection con = Database.getConnection();
 			String query = "UPDATE BOOKS\n" + "SET Checked_Out = FALSE, MemberID = NULL, Date_Out = NULL\n"
@@ -222,7 +218,6 @@ public class Member {
 
 			ps.close();
 			con.close();
-			System.out.println("checked out: " + checkedOut.size());//test line
 		} catch (SQLException se) {
 			se.printStackTrace();
 		}
@@ -236,8 +231,24 @@ public class Member {
 	public void placeHold(BookDetail bookDetail) {
 		Book book = bookDetail.getAvailableCopy();
 		if (book != null) {
+			try {
+				Connection con = Database.getConnection();
+				String query = "UPDATE BOOKS\n" + "SET On_Hold = TRUE, MemberID = ?\n"
+						+ "WHERE Checked_Out = FALSE AND ID = ?;";
 
+				// create the prepared statement
+				PreparedStatement ps = con.prepareStatement(query);
+				ps.setInt(1, this.memberID);
+				ps.setInt(2, book.getId());
+				ps.executeUpdate();
+
+				ps.close();
+				con.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
 		}
+
 	}
 
 	public void reportLost(Book book) {
