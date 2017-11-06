@@ -181,7 +181,7 @@ public class Member {
 	public void checkOut(Book book) {
 		// check to see if member account is not suspended
 		if (isActive()) {
-			if (checkedOut.size() < 10) {
+			if (getCheckedOut().size() < 10) {
 				checkedOut.add(book);
 
 				try {
