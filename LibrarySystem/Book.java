@@ -4,10 +4,8 @@ public class Book {
 	int id;
 	String isbn;
 
-	public Book(int id, String isbn) {
-
+	public Book(int id) {
 		this.id = id;
-		this.isbn = isbn;
 	}
 
 	public int getId() {
@@ -16,5 +14,12 @@ public class Book {
 
 	public String getIsbn() {
 		return isbn;
+	}
+
+	public boolean equals(Object o){
+		if(((Book)o).getId() == (this.id))
+			return true;
+		else
+			return false;
 	}
 }

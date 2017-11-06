@@ -12,17 +12,15 @@ public class BookDetail {
 
 	public BookDetail(String isbn) {
 		this.isbn = isbn;
-		//Pulls book data from database
+		// Pulls book data from database
 		// Query to get the title and year from BOOK_DETAILS table
 		Connection con = Database.getConnection();
-		String query = "SELECT Title, Year\n" +
-				"FROM BOOK_DETAILS BD\n" +
-				"WHERE BD.ISBN='" + this.isbn + "';";
+		String query = "SELECT Title, Year\n" + "FROM BOOK_DETAILS BD\n" + "WHERE BD.ISBN='" + this.isbn + "';";
 		try {
-			//create the prepared statement
+			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				this.title = rs.getString("Title");
 				this.year = rs.getString("Year");
 			}
@@ -30,12 +28,12 @@ public class BookDetail {
 			rs.close();
 			ps.close();
 			con.close();
-		}
-		catch (SQLException se) {
+		} catch (SQLException se) {
 			se.printStackTrace();
 		}
 
-		//Runs queries to get the count, authors, and keywords from the database
+		// Runs queries to get the count, authors, and keywords from the
+		// database
 		extractCount();
 		extractAuthors();
 		extractKeywords();
@@ -72,51 +70,45 @@ public class BookDetail {
 
 	private void extractCount() {
 		Connection con = Database.getConnection();
-		String query = "SELECT COUNT(ID) AS 'count'" +
-				"FROM BOOKS B\n" +
-				"WHERE B.ISBN='" + this.isbn + "';";
+		String query = "SELECT COUNT(ID) AS 'count'" + "FROM BOOKS B\n" + "WHERE B.ISBN='" + this.isbn + "';";
 		try {
-			//create the prepared statement
+			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				this.count = rs.getInt("count");
 
-			}
-			else {
+			} else {
 				this.count = 0;
 			}
 
 			rs.close();
 			ps.close();
 			con.close();
-		}
-		catch (SQLException se) {
+		} catch (SQLException se) {
 			se.printStackTrace();
 		}
 	}
 
 	public String toString() {
-		String retval ="ISBN: " + isbn + "\n";
+		String retval = "ISBN: " + isbn + "\n";
 		retval += "Title: " + title + "\n";
 		retval += "No. of Copies: " + count + "\n";
 		retval += "Author(s): ";
 
-		for(int i=0; i<authors.size(); i++) {
-			if(i< authors.size() -1) {
+		for (int i = 0; i < authors.size(); i++) {
+			if (i < authors.size() - 1) {
 				retval += authors.get(i) + ", ";
-			}
-			else {
+			} else {
 				retval += authors.get(i) + "\n";
 			}
 		}
 
 		retval += "KeyWords(s): ";
-		for(int i=0; i<keywords.size(); i++) {
-			if(i< keywords.size() -1) {
+		for (int i = 0; i < keywords.size(); i++) {
+			if (i < keywords.size() - 1) {
 				retval += keywords.get(i) + ", ";
-			}
-			else {
+			} else {
 				retval += keywords.get(i) + "\n";
 			}
 		}
@@ -128,16 +120,14 @@ public class BookDetail {
 		ArrayList<String> authors = new ArrayList<String>();
 
 		Connection con = Database.getConnection();
-		String query = "SELECT AName\n" +
-				       "FROM AUTHORS A\n" +
-				       "WHERE A.ISBN='" + this.isbn + "'";
+		String query = "SELECT AName\n" + "FROM AUTHORS A\n" + "WHERE A.ISBN='" + this.isbn + "'";
 
 		try {
-			//create the prepared statement
+			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
 
-			while(rs.next()) {
+			while (rs.next()) {
 				authors.add(rs.getString("AName"));
 			}
 			this.authors = authors;
@@ -145,8 +135,7 @@ public class BookDetail {
 			rs.close();
 			ps.close();
 			con.close();
-		}
-		catch (SQLException se) {
+		} catch (SQLException se) {
 			se.printStackTrace();
 		}
 	}
@@ -155,24 +144,21 @@ public class BookDetail {
 		ArrayList<String> keywords = new ArrayList<>();
 
 		Connection con = Database.getConnection();
-		String query = "SELECT keyword\n" +
-				       "FROM KEYWORDS K\n" +
-				       "WHERE K.ISBN='" + this.isbn + "'";
+		String query = "SELECT keyword\n" + "FROM KEYWORDS K\n" + "WHERE K.ISBN='" + this.isbn + "'";
 
 		try {
-			//create the prepared statement
+			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
 
-			while(rs.next()) {
+			while (rs.next()) {
 				keywords.add(rs.getString("keyword"));
 			}
 			this.keywords = keywords;
 			rs.close();
 			ps.close();
 			con.close();
-		}
-		catch (SQLException se) {
+		} catch (SQLException se) {
 			se.printStackTrace();
 		}
 	}

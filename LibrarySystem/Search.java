@@ -10,15 +10,13 @@ public class Search {
 		ArrayList<BookDetail> bookDetails = new ArrayList<>();
 
 		Connection con = Database.getConnection();
-		String query = "SELECT ISBN\n" +
-				       "FROM BOOK_DETAILS BD\n" +
-				       "WHERE BD.Title LIKE '%" + title + "%'";
+		String query = "SELECT ISBN\n" + "FROM BOOK_DETAILS BD\n" + "WHERE BD.Title LIKE '%" + title + "%'";
 
 		try {
-			//create the prepared statement
+			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 
 				bookDetails.add(new BookDetail(rs.getString("ISBN")));
 			}
@@ -26,8 +24,7 @@ public class Search {
 			rs.close();
 			ps.close();
 			con.close();
-		}
-		catch (SQLException se) {
+		} catch (SQLException se) {
 			se.printStackTrace();
 		}
 		return bookDetails;
@@ -37,22 +34,19 @@ public class Search {
 		ArrayList<BookDetail> bookDetails = new ArrayList<>();
 
 		Connection con = Database.getConnection();
-		String query = "SELECT ISBN\n" +
-				"FROM BOOK_DETAILS BD\n" +
-				"WHERE BD.ISBN='" + isbn + "'";
+		String query = "SELECT ISBN\n" + "FROM BOOK_DETAILS BD\n" + "WHERE BD.ISBN='" + isbn + "'";
 
 		try {
-			//create the prepared statement
+			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				bookDetails.add(new BookDetail(rs.getString("ISBN")));
 			}
 
 			rs.close();
 			ps.close();
-		}
-		catch (SQLException se) {
+		} catch (SQLException se) {
 			se.printStackTrace();
 		}
 		return bookDetails;
@@ -62,15 +56,13 @@ public class Search {
 		ArrayList<BookDetail> bookDetails = new ArrayList<>();
 
 		Connection con = Database.getConnection();
-		String query = "SELECT ISBN\n" +
-				"FROM BOOK_DETAILS BD\n" +
-				"WHERE BD.Year LIKE '%" + year + "%'";
+		String query = "SELECT ISBN\n" + "FROM BOOK_DETAILS BD\n" + "WHERE BD.Year LIKE '%" + year + "%'";
 
 		try {
-			//create the prepared statement
+			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 
 				bookDetails.add(new BookDetail(rs.getString("ISBN")));
 			}
@@ -78,8 +70,7 @@ public class Search {
 			rs.close();
 			ps.close();
 			con.close();
-		}
-		catch (SQLException se) {
+		} catch (SQLException se) {
 			se.printStackTrace();
 		}
 		return bookDetails;
