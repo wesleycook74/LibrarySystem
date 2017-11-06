@@ -59,8 +59,14 @@ public class Tester {
 		//m.checkOut(book2);
 
 //		m.placeHold(new BookDetail("0307346617"));
-		Book book3 = new Book(3);
-		m.checkOut(book3);
+//		Book book3 = new Book(3);
+//		m.checkOut(book3);
+
+		Book book4 = new Book(11);
+		m.checkOut(book4);
+
+		Member m2 = new Member(2);
+		m2.placeHold(new BookDetail("9781451697216"));
 
 
 
