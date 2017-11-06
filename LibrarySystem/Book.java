@@ -6,6 +6,7 @@ public class Book {
 
 	public Book(int id) {
 		this.id = id;
+
 	}
 
 	public int getId() {
@@ -14,6 +15,10 @@ public class Book {
 
 	public String getIsbn() {
 		return isbn;
+	}
+
+	public boolean isAvailable() {
+		return true;
 	}
 
 	public boolean equals(Object o){

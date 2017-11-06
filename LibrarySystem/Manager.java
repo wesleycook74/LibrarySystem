@@ -21,14 +21,6 @@ public class Manager extends Associate {
 
 	}
 
-	public void suspendAccount() {
-
-	}
-
-	public void activateAccount() {
-
-	}
-
 	public void assessFines() {
 
 	}

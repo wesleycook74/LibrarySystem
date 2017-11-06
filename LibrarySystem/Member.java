@@ -234,7 +234,10 @@ public class Member {
 	}
 
 	public void placeHold(BookDetail bookDetail) {
+		Book book = bookDetail.getAvailableCopy();
+		if (book != null) {
 
+		}
 	}
 
 	public void reportLost(Book book) {
