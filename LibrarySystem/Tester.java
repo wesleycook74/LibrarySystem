@@ -47,7 +47,7 @@ public class Tester {
 
 
 		// Test suspend member accounts
-		Member m = new Member(1);
+		Member m = new Member(2);
 		// Member m = mem1;
 		// m.activateAccount();
 		// System.out.println(m.isActive());
@@ -58,8 +58,11 @@ public class Tester {
 		//Book book2 = new Book(2);
 		//m.checkOut(book2);
 
+//		m.placeHold(new BookDetail("0307346617"));
 		Book book3 = new Book(3);
-		m.placeHold(new BookDetail("0307346617"));
+		m.checkOut(book3);
+
+
 
 	}
 

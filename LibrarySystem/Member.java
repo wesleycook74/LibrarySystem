@@ -186,13 +186,14 @@ public class Member {
 
 				try {
 					Connection con = Database.getConnection();
-					String query = "UPDATE BOOKS\n" + "SET Checked_Out = TRUE, MemberID = ?, Date_Out = NOW()\n"
-							+ "WHERE Checked_Out = FALSE AND ID = ?;";
+					String query = "UPDATE BOOKS\n" + "SET Checked_Out = TRUE, MemberID = ?, Date_Out = NOW(), On_Hold=FALSE\n"
+							+ "WHERE ID = ? AND ((Checked_Out = FALSE AND On_Hold = FALSE) OR (MemberID = ? AND On_Hold = TRUE ));";
 
 					// create the prepared statement
 					PreparedStatement ps = con.prepareStatement(query);
 					ps.setInt(1, this.memberID);
 					ps.setInt(2, book.getId());
+					ps.setInt(3, this.memberID);
 					ps.executeUpdate();
 
 					ps.close();
