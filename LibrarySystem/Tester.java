@@ -52,24 +52,24 @@ public class Tester {
 		// m.activateAccount();
 		// System.out.println(m.isActive());
 
-		//Book book1 = new Book(1);
+		Book book1 = new Book(1);
 		//m.checkOut(book1);
 
-		//Book book2 = new Book(2);
+		Book book2 = new Book(2);
 		//m.checkOut(book2);
 
-//		m.placeHold(new BookDetail("0307346617"));
-//		Book book3 = new Book(3);
-//		m.checkOut(book3);
+		//m.placeHold(new BookDetail("0307346617"));
+		//Book book3 = new Book(3);
+		//m.checkOut(book3);
 
-		Book book4 = new Book(11);
-		m.checkOut(book4);
+		//Book book4 = new Book(11);
+		//m.checkOut(book4);
 
-		Member m2 = new Member(2);
-		m2.placeHold(new BookDetail("9781451697216"));
+		//Member m2 = new Member(2);
+		//m2.placeHold(new BookDetail("9781451697216"));
 
-
-
+		m.renewBook(book1);
+		m.renewBook(book2);
 	}
 
 }
