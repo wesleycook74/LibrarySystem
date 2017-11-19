@@ -1,0 +1,25 @@
+
+Test Case 1  		<single>
+   Book Status :  Not Checked Out
+
+
+Test Case 2  		<single>
+   Book Status :  On Hold
+
+
+Test Case 3  		<error>
+   Book Status :  Invalid
+
+
+Test Case 4  		<single>
+   Member Status :  Suspended
+
+
+Test Case 5  		<error>
+   Member Status :  Invalid
+
+
+Test Case 6  		(Key = 1.1.)
+   Book Status   :  Renewable
+   Member Status :  Good Standing
+

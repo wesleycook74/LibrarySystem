@@ -1,0 +1,21 @@
+
+Test Case 1  		<single>
+   Book Status :  On Hold
+
+
+Test Case 2  		<error>
+   Book Status :  Invalid
+
+
+Test Case 3  		<single>
+   Member Status :  Suspended General
+
+
+Test Case 4  		<error>
+   Member Status :  More than one
+
+
+Test Case 5  		(Key = 1.1.)
+   Book Status   :  Available
+   Member Status :  Good Standing
+

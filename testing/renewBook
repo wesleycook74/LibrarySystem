@@ -1,0 +1,13 @@
+
+# Book
+  Book Status:
+      Renewable.
+      Not Checked Out.		[single][property notCheckedOut]		
+      On Hold.			[single][property onHold]
+      Invalid.			[error]
+ 			
+# Member
+  Member Status:
+      Good Standing.			
+      Suspended.		[single][property suspended]
+      Invalid.			[error]

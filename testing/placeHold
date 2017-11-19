@@ -1,0 +1,11 @@
+# Book
+  Book Status:
+     	Available.
+	On Hold.	 [property onHold]
+	Invalid.	 [error]
+		
+# Member
+  Member Status:
+      Good Standing.	
+      Suspended General. [single][if !onHold ]	
+	Invalid		 [error]

@@ -64,7 +64,6 @@ public class Member {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public Member(int memID) {
@@ -102,7 +101,6 @@ public class Member {
 		} catch (SQLException se) {
 			se.printStackTrace();
 		}
-
 	}
 
 	public String getFirstName() {
@@ -272,13 +270,12 @@ public class Member {
 	}
 
 	public void reportLost(Book book) {
-
+	//to do
 	}
 
 	public void suspendAccount() {
 		String update = "UPDATE MEMBERS \n" + "SET Is_active=FALSE \n" + "WHERE MemberID=" + memberID + ";";
 		Database.runUpdate(update);
-
 	}
 
 	public void activateAccount() {
