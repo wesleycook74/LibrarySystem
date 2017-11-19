@@ -45,7 +45,7 @@ public class BookDetail {
 		Connection con = Database.getConnection();
 		String query = "SELECT ID " +
 				       "FROM BOOKS " +
-				       "WHERE ISBN=? AND Checked_out=False AND On_Hold=False";
+				       "WHERE ISBN=? AND CheckedOut=False AND OnHold=False";
 		try {
 			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);

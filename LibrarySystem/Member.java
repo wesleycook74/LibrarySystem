@@ -27,7 +27,7 @@ public class Member {
 
 		Connection con = Database.getConnection();
 
-		String query = "insert into MEMBERS (Fname, Minit, Lname, Address, PhoneNumber, Username, Password, Is_active)"
+		String query = "insert into MEMBERS (Fname, Minit, Lname, Address, PhoneNumber, Username, Password, IsActive)"
 				+ " values (?, ?, ?, ?, ?, ? ,?, ?)";
 
 		PreparedStatement ps2 = null;
@@ -74,7 +74,7 @@ public class Member {
 
 		Connection con = Database.getConnection();
 
-		String query = "SELECT MemberID, Fname, Lname, Minit, Address, PhoneNumber, Username, Password, Fines, Is_active\n"
+		String query = "SELECT MemberID, Fname, Lname, Minit, Address, PhoneNumber, Username, Password, Fines, IsActive\n"
 				+ "FROM MEMBERS \n" + "WHERE MEMBERS.MemberID =" + memID + ";";
 
 		PreparedStatement ps2 = null;
@@ -135,7 +135,7 @@ public class Member {
 		checkedOut = new ArrayList<Book>();
 
 		Connection con = Database.getConnection();
-		String query = "SELECT ID\n" + "FROM BOOKS\n" + "WHERE MemberID = " + memberID;
+		String query = "SELECT ID\n" + "FROM BOOKS\n" + "WHERE CheckedOutMemberID = " + memberID;
 
 		try {
 			// create the prepared statement
@@ -184,8 +184,8 @@ public class Member {
 
 				try {
 					Connection con = Database.getConnection();
-					String query = "UPDATE BOOKS\n" + "SET Checked_Out = TRUE, MemberID = ?, Date_Out = NOW(), On_Hold=FALSE\n"
-							+ "WHERE ID = ? AND ((Checked_Out = FALSE AND On_Hold = FALSE) OR (MemberID = ? AND On_Hold = TRUE ));";
+					String query = "UPDATE BOOKS\n" + "SET CheckedOut = TRUE, CheckedOutMemberID = ?, DateOut = NOW(), OnHold=FALSE, OnHoldMemberID = NULL\n"
+							+ "WHERE ID = ? AND ((CheckedOut = FALSE AND OnHold = FALSE) OR (OnHoldMemberID = ? AND OnHold = TRUE ));";
 
 					// create the prepared statement
 					PreparedStatement ps = con.prepareStatement(query);
@@ -207,8 +207,8 @@ public class Member {
 		try {
 			checkedOut.remove(book);
 			Connection con = Database.getConnection();
-			String query = "UPDATE BOOKS\n" + "SET Checked_Out = FALSE, MemberID = NULL, Date_Out = NULL\n"
-					+ "WHERE Checked_Out = TRUE AND ID = ?;";
+			String query = "UPDATE BOOKS\n" + "SET CheckedOut = FALSE, CheckedOutMemberID = NULL, DateOut = NULL\n"
+					+ "WHERE CheckedOut = TRUE AND ID = ?;";
 
 			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
@@ -227,13 +227,12 @@ public class Member {
 	//to do
 	}
 
-	public void placeHold(BookDetail bookDetail) {
-		Book book = bookDetail.getAvailableCopy();
+	public void placeHold(Book book) {
 		if (book != null) {
 			try {
 				Connection con = Database.getConnection();
-				String query = "UPDATE BOOKS\n" + "SET On_Hold = TRUE, MemberID = ?\n"
-						+ "WHERE Checked_Out = FALSE AND ID = ?;";
+				String query = "UPDATE BOOKS\n" + "SET OnHold = TRUE, OnHoldMemberID = ?\n"
+						+ "WHERE ID = ?;";
 
 				// create the prepared statement
 				PreparedStatement ps = con.prepareStatement(query);
@@ -255,12 +254,12 @@ public class Member {
 	}
 
 	public void suspendAccount() {
-		String update = "UPDATE MEMBERS \n" + "SET Is_active=FALSE \n" + "WHERE MemberID=" + memberID + ";";
+		String update = "UPDATE MEMBERS \n" + "SET IsActive=FALSE \n" + "WHERE MemberID=" + memberID + ";";
 		Database.runUpdate(update);
 	}
 
 	public void activateAccount() {
-		String update = "UPDATE MEMBERS \n" + "SET Is_active=TRUE \n" + "WHERE MemberID=" + memberID + ";";
+		String update = "UPDATE MEMBERS \n" + "SET IsActive=TRUE \n" + "WHERE MemberID=" + memberID + ";";
 		Database.runUpdate(update);
 	}
 
@@ -273,13 +272,13 @@ public class Member {
 	// returns true if the member account is valid and is not suspended
 	public boolean isActive() {
 		if (isValid()) {
-			String query = "SELECT Is_active\n" + "FROM MEMBERS M\n" + "WHERE M.MemberID=" + this.memberID;
+			String query = "SELECT IsActive\n" + "FROM MEMBERS M\n" + "WHERE M.MemberID=" + this.memberID;
 			Connection con = Database.getConnection();
 			try {
 				PreparedStatement ps = con.prepareStatement(query);
 				ResultSet rs = ps.executeQuery();
 				if (rs.next()) {
-					return rs.getBoolean("Is_active");
+					return rs.getBoolean("IsActive");
 				}
 				rs.close();
 				ps.close();
