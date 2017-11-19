@@ -179,12 +179,14 @@ public class Member {
 	public void checkOut(Book book) {
 		// check to see if member account is not suspended
 		if (isActive()) {
+			// check to see if books checked out is less than 10
 			if (getCheckedOut().size() < 10) {
 				checkedOut.add(book);
 
 				try {
 					Connection con = Database.getConnection();
-					String query = "UPDATE BOOKS\n" + "SET Checked_Out = TRUE, MemberID = ?, Date_Out = NOW(), On_Hold=FALSE\n"
+					String query = "UPDATE BOOKS\n"
+							+ "SET Checked_Out = TRUE, MemberID = ?, Date_Out = NOW(), On_Hold=FALSE\n"
 							+ "WHERE ID = ? AND ((Checked_Out = FALSE AND On_Hold = FALSE) OR (MemberID = ? AND On_Hold = TRUE ));";
 
 					// create the prepared statement
@@ -222,9 +224,26 @@ public class Member {
 		}
 	}
 
-
 	public void renewBook(Book book) {
-	//to do
+		// check to see if member account is not suspended
+		if (isActive()) {
+			try {
+				Connection con = Database.getConnection();
+				String query = "UPDATE BOOKS\n" + "SET Date_Out = NOW()"
+						+ "WHERE ID = ? AND MemberID = ? AND Checked_Out = TRUE;";
+
+				// create the prepared statement
+				PreparedStatement ps = con.prepareStatement(query);
+				ps.setInt(1, book.getId());
+				ps.setInt(2, this.memberID);
+				ps.executeUpdate();
+
+				ps.close();
+				con.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
 	}
 
 	public void placeHold(BookDetail bookDetail) {
