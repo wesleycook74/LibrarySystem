@@ -24,12 +24,9 @@ public class Member {
 		this.password = password;
 		checkedOut = new ArrayList<Book>();
 		getCheckedOut();
-
 		Connection con = Database.getConnection();
-
 		String query = "insert into MEMBERS (Fname, Minit, Lname, Address, PhoneNumber, Username, Password, IsActive)"
 				+ " values (?, ?, ?, ?, ?, ? ,?, ?)";
-
 		PreparedStatement ps = null;
 		try {
 			ps = con.prepareStatement(query);
@@ -41,18 +38,14 @@ public class Member {
 			ps.setString(6, userName);
 			ps.setString(7, password);
 			ps.setBoolean(8, true);
-
 			ps.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		String getmemid = "SELECT MemberID\n" + "FROM MEMBERS BD\n" + "WHERE Username = '" + userName + "'";
-
 		try {
 			PreparedStatement mid = con.prepareStatement(getmemid);
 			ResultSet rs = mid.executeQuery();
-
 			// int id = ((Integer) rs.getObject(1)).intValue();
 			// int id = Integer.parseInt(rs.getObject(1).toString());
 			while (rs.next()) {
@@ -60,29 +53,23 @@ public class Member {
 			}
 			rs.close();
 			con.close();
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public Member(int memID) {
-
 		this.memberID = memID;
 		checkedOut = new ArrayList<Book>();
 		getCheckedOut();
-
 		Connection con = Database.getConnection();
-
 		String query = "SELECT MemberID, Fname, Lname, Minit, Address, PhoneNumber, Username, Password, Fines, IsActive\n"
 				+ "FROM MEMBERS \n" + "WHERE MEMBERS.MemberID =" + memID + ";";
-
 		try {
 			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-
 				this.memberID = rs.getInt("MemberID");
 				this.firstName = rs.getString("Fname");
 				this.lastName = rs.getString("Lname");
@@ -93,7 +80,6 @@ public class Member {
 				this.password = rs.getString("Password");
 				this.fines = rs.getDouble("Fines");
 			}
-
 			rs.close();
 			ps.close();
 			con.close();
@@ -130,12 +116,18 @@ public class Member {
 		return password;
 	}
 
+	public String getAddress() {
+		return address;
+	}
+
+	public double getFines() {
+		return fines;
+	}
+
 	public ArrayList<Book> getCheckedOut() {
 		checkedOut = new ArrayList<Book>();
-
 		Connection con = Database.getConnection();
 		String query = "SELECT ID\n" + "FROM BOOKS\n" + "WHERE CheckedOutMemberID = " + memberID;
-
 		try {
 			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
@@ -149,14 +141,6 @@ public class Member {
 			se.printStackTrace();
 		}
 		return checkedOut;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public double getFines() {
-		return fines;
 	}
 
 	public void payFines(double amountpaid) {
@@ -187,14 +171,12 @@ public class Member {
 
 					String query = "UPDATE BOOKS\n" + "SET CheckedOut = TRUE, CheckedOutMemberID = ?, DateOut = NOW(), OnHold=FALSE, OnHoldMemberID = NULL\n"
 							+ "WHERE ID = ? AND CheckedOut = FALSE AND ((OnHold = FALSE) OR (OnHoldMemberID = ? AND OnHold = TRUE ));";
-
 					// create the prepared statement
 					PreparedStatement ps = con.prepareStatement(query);
 					ps.setInt(1, this.memberID);
 					ps.setInt(2, book.getId());
 					ps.setInt(3, this.memberID);
 					ps.executeUpdate();
-
 					ps.close();
 					con.close();
 				} catch (SQLException se) {
@@ -210,12 +192,10 @@ public class Member {
 			Connection con = Database.getConnection();
 			String query = "UPDATE BOOKS\n" + "SET CheckedOut = FALSE, CheckedOutMemberID = NULL, DateOut = NULL, RenewCount = 0\n"
 					+ "WHERE CheckedOut = TRUE AND ID = ?;";
-
 			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setInt(1, book.getId());
 			ps.executeUpdate();
-
 			ps.close();
 			con.close();
 		} catch (SQLException se) {
@@ -276,12 +256,10 @@ public class Member {
 				Connection con = Database.getConnection();
 				String query = "UPDATE BOOKS\n" + "SET OnHold = FALSE, OnHoldMemberID = NULL\n"
 						+ "WHERE ID = ?;";
-
 				// create the prepared statement
 				PreparedStatement ps = con.prepareStatement(query);
 				ps.setInt(1, book.getId());
 				ps.executeUpdate();
-
 				ps.close();
 				con.close();
 			} catch (SQLException se) {
@@ -304,30 +282,21 @@ public class Member {
 		Database.runUpdate(update);
 	}
 
-	// Returns true if the memberID is valid
-	public boolean isValid() {
-		// Needs to be finished
-		return true;
-	}
-
 	// returns true if the member account is valid and is not suspended
 	public boolean isActive() {
-		if (isValid()) {
-			String query = "SELECT IsActive\n" + "FROM MEMBERS M\n" + "WHERE M.MemberID=" + this.memberID;
-			Connection con = Database.getConnection();
-			try {
-				PreparedStatement ps = con.prepareStatement(query);
-				ResultSet rs = ps.executeQuery();
-				if (rs.next()) {
-					return rs.getBoolean("IsActive");
-				}
-				rs.close();
-				ps.close();
-				con.close();
-
-			} catch (SQLException e) {
-				e.printStackTrace();
+		String query = "SELECT IsActive\n" + "FROM MEMBERS M\n" + "WHERE M.MemberID=" + this.memberID;
+		Connection con = Database.getConnection();
+		try {
+			PreparedStatement ps = con.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return rs.getBoolean("IsActive");
 			}
+			rs.close();
+			ps.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		return false;
 	}
