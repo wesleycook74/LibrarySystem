@@ -1,11 +1,12 @@
 # Book
   Book Status:
      	Available.
-	On Hold.	 [property onHold]
+	On Hold.	 [error][property onHold]
+	Checked Out.	 [property checkedOut]
 	Invalid.	 [error]
 		
 # Member
   Member Status:
       Good Standing.	
-      Suspended General. [single][if !onHold ]	
+      Suspended General. [single]
 	Invalid		 [error]

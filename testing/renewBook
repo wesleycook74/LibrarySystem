@@ -1,13 +1,18 @@
 
 # Book
   Book Status:
-      Renewable.
-      Not Checked Out.		[single][property notCheckedOut]		
-      On Hold.			[single][property onHold]
+      Available.
+      On Hold.			
       Invalid.			[error]
+  Times Renewed:
+	 Less Than 2.		
+	 2 Or More.		[error]
  			
 # Member
   Member Status:
       Good Standing.			
-      Suspended.		[single][property suspended]
+      Suspended.		[single]
       Invalid.			[error]
+  Book Posession:
+      Has Book.
+      Does Not Have Book.        [error]
