@@ -2,12 +2,15 @@
 # Book
   Book Status:
       Renewable.
-      Not Checked Out.		[single][property notCheckedOut]		
+      Not Checked Out.	[error][property notCheckedOut]		
       On Hold.			[single][property onHold]
       Invalid.			[error]
+  Times Renewed:
+	 Less Than 2.		
+	 2 Or More.		[single][property tooManyRenewals]
  			
 # Member
   Member Status:
       Good Standing.			
-      Suspended.		[single][property suspended]
+      Suspended.			[single][property suspended]
       Invalid.			[error]
