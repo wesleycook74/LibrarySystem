@@ -45,7 +45,29 @@ public class BookDetail {
 		Connection con = Database.getConnection();
 		String query = "SELECT ID " +
 				       "FROM BOOKS " +
-				       "WHERE ISBN=? AND CheckedOut=False AND OnHold=False";
+				       "WHERE ISBN=? AND CheckedOut=TRUE AND OnHold=FALSE";
+		try {
+			// create the prepared statement
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setString(1, this.isbn);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				b = new Book(rs.getInt("ID"));
+			}
+
+			con.close();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+		return b;
+	}
+
+	public Book getCheckedOutCopy() {
+		Book b = null;
+		Connection con = Database.getConnection();
+		String query = "SELECT ID " +
+				       "FROM BOOKS " +
+				       "WHERE ISBN=? AND CheckedOut=TRUE AND OnHold=FALSE";
 		try {
 			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
