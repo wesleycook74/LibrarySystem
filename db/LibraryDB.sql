@@ -10,7 +10,7 @@ CREATE TABLE MEMBERS (
     Username VARCHAR(15) UNIQUE,
     Password VARCHAR(15),
     Fines DECIMAL(5),
-    Is_active BOOLEAN NOT NULL,
+    IsActive BOOLEAN NOT NULL,
     PRIMARY KEY (MemberID)
 );
 
@@ -32,14 +32,18 @@ CREATE TABLE BOOK_DETAILS (
 CREATE TABLE BOOKS (
     ID INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
     ISBN VARCHAR(13) NOT NULL,
-    Checked_Out BOOLEAN,
-    On_Hold BOOLEAN,
-    Date_Out DATE,
-    MemberID INT(4) UNSIGNED,
+    CheckedOut BOOLEAN,
+    OnHold BOOLEAN,
+    DateOut DATE,
+    CheckedOutMemberID INT(4) UNSIGNED,
+    OnHoldMemberID INT(4) UNSIGNED,
+    RenewCount INT(1),
     PRIMARY KEY (ID),
     FOREIGN KEY (ISBN)
         REFERENCES BOOK_DETAILS (ISBN),
-    FOREIGN KEY (MemberID)
+    FOREIGN KEY (CheckedOutMemberID)
+        REFERENCES MEMBERS (MemberID),
+    FOREIGN KEY (OnHoldMemberID)
         REFERENCES MEMBERS (MemberID)
 );
 
