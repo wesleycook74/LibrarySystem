@@ -24,42 +24,18 @@ public class BookDetail {
 				this.title = rs.getString("Title");
 				this.year = rs.getString("Year");
 			}
-
 			rs.close();
 			ps.close();
 			con.close();
 		} catch (SQLException se) {
 			se.printStackTrace();
 		}
-
 		// Runs queries to get the count, authors, and keywords from the
 		// database
 		extractCount();
 		extractAuthors();
 		extractKeywords();
 
-	}
-
-	public Book getAvailableCopy() {
-		Book b = null;
-		Connection con = Database.getConnection();
-		String query = "SELECT ID " +
-				       "FROM BOOKS " +
-				       "WHERE ISBN=? AND CheckedOut=False AND OnHold=False";
-		try {
-			// create the prepared statement
-			PreparedStatement ps = con.prepareStatement(query);
-			ps.setString(1, this.isbn);
-			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
-				b = new Book(rs.getInt("ID"));
-			}
-
-			con.close();
-		} catch (SQLException se) {
-			se.printStackTrace();
-		}
-		return b;
 	}
 
 	public String getIsbn() {
@@ -86,6 +62,48 @@ public class BookDetail {
 		return keywords;
 	}
 
+	public Book getAvailableCopy() {
+		Book b = null;
+		Connection con = Database.getConnection();
+		String query = "SELECT ID " +
+				       "FROM BOOKS " +
+				       "WHERE ISBN=? AND CheckedOut=FALSE AND OnHold=FALSE";
+		try {
+			// create the prepared statement
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setString(1, this.isbn);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				b = new Book(rs.getInt("ID"));
+			}
+			con.close();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+		return b;
+	}
+
+	public Book getCheckedOutCopy() {
+		Book b = null;
+		Connection con = Database.getConnection();
+		String query = "SELECT ID " +
+				       "FROM BOOKS " +
+				       "WHERE ISBN=? AND CheckedOut=TRUE AND OnHold=FALSE";
+		try {
+			// create the prepared statement
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setString(1, this.isbn);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				b = new Book(rs.getInt("ID"));
+			}
+			con.close();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+		return b;
+	}
+
 	private void extractCount() {
 		Connection con = Database.getConnection();
 		String query = "SELECT COUNT(ID) AS 'count'" + "FROM BOOKS B\n" + "WHERE B.ISBN='" + this.isbn + "';";
@@ -95,11 +113,49 @@ public class BookDetail {
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				this.count = rs.getInt("count");
-
 			} else {
 				this.count = 0;
 			}
+			rs.close();
+			ps.close();
+			con.close();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+	}
 
+	private void extractAuthors() {
+		ArrayList<String> authors = new ArrayList<String>();
+		Connection con = Database.getConnection();
+		String query = "SELECT AName\n" + "FROM AUTHORS A\n" + "WHERE A.ISBN='" + this.isbn + "'";
+		try {
+			// create the prepared statement
+			PreparedStatement ps = con.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				authors.add(rs.getString("AName"));
+			}
+			this.authors = authors;
+			rs.close();
+			ps.close();
+			con.close();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+	}
+
+	private void extractKeywords() {
+		ArrayList<String> keywords = new ArrayList<>();
+		Connection con = Database.getConnection();
+		String query = "SELECT keyword\n" + "FROM KEYWORDS K\n" + "WHERE K.ISBN='" + this.isbn + "'";
+		try {
+			// create the prepared statement
+			PreparedStatement ps = con.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				keywords.add(rs.getString("keyword"));
+			}
+			this.keywords = keywords;
 			rs.close();
 			ps.close();
 			con.close();
@@ -132,52 +188,5 @@ public class BookDetail {
 		}
 		retval += "Year: " + year + "\n";
 		return retval;
-	}
-
-	private void extractAuthors() {
-		ArrayList<String> authors = new ArrayList<String>();
-
-		Connection con = Database.getConnection();
-		String query = "SELECT AName\n" + "FROM AUTHORS A\n" + "WHERE A.ISBN='" + this.isbn + "'";
-
-		try {
-			// create the prepared statement
-			PreparedStatement ps = con.prepareStatement(query);
-			ResultSet rs = ps.executeQuery();
-
-			while (rs.next()) {
-				authors.add(rs.getString("AName"));
-			}
-			this.authors = authors;
-
-			rs.close();
-			ps.close();
-			con.close();
-		} catch (SQLException se) {
-			se.printStackTrace();
-		}
-	}
-
-	private void extractKeywords() {
-		ArrayList<String> keywords = new ArrayList<>();
-
-		Connection con = Database.getConnection();
-		String query = "SELECT keyword\n" + "FROM KEYWORDS K\n" + "WHERE K.ISBN='" + this.isbn + "'";
-
-		try {
-			// create the prepared statement
-			PreparedStatement ps = con.prepareStatement(query);
-			ResultSet rs = ps.executeQuery();
-
-			while (rs.next()) {
-				keywords.add(rs.getString("keyword"));
-			}
-			this.keywords = keywords;
-			rs.close();
-			ps.close();
-			con.close();
-		} catch (SQLException se) {
-			se.printStackTrace();
-		}
 	}
 }
