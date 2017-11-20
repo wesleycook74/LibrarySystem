@@ -13,21 +13,6 @@ public class Member {
 	private String address;
 	private double fines;
 
-	public Member(String firstName, String middleInitial, String lastName, String address, String phoneNumber,
-			String userName, String password) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.middleInitial = middleInitial;
-		this.address = address;
-		this.phoneNumber = phoneNumber;
-		this.userName = userName;
-		this.password = password;
-		checkedOut = new ArrayList<Book>();
-		getCheckedOut();
-
-
-	}
-
 	public Member(int memID) {
 
 		this.memberID = memID;
@@ -38,6 +23,42 @@ public class Member {
 
 		String query = "SELECT MemberID, Fname, Lname, Minit, Address, PhoneNumber, Username, Password, Fines, Is_active\n"
 				+ "FROM MEMBERS \n" + "WHERE MEMBERS.MemberID =" + memID + ";";
+
+		PreparedStatement ps2 = null;
+		try {
+			// create the prepared statement
+			PreparedStatement ps = con.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+
+				this.memberID = rs.getInt("MemberID");
+				this.firstName = rs.getString("Fname");
+				this.lastName = rs.getString("Lname");
+				this.middleInitial = rs.getString("Minit");
+				this.address = rs.getString("Address");
+				this.phoneNumber = rs.getString("PhoneNumber");
+				this.userName = rs.getString("Username");
+				this.password = rs.getString("Password");
+				this.fines = rs.getDouble("Fines");
+			}
+
+			rs.close();
+			ps.close();
+			con.close();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+	}
+
+	public Member(String username)
+	{
+		checkedOut = new ArrayList<Book>();
+		getCheckedOut();
+
+		Connection con = Database.getConnection();
+
+		String query = "SELECT MemberID, Fname, Lname, Minit, Address, PhoneNumber, Username, Password, Fines, Is_active\n"
+				+ "FROM MEMBERS \n" + "WHERE MEMBERS.Username =" + username + ";";
 
 		PreparedStatement ps2 = null;
 		try {
