@@ -15,34 +15,16 @@ public class Member {
 
 	public Member(int memID) {
 
-		checkedOut = new ArrayList<Book>();
 		getCheckedOut();
 		Connection con = Database.getConnection();
 
-		String query = "insert into MEMBERS (Fname, Minit, Lname, Address, PhoneNumber, Username, Password, IsActive)"
-				+ " values (?, ?, ?, ?, ?, ? ,?, ?)";
-		PreparedStatement ps = null;
+		String query = "SELECT MemberID, Fname, Lname, Minit, Address, PhoneNumber, Username, Password, Fines, IsActive\n"
+				+ "FROM MEMBERS \n" + "WHERE MEMBERS.username =" + username + ";";
 		try {
-			ps = con.prepareStatement(query);
-			ps.setString(1, firstName);
-			ps.setString(2, middleInitial);
-			ps.setString(3, lastName);
-			ps.setString(4, address);
-			ps.setString(5, phoneNumber);
-			ps.setString(6, userName);
-			ps.setString(7, password);
-			ps.setBoolean(8, true);
-			ps.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		String getmemid = "SELECT MemberID\n" + "FROM MEMBERS BD\n" + "WHERE Username = '" + userName + "'";
-		try {
-			PreparedStatement mid = con.prepareStatement(getmemid);
-			ResultSet rs = mid.executeQuery();
-			// int id = ((Integer) rs.getObject(1)).intValue();
-			// int id = Integer.parseInt(rs.getObject(1).toString());
-			while (rs.next()) {
+			// create the prepared statement
+			PreparedStatement ps = con.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
 				this.memberID = rs.getInt("MemberID");
 				this.firstName = rs.getString("Fname");
 				this.lastName = rs.getString("Lname");
@@ -53,7 +35,6 @@ public class Member {
 				this.password = rs.getString("Password");
 				this.fines = rs.getDouble("Fines");
 			}
-
 			rs.close();
 			ps.close();
 			con.close();

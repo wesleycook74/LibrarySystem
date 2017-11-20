@@ -11,6 +11,7 @@ CREATE TABLE MEMBERS (
     Password VARCHAR(15),
     Fines DECIMAL(5),
     IsActive BOOLEAN NOT NULL,
+    MemberLevel INT(1) DEFAULT (0), # 0 -> member, 1 -> associate, 2 -> manager
     PRIMARY KEY (MemberID)
 );
 
