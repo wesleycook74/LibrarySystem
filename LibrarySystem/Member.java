@@ -25,45 +25,7 @@ public class Member {
 		checkedOut = new ArrayList<Book>();
 		getCheckedOut();
 
-		Connection con = Database.getConnection();
 
-		String query = "insert into MEMBERS (Fname, Minit, Lname, Address, PhoneNumber, Username, Password, Is_active)"
-				+ " values (?, ?, ?, ?, ?, ? ,?, ?)";
-
-		PreparedStatement ps2 = null;
-		try {
-			ps2 = con.prepareStatement(query);
-			ps2.setString(1, firstName);
-			ps2.setString(2, middleInitial);
-			ps2.setString(3, lastName);
-			ps2.setString(4, address);
-			ps2.setString(5, phoneNumber);
-			ps2.setString(6, userName);
-			ps2.setString(7, password);
-			ps2.setBoolean(8, true);
-
-			ps2.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		String getmemid = "SELECT MemberID\n" + "FROM MEMBERS BD\n" + "WHERE Username = '" + userName + "'";
-
-		try {
-			PreparedStatement mid = con.prepareStatement(getmemid);
-			ResultSet rs = mid.executeQuery();
-
-			// int id = ((Integer) rs.getObject(1)).intValue();
-			// int id = Integer.parseInt(rs.getObject(1).toString());
-			while (rs.next()) {
-				this.memberID = rs.getInt("MemberID");
-			}
-			rs.close();
-			con.close();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public Member(int memID) {
@@ -102,6 +64,8 @@ public class Member {
 			se.printStackTrace();
 		}
 	}
+
+
 
 	public String getFirstName() {
 		return firstName;

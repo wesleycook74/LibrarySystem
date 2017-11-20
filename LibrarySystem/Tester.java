@@ -13,6 +13,19 @@ public class Tester {
 
 	public static void main(String[] args) {
 
+		// Testing add members from associate
+		Associate associate3 = new Associate("test3fn", "I", "test3ln",
+				 "333 test Road Valdosta GA", "3333333333", "test3",
+				 "test3pw");
+
+
+		Member mem = associate3.createMember("Test4fn", "A", "Kimtest4", "444 Test  thing Nashville GA", "444444449", "testing4", "testingpasswgord4");
+		//associate2.sendmembertoDB(mem);
+
+		System.out.println("done");
+
+
+
 //		 // Testing add members
 //		 Member mem1 = new Member("Chloe", "A", "Kimble",
 //				 "1500 N Patterson St Valdosta GA", "123456789",
@@ -47,7 +60,7 @@ public class Tester {
 
 
 		// Test suspend member accounts
-		Member m = new Member(1);
+		//Member m = new Member(1);
 		// Member m = mem1;
 		// m.activateAccount();
 		// System.out.println(m.isActive());
@@ -58,12 +71,16 @@ public class Tester {
 		Book book2 = new Book(2);
 		//m.checkOut(book2);
 
-		//m.placeHold(new BookDetail("0307346617"));
-		//Book book3 = new Book(3);
-		//m.checkOut(book3);
+//		m.placeHold(new BookDetail("0307346617"));
+//		Book book3 = new Book(3);
+//		m.checkOut(book3);
+/*
+		Book book4 = new Book(11);
+		m.checkOut(book4);
 
-		//Book book4 = new Book(11);
-		//m.checkOut(book4);
+		Member m2 = new Member(2);
+		m2.placeHold(new BookDetail("9781451697216"));
+*/
 
 		//Member m2 = new Member(2);
 		//m2.placeHold(new BookDetail("9781451697216"));
