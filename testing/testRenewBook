@@ -1,25 +1,34 @@
 
-Test Case 1  		<single>
-   Book Status :  Not Checked Out
-
-
-Test Case 2  		<single>
-   Book Status :  On Hold
-
-
-Test Case 3  		<error>
+Test Case 1  		<error>
    Book Status :  Invalid
 
 
-Test Case 4  		<single>
+Test Case 2  		<error>
+   Times Renewed :  2 Or More
+
+
+Test Case 3  		<single>
    Member Status :  Suspended
 
 
-Test Case 5  		<error>
+Test Case 4  		<error>
    Member Status :  Invalid
 
 
-Test Case 6  		(Key = 1.1.)
-   Book Status   :  Renewable
-   Member Status :  Good Standing
+Test Case 5  		<error>
+   Book Posession :  Does Not Have Book
+
+
+Test Case 6  		(Key = 1.1.1.1.)
+   Book Status    :  Available
+   Times Renewed  :  Less Than 2
+   Member Status  :  Good Standing
+   Book Posession :  Has Book
+
+
+Test Case 7  		(Key = 2.1.1.1.)
+   Book Status    :  On Hold
+   Times Renewed  :  Less Than 2
+   Member Status  :  Good Standing
+   Book Posession :  Has Book
 

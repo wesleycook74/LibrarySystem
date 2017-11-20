@@ -15,22 +15,34 @@ public class Member {
 
 	public Member(int memID) {
 
-		this.memberID = memID;
 		checkedOut = new ArrayList<Book>();
 		getCheckedOut();
-
 		Connection con = Database.getConnection();
 
-		String query = "SELECT MemberID, Fname, Lname, Minit, Address, PhoneNumber, Username, Password, Fines, Is_active\n"
-				+ "FROM MEMBERS \n" + "WHERE MEMBERS.MemberID =" + memID + ";";
-
-		PreparedStatement ps2 = null;
+		String query = "insert into MEMBERS (Fname, Minit, Lname, Address, PhoneNumber, Username, Password, IsActive)"
+				+ " values (?, ?, ?, ?, ?, ? ,?, ?)";
+		PreparedStatement ps = null;
 		try {
-			// create the prepared statement
-			PreparedStatement ps = con.prepareStatement(query);
-			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
-
+			ps = con.prepareStatement(query);
+			ps.setString(1, firstName);
+			ps.setString(2, middleInitial);
+			ps.setString(3, lastName);
+			ps.setString(4, address);
+			ps.setString(5, phoneNumber);
+			ps.setString(6, userName);
+			ps.setString(7, password);
+			ps.setBoolean(8, true);
+			ps.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		String getmemid = "SELECT MemberID\n" + "FROM MEMBERS BD\n" + "WHERE Username = '" + userName + "'";
+		try {
+			PreparedStatement mid = con.prepareStatement(getmemid);
+			ResultSet rs = mid.executeQuery();
+			// int id = ((Integer) rs.getObject(1)).intValue();
+			// int id = Integer.parseInt(rs.getObject(1).toString());
+			while (rs.next()) {
 				this.memberID = rs.getInt("MemberID");
 				this.firstName = rs.getString("Fname");
 				this.lastName = rs.getString("Lname");
@@ -52,21 +64,16 @@ public class Member {
 
 	public Member(String username)
 	{
-		checkedOut = new ArrayList<Book>();
 		getCheckedOut();
-
 		Connection con = Database.getConnection();
 
-		String query = "SELECT MemberID, Fname, Lname, Minit, Address, PhoneNumber, Username, Password, Fines, Is_active\n"
-				+ "FROM MEMBERS \n" + "WHERE MEMBERS.Username =" + username + ";";
-
-		PreparedStatement ps2 = null;
+		String query = "SELECT MemberID, Fname, Lname, Minit, Address, PhoneNumber, Username, Password, Fines, IsActive\n"
+				+ "FROM MEMBERS \n" + "WHERE MEMBERS.username =" + username + ";";
 		try {
 			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-
 				this.memberID = rs.getInt("MemberID");
 				this.firstName = rs.getString("Fname");
 				this.lastName = rs.getString("Lname");
@@ -77,7 +84,6 @@ public class Member {
 				this.password = rs.getString("Password");
 				this.fines = rs.getDouble("Fines");
 			}
-
 			rs.close();
 			ps.close();
 			con.close();
@@ -116,12 +122,18 @@ public class Member {
 		return password;
 	}
 
+	public String getAddress() {
+		return address;
+	}
+
+	public double getFines() {
+		return fines;
+	}
+
 	public ArrayList<Book> getCheckedOut() {
 		checkedOut = new ArrayList<Book>();
-
 		Connection con = Database.getConnection();
-		String query = "SELECT ID\n" + "FROM BOOKS\n" + "WHERE MemberID = " + memberID;
-
+		String query = "SELECT ID\n" + "FROM BOOKS\n" + "WHERE CheckedOutMemberID = " + memberID;
 		try {
 			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
@@ -135,14 +147,6 @@ public class Member {
 			se.printStackTrace();
 		}
 		return checkedOut;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public double getFines() {
-		return fines;
 	}
 
 	public void payFines(double amountpaid) {
@@ -170,17 +174,15 @@ public class Member {
 
 				try {
 					Connection con = Database.getConnection();
-					String query = "UPDATE BOOKS\n"
-							+ "SET Checked_Out = TRUE, MemberID = ?, Date_Out = NOW(), On_Hold=FALSE\n"
-							+ "WHERE ID = ? AND ((Checked_Out = FALSE AND On_Hold = FALSE) OR (MemberID = ? AND On_Hold = TRUE ));";
 
+					String query = "UPDATE BOOKS\n" + "SET CheckedOut = TRUE, CheckedOutMemberID = ?, DateOut = NOW(), OnHold=FALSE, OnHoldMemberID = NULL\n"
+							+ "WHERE ID = ? AND CheckedOut = FALSE AND ((OnHold = FALSE) OR (OnHoldMemberID = ? AND OnHold = TRUE ));";
 					// create the prepared statement
 					PreparedStatement ps = con.prepareStatement(query);
 					ps.setInt(1, this.memberID);
 					ps.setInt(2, book.getId());
 					ps.setInt(3, this.memberID);
 					ps.executeUpdate();
-
 					ps.close();
 					con.close();
 				} catch (SQLException se) {
@@ -194,14 +196,12 @@ public class Member {
 		try {
 			checkedOut.remove(book);
 			Connection con = Database.getConnection();
-			String query = "UPDATE BOOKS\n" + "SET Checked_Out = FALSE, MemberID = NULL, Date_Out = NULL\n"
-					+ "WHERE Checked_Out = TRUE AND ID = ?;";
-
+			String query = "UPDATE BOOKS\n" + "SET CheckedOut = FALSE, CheckedOutMemberID = NULL, DateOut = NULL, RenewCount = 0\n"
+					+ "WHERE CheckedOut = TRUE AND ID = ?;";
 			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setInt(1, book.getId());
 			ps.executeUpdate();
-
 			ps.close();
 			con.close();
 		} catch (SQLException se) {
@@ -214,8 +214,9 @@ public class Member {
 		if (isActive()) {
 			try {
 				Connection con = Database.getConnection();
-				String query = "UPDATE BOOKS\n" + "SET Date_Out = NOW()"
-						+ "WHERE ID = ? AND MemberID = ? AND Checked_Out = TRUE;";
+				String query = "UPDATE BOOKS\n" + "SET DateOut = NOW(), RenewCount = RenewCount + 1\n"
+						+ "WHERE ID = ? AND CheckedOutMemberID = ? AND CheckedOut = TRUE AND RenewCount < 2 AND\n"
+						+ "OnHold = FALSE;";
 
 				// create the prepared statement
 				PreparedStatement ps = con.prepareStatement(query);
@@ -233,11 +234,13 @@ public class Member {
 
 	public void placeHold(BookDetail bookDetail) {
 		Book book = bookDetail.getAvailableCopy();
+		if (book == null)
+			book = bookDetail.getCheckedOutCopy();
 		if (book != null) {
 			try {
 				Connection con = Database.getConnection();
-				String query = "UPDATE BOOKS\n" + "SET On_Hold = TRUE, MemberID = ?\n"
-						+ "WHERE Checked_Out = FALSE AND ID = ?;";
+				String query = "UPDATE BOOKS\n" + "SET OnHold = TRUE, OnHoldMemberID = ?\n"
+						+ "WHERE ID = ?;";
 
 				// create the prepared statement
 				PreparedStatement ps = con.prepareStatement(query);
@@ -251,47 +254,55 @@ public class Member {
 				se.printStackTrace();
 			}
 		}
+	}
 
+	public void releaseHold(Book book) {
+		if (book != null) {
+			try {
+				Connection con = Database.getConnection();
+				String query = "UPDATE BOOKS\n" + "SET OnHold = FALSE, OnHoldMemberID = NULL\n"
+						+ "WHERE ID = ?;";
+				// create the prepared statement
+				PreparedStatement ps = con.prepareStatement(query);
+				ps.setInt(1, book.getId());
+				ps.executeUpdate();
+				ps.close();
+				con.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
 	}
 
 	public void reportLost(Book book) {
-	//to do
+		//to do
 	}
 
 	public void suspendAccount() {
-		String update = "UPDATE MEMBERS \n" + "SET Is_active=FALSE \n" + "WHERE MemberID=" + memberID + ";";
+		String update = "UPDATE MEMBERS \n" + "SET IsActive=FALSE \n" + "WHERE MemberID=" + memberID + ";";
 		Database.runUpdate(update);
 	}
 
 	public void activateAccount() {
-		String update = "UPDATE MEMBERS \n" + "SET Is_active=TRUE \n" + "WHERE MemberID=" + memberID + ";";
+		String update = "UPDATE MEMBERS \n" + "SET IsActive=TRUE \n" + "WHERE MemberID=" + memberID + ";";
 		Database.runUpdate(update);
-	}
-
-	// Returns true if the memberID is valid
-	public boolean isValid() {
-		// Needs to be finished
-		return true;
 	}
 
 	// returns true if the member account is valid and is not suspended
 	public boolean isActive() {
-		if (isValid()) {
-			String query = "SELECT Is_active\n" + "FROM MEMBERS M\n" + "WHERE M.MemberID=" + this.memberID;
-			Connection con = Database.getConnection();
-			try {
-				PreparedStatement ps = con.prepareStatement(query);
-				ResultSet rs = ps.executeQuery();
-				if (rs.next()) {
-					return rs.getBoolean("Is_active");
-				}
-				rs.close();
-				ps.close();
-				con.close();
-
-			} catch (SQLException e) {
-				e.printStackTrace();
+		String query = "SELECT IsActive\n" + "FROM MEMBERS M\n" + "WHERE M.MemberID=" + this.memberID;
+		Connection con = Database.getConnection();
+		try {
+			PreparedStatement ps = con.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return rs.getBoolean("IsActive");
 			}
+			rs.close();
+			ps.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		return false;
 	}

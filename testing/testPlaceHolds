@@ -1,5 +1,5 @@
 
-Test Case 1  		<single>
+Test Case 1  		<error>
    Book Status :  On Hold
 
 
@@ -11,11 +11,12 @@ Test Case 3  		<single>
    Member Status :  Suspended General
 
 
-Test Case 4  		<error>
-   Member Status :  More than one
-
-
-Test Case 5  		(Key = 1.1.)
+Test Case 4  		(Key = 1.1.)
    Book Status   :  Available
+   Member Status :  Good Standing
+
+
+Test Case 5  		(Key = 3.1.)
+   Book Status   :  Checked Out
    Member Status :  Good Standing
 

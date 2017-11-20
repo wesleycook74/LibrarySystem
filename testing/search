@@ -1,0 +1,17 @@
+# Search Terms
+  Length:
+      0.			[property empty]	
+      More than 0.
+  Content:
+      Only Alphanumeric. 	[if !empty]			
+      Alphanumeric and Special. [if !empty]
+      Only Special		[if !empty]
+  Search Type:
+      Title.
+      Author.
+      Year.
+
+# BookDetail
+    Matches:
+      Has Matching Books.	
+      No Matching Books.      [if !empty]
