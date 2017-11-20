@@ -35,29 +35,13 @@ public class Associate extends Member {
 			ps2.setString(6, userName);
 			ps2.setString(7, password);
 			ps2.setBoolean(8, true);
+			ps2.setInt(9,0);
 
 			ps2.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		String getmemid = "SELECT MemberID\n" + "FROM MEMBERS\n" + "WHERE Username = '" + userName + "'";
-
-		try {
-			PreparedStatement mid = con.prepareStatement(getmemid);
-			ResultSet rs = mid.executeQuery();
-
-			// int id = ((Integer) rs.getObject(1)).intValue();
-			// int id = Integer.parseInt(rs.getObject(1).toString());
-			while (rs.next()) {
-				int memberID = rs.getInt("MemberID");
-			}
-			rs.close();
-			con.close();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	
