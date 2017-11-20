@@ -13,19 +13,6 @@ public class Tester {
 
 	public static void main(String[] args) {
 
-		// Testing add members from associate
-		Associate associate3 = new Associate("test3fn", "I", "test3ln",
-				 "333 test Road Valdosta GA", "3333333333", "test3",
-				 "test3pw");
-
-
-		Member mem = associate3.createMember("Test4fn", "A", "Kimtest4", "444 Test  thing Nashville GA", "444444449", "testing4", "testingpasswgord4");
-		//associate2.sendmembertoDB(mem);
-
-		System.out.println("done");
-
-
-
 //		 // Testing add members
 //		 Member mem1 = new Member("Chloe", "A", "Kimble",
 //				 "1500 N Patterson St Valdosta GA", "123456789",
