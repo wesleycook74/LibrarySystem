@@ -19,7 +19,7 @@ public class Member {
 		Connection con = Database.getConnection();
 
 		String query = "SELECT MemberID, Fname, Lname, Minit, Address, PhoneNumber, Username, Password, Fines, IsActive\n"
-				+ "FROM MEMBERS \n" + "WHERE MEMBERS.username =" + username + ";";
+				+ "FROM MEMBERS \n" + "WHERE MEMBERS.MemberID =" + memID + ";";
 		try {
 			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
