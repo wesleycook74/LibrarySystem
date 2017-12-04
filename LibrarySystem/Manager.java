@@ -15,7 +15,6 @@ public class Manager extends Associate {
 
 	public void createManager(String firstName, String middleInitial, String lastName, String address, String phoneNumber,
 								  String userName, String password){
-		int memberID = 0;
 		Connection con = Database.getConnection();
 		String query = "INSERT INTO MEMBERS (Fname, Minit, Lname, Address, PhoneNumber, Username, Password, IsActive, MemberLevel)"
 				+ " VALUES (?, ?, ?, ?, ?, ? ,?, ?, ?)";
@@ -32,21 +31,6 @@ public class Manager extends Associate {
 			ps.setBoolean(8, true);//IsActive
 			ps.setInt(9, 2);//MemberLevel
 			ps.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		//why do we have this part? - Arron
-		String getmemid = "SELECT MemberID\n" + "FROM MEMBERS\n" + "WHERE Username = '" + userName + "'";
-		try {
-			PreparedStatement mid = con.prepareStatement(getmemid);
-			ResultSet rs = mid.executeQuery();
-			// int id = ((Integer) rs.getObject(1)).intValue();
-			// int id = Integer.parseInt(rs.getObject(1).toString());
-			while (rs.next()) {
-				memberID = rs.getInt("MemberID");
-			}
-			rs.close();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -71,21 +55,6 @@ public class Manager extends Associate {
 			ps.setBoolean(8, true);//IsActive
 			ps.setInt(9, 1);//MemberLevel
 			ps.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		// why do we have this part? - Arron
-		String getmemid = "SELECT MemberID\n" + "FROM MEMBERS\n" + "WHERE Username = '" + userName + "'";
-		try {
-			PreparedStatement mid = con.prepareStatement(getmemid);
-			ResultSet rs = mid.executeQuery();
-			// int id = ((Integer) rs.getObject(1)).intValue();
-			// int id = Integer.parseInt(rs.getObject(1).toString());
-			while (rs.next()) {
-				memberID = rs.getInt("MemberID");
-			}
-			rs.close();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
