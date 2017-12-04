@@ -8,18 +8,16 @@ public class Member {
 	private String firstName, lastName, middleInitial;
 	private int memberID;
 	private String phoneNumber;
-	private String userName, password;
+	private String username, password;
 	private ArrayList<Book> checkedOut;
 	private String address;
 	private double fines;
 
 	public Member(int memID) {
-
 		getCheckedOut();
 		Connection con = Database.getConnection();
-
 		String query = "SELECT MemberID, Fname, Lname, Minit, Address, PhoneNumber, Username, Password, Fines, IsActive\n"
-				+ "FROM MEMBERS \n" + "WHERE MEMBERS.MemberID =" + memID + ";";
+				+ "FROM MEMBERS \n" + "WHERE MEMBERS.MemberID = " + memID + ";";
 		try {
 			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
@@ -31,7 +29,7 @@ public class Member {
 				this.middleInitial = rs.getString("Minit");
 				this.address = rs.getString("Address");
 				this.phoneNumber = rs.getString("PhoneNumber");
-				this.userName = rs.getString("Username");
+				this.username = rs.getString("Username");
 				this.password = rs.getString("Password");
 				this.fines = rs.getDouble("Fines");
 			}
@@ -47,9 +45,8 @@ public class Member {
 	{
 		getCheckedOut();
 		Connection con = Database.getConnection();
-
 		String query = "SELECT MemberID, Fname, Lname, Minit, Address, PhoneNumber, Username, Password, Fines, IsActive\n"
-				+ "FROM MEMBERS \n" + "WHERE MEMBERS.username =" + username + ";";
+				+ "FROM MEMBERS\n" + "WHERE MEMBERS.Username = " + username + ";";
 		try {
 			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
@@ -61,7 +58,7 @@ public class Member {
 				this.middleInitial = rs.getString("Minit");
 				this.address = rs.getString("Address");
 				this.phoneNumber = rs.getString("PhoneNumber");
-				this.userName = rs.getString("Username");
+				this.username = rs.getString("Username");
 				this.password = rs.getString("Password");
 				this.fines = rs.getDouble("Fines");
 			}
@@ -72,8 +69,6 @@ public class Member {
 			se.printStackTrace();
 		}
 	}
-
-
 
 	public String getFirstName() {
 		return firstName;
@@ -96,7 +91,7 @@ public class Member {
 	}
 
 	public String getUserName() {
-		return userName;
+		return username;
 	}
 
 	public String getPassword() {
@@ -292,6 +287,6 @@ public class Member {
 	public String toString() {
 		return "Member [firstName=" + firstName + ", middleInitial=" + middleInitial + ", lastName=" + lastName
 				+ ", memberID=" + memberID + ", phoneNumber=" + phoneNumber + ", address=" + address + ", userName="
-				+ userName + ", checkedOut=" + checkedOut + ", fines=" + fines + "]";
+				+ username + ", checkedOut=" + checkedOut + ", fines=" + fines + "]";
 	}
 }

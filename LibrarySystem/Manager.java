@@ -13,40 +13,33 @@ public class Manager extends Associate {
 		super(username);
 	}
 
-
-	public void createAssociate(String firstName, String middleInitial, String lastName, String address, String phoneNumber,
+	public void createManager(String firstName, String middleInitial, String lastName, String address, String phoneNumber,
 								  String userName, String password){
-
-		int memberID=0;
-
+		int memberID = 0;
 		Connection con = Database.getConnection();
-
-		String query = "insert into MEMBERS (Fname, Minit, Lname, Address, PhoneNumber, Username, Password, Is_active)"
-				+ " values (?, ?, ?, ?, ?, ? ,?, ?)";
-
-		PreparedStatement ps2 = null;
+		String query = "INSERT INTO MEMBERS (Fname, Minit, Lname, Address, PhoneNumber, Username, Password, IsActive, MemberLevel)"
+				+ " VALUES (?, ?, ?, ?, ?, ? ,?, ?, ?)";
+		PreparedStatement ps = null;
 		try {
-			ps2 = con.prepareStatement(query);
-			ps2.setString(1, firstName);
-			ps2.setString(2, middleInitial);
-			ps2.setString(3, lastName);
-			ps2.setString(4, address);
-			ps2.setString(5, phoneNumber);
-			ps2.setString(6, userName);
-			ps2.setString(7, password);
-			ps2.setBoolean(8, true);
-
-			ps2.execute();
+			ps = con.prepareStatement(query);
+			ps.setString(1, firstName);
+			ps.setString(2, middleInitial);
+			ps.setString(3, lastName);
+			ps.setString(4, address);
+			ps.setString(5, phoneNumber);
+			ps.setString(6, userName);
+			ps.setString(7, password);
+			ps.setBoolean(8, true);//IsActive
+			ps.setInt(9, 2);//MemberLevel
+			ps.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		String getmemid = "SELECT MemberID\n" + "FROM MEMBERS BD\n" + "WHERE Username = '" + userName + "'";
-
+		//why do we have this part? - Arron
+		String getmemid = "SELECT MemberID\n" + "FROM MEMBERS\n" + "WHERE Username = '" + userName + "'";
 		try {
 			PreparedStatement mid = con.prepareStatement(getmemid);
 			ResultSet rs = mid.executeQuery();
-
 			// int id = ((Integer) rs.getObject(1)).intValue();
 			// int id = Integer.parseInt(rs.getObject(1).toString());
 			while (rs.next()) {
@@ -54,23 +47,48 @@ public class Manager extends Associate {
 			}
 			rs.close();
 			con.close();
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		String query3 = "insert into ASSOCIATES (MemberID, Manager)" + " values (?, ?)";
+	}
+
+	public void createAssociate(String firstName, String middleInitial, String lastName, String address,
+			String phoneNumber, String userName, String password) {
+		int memberID = 0;
+		Connection con = Database.getConnection();
+		String query = "INSERT INTO MEMBERS (Fname, Minit, Lname, Address, PhoneNumber, Username, Password, IsActive, MemberLevel)"
+				+ " VALUES (?, ?, ?, ?, ?, ? ,?, ?, ?)";
+		PreparedStatement ps = null;
 		try {
-
-			PreparedStatement ps3 = con.prepareStatement(query3);
-			ps3.setInt(1, memberID);
-			ps3.setInt(2, 0);
-
+			ps = con.prepareStatement(query);
+			ps.setString(1, firstName);
+			ps.setString(2, middleInitial);
+			ps.setString(3, lastName);
+			ps.setString(4, address);
+			ps.setString(5, phoneNumber);
+			ps.setString(6, userName);
+			ps.setString(7, password);
+			ps.setBoolean(8, true);//IsActive
+			ps.setInt(9, 1);//MemberLevel
+			ps.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		// why do we have this part? - Arron
+		String getmemid = "SELECT MemberID\n" + "FROM MEMBERS\n" + "WHERE Username = '" + userName + "'";
+		try {
+			PreparedStatement mid = con.prepareStatement(getmemid);
+			ResultSet rs = mid.executeQuery();
+			// int id = ((Integer) rs.getObject(1)).intValue();
+			// int id = Integer.parseInt(rs.getObject(1).toString());
+			while (rs.next()) {
+				memberID = rs.getInt("MemberID");
+			}
+			rs.close();
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-
 	}
 
 	public void editMember() {
