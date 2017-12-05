@@ -19,8 +19,14 @@ public class Tester {
 //		m1.checkOut(book2);
 
 		//Does not have permission to create associate as an associate
-		Member m1 = new Manager("wicook");
-		((Manager)m1).createAssociate("Testman", null, "Testerson", "000 Null Drive, Valdosta, GA",
-				"0123987654", "testy", "tests");
+//		Member m1 = new Manager("wicook");
+//		((Manager)m1).createAssociate("Testman", null, "Testerson", "000 Null Drive, Valdosta, GA",
+//				"0123987654", "testy", "tests");
+
+//		Manager man = new Manager("atcroft");
+//		man.addBookCopy("0060853980");
+//		man.addBookDetail("9780060873172", "Micro", "2012",
+//				new String[]{"Michael Crichton","Richard Preston"},
+//				new String[]{"Fiction","Adventure","Thriller"}, 4);
 	}
 }
