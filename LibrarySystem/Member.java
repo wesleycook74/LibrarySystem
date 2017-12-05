@@ -9,7 +9,7 @@ public class Member {
 	private int memberID;
 	private String phoneNumber;
 	private String username, password;
-	private ArrayList<Book> checkedOut;
+	private ArrayList<Copy> checkedOut;
 	private String address;
 	private double fines;
 
@@ -105,8 +105,8 @@ public class Member {
 		return fines;
 	}
 
-	public ArrayList<Book> getCheckedOut() {
-		checkedOut = new ArrayList<Book>();
+	public ArrayList<Copy> getCheckedOut() {
+		checkedOut = new ArrayList<Copy>();
 		Connection con = Database.getConnection();
 		String query = "SELECT ID\n" + "FROM BOOKS\n" + "WHERE CheckedOutMemberID = " + memberID;
 		try {
@@ -114,7 +114,7 @@ public class Member {
 			PreparedStatement ps = con.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next())
-				checkedOut.add(new Book(rs.getInt("ID")));
+				checkedOut.add(new Copy(rs.getInt("ID")));
 			rs.close();
 			ps.close();
 			con.close();
@@ -140,12 +140,12 @@ public class Member {
 		}
 	}
 
-	public void checkOut(Book book) {
+	public void checkOut(Copy copy) {
 		// check to see if member account is not suspended
 		if (isActive()) {
 			// check to see if books checked out is less than 10
 			if (getCheckedOut().size() < 10) {
-				checkedOut.add(book);
+				checkedOut.add(copy);
 				try {
 					Connection con = Database.getConnection();
 
@@ -153,7 +153,7 @@ public class Member {
 							+ "WHERE ID = ? AND CheckedOut = FALSE AND ((OnHold = FALSE) OR (OnHoldMemberID = ? AND OnHold = TRUE ));";
 					PreparedStatement ps = con.prepareStatement(query);
 					ps.setInt(1, this.memberID);
-					ps.setInt(2, book.getId());
+					ps.setInt(2, copy.getId());
 					ps.setInt(3, this.memberID);
 					ps.executeUpdate();
 					ps.close();
@@ -165,14 +165,14 @@ public class Member {
 		}
 	}
 
-	public void returnBook(Book book) {
+	public void returnBook(Copy copy) {
 		try {
-			checkedOut.remove(book);
+			checkedOut.remove(copy);
 			Connection con = Database.getConnection();
 			String query = "UPDATE BOOKS\n" + "SET CheckedOut = FALSE, CheckedOutMemberID = NULL, DateOut = NULL, RenewCount = 0\n"
 					+ "WHERE CheckedOut = TRUE AND ID = ?;";
 			PreparedStatement ps = con.prepareStatement(query);
-			ps.setInt(1, book.getId());
+			ps.setInt(1, copy.getId());
 			ps.executeUpdate();
 			ps.close();
 			con.close();
@@ -181,7 +181,7 @@ public class Member {
 		}
 	}
 
-	public void renewBook(Book book) {
+	public void renewBook(Copy copy) {
 		// check to see if member account is not suspended
 		if (isActive()) {
 			try {
@@ -190,7 +190,7 @@ public class Member {
 						+ "WHERE ID = ? AND CheckedOutMemberID = ? AND CheckedOut = TRUE AND RenewCount < 2 AND\n"
 						+ "OnHold = FALSE;";
 				PreparedStatement ps = con.prepareStatement(query);
-				ps.setInt(1, book.getId());
+				ps.setInt(1, copy.getId());
 				ps.setInt(2, this.memberID);
 				ps.executeUpdate();
 
@@ -202,18 +202,18 @@ public class Member {
 		}
 	}
 
-	public void placeHold(BookDetail bookDetail) {
-		Book book = bookDetail.getAvailableCopy();
-		if (book == null)
-			book = bookDetail.getCheckedOutCopy();
-		if (book != null) {
+	public void placeHold(Book book) {
+		Copy copy = book.getAvailableCopy();
+		if (copy == null)
+			copy = book.getCheckedOutCopy();
+		if (copy != null) {
 			try {
 				Connection con = Database.getConnection();
 				String query = "UPDATE BOOKS\n" + "SET OnHold = TRUE, OnHoldMemberID = ?\n"
 						+ "WHERE ID = ?;";
 				PreparedStatement ps = con.prepareStatement(query);
 				ps.setInt(1, this.memberID);
-				ps.setInt(2, book.getId());
+				ps.setInt(2, copy.getId());
 				ps.executeUpdate();
 
 				ps.close();
@@ -224,14 +224,14 @@ public class Member {
 		}
 	}
 
-	public void releaseHold(Book book) {
-		if (book != null) {
+	public void releaseHold(Copy copy) {
+		if (copy != null) {
 			try {
 				Connection con = Database.getConnection();
 				String query = "UPDATE BOOKS\n" + "SET OnHold = FALSE, OnHoldMemberID = NULL\n"
 						+ "WHERE ID = ?;";
 				PreparedStatement ps = con.prepareStatement(query);
-				ps.setInt(1, book.getId());
+				ps.setInt(1, copy.getId());
 				ps.executeUpdate();
 				ps.close();
 				con.close();
@@ -241,7 +241,7 @@ public class Member {
 		}
 	}
 
-	public void reportLost(Book book) {
+	public void reportLost(Copy copy) {
 		//to do
 	}
 

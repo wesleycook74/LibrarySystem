@@ -2,6 +2,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Manager extends Associate {
 
@@ -183,23 +184,49 @@ public class Manager extends Associate {
 		}
 	}
 
+	private void deleteAuthors(Book book) {
+		if (isManager()) {
+			String query = "DELETE FROM AUTHORS\n"
+					+ "WHERE AUTHORS.ISBN = '" + book.getIsbn() + "';";
+			Database.executeStatement(query);
+		}
+	}
+
+	private void deleteKeywords(Book book) {
+		if (isManager()) {
+			String query = "DELETE FROM KEYWORDS\n"
+					+ "WHERE KEYWORDS.ISBN = '" + book.getIsbn() + "';";
+			Database.executeStatement(query);
+		}
+	}
+
 	public void editBookDetail(String title, String isbn, String year, String[] authors, String[] keywords) {
 		if (isManager()) {
 
 		}
 	}
 
-	// Removes a physical copy of the book from inventory
-	public void removeBookCopy(Book book) {
+	// Removes a physical copy of the copy from inventory
+	public void deleteBookCopy(Copy copy) {
 		if (isManager()) {
-
+			String query = "DELETE FROM BOOKS\n"
+					+ "WHERE BOOKS.ID = " + copy.id + ";";
+			Database.executeStatement(query);
 		}
 	}
 
 	// Removes book detail and all corresponding books from library database
-	public void removeBookDetail(BookDetail bookDetail) {
+	public void deleteBookDetail(Book book) {
 		if (isManager()) {
-
+			ArrayList<Copy> copies = book.getAllCopies();
+			for(Copy b : copies) {
+				deleteBookCopy(b);
+			}
+			deleteAuthors(book);
+			deleteKeywords(book);
+			String query = "DELETE FROM BOOK_DETAILS\n"
+					+ "WHERE BOOK_DETAILS.ISBN = '" + book.getIsbn() + "';";
+			Database.executeStatement(query);
 		}
 	}
 

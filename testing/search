@@ -11,7 +11,7 @@
       Author.
       Year.
 
-# BookDetail
+# Book
     Matches:
       Has Matching Books.	
       No Matching Books.      [if !empty]
