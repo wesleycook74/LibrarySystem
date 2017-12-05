@@ -1,14 +1,3 @@
-import java.util.ArrayList;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.sql.SQLException;
-
 public class Tester {
 
 	public static void main(String[] args) {
@@ -29,6 +18,7 @@ public class Tester {
 //		Book book2 = new Book(2);
 //		m1.checkOut(book2);
 
+		//Does not have permission to create associate as an associate
 		Member m1 = new Manager("wicook");
 		((Manager)m1).createAssociate("Testman", null, "Testerson", "000 Null Drive, Valdosta, GA",
 				"0123987654", "testy", "tests");
