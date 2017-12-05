@@ -38,4 +38,23 @@ public class Associate extends Member {
 			e.printStackTrace();
 		}
 	}
+
+	public boolean isAssociate(){
+		Connection con = Database.getConnection();
+		String query = "SELECT MemberLevel\n"
+				+ "FROM MEMBERS\n" + "WHERE MEMBERS.MemberID = " + this.getMemberID() + ";";
+		try {
+			PreparedStatement ps = con.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return rs.getInt("MemberLevel") == 1;
+			}
+			rs.close();
+			ps.close();
+			con.close();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+		return false;
+	}
 }

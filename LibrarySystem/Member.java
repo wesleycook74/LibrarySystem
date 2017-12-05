@@ -19,7 +19,6 @@ public class Member {
 		String query = "SELECT MemberID, Fname, Lname, Minit, Address, PhoneNumber, Username, Password, Fines, IsActive\n"
 				+ "FROM MEMBERS \n" + "WHERE MEMBERS.MemberID = " + memID + ";";
 		try {
-			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
@@ -46,7 +45,7 @@ public class Member {
 		getCheckedOut();
 		Connection con = Database.getConnection();
 		String query = "SELECT MemberID, Fname, Lname, Minit, Address, PhoneNumber, Username, Password, Fines, IsActive\n"
-				+ "FROM MEMBERS\n" + "WHERE MEMBERS.Username = " + username + ";";
+				+ "FROM MEMBERS\n" + "WHERE MEMBERS.Username = '" + username + "';";
 		try {
 			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
@@ -147,13 +146,11 @@ public class Member {
 			// check to see if books checked out is less than 10
 			if (getCheckedOut().size() < 10) {
 				checkedOut.add(book);
-
 				try {
 					Connection con = Database.getConnection();
 
 					String query = "UPDATE BOOKS\n" + "SET CheckedOut = TRUE, CheckedOutMemberID = ?, DateOut = NOW(), OnHold=FALSE, OnHoldMemberID = NULL\n"
 							+ "WHERE ID = ? AND CheckedOut = FALSE AND ((OnHold = FALSE) OR (OnHoldMemberID = ? AND OnHold = TRUE ));";
-					// create the prepared statement
 					PreparedStatement ps = con.prepareStatement(query);
 					ps.setInt(1, this.memberID);
 					ps.setInt(2, book.getId());
@@ -174,7 +171,6 @@ public class Member {
 			Connection con = Database.getConnection();
 			String query = "UPDATE BOOKS\n" + "SET CheckedOut = FALSE, CheckedOutMemberID = NULL, DateOut = NULL, RenewCount = 0\n"
 					+ "WHERE CheckedOut = TRUE AND ID = ?;";
-			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setInt(1, book.getId());
 			ps.executeUpdate();
@@ -193,8 +189,6 @@ public class Member {
 				String query = "UPDATE BOOKS\n" + "SET DateOut = NOW(), RenewCount = RenewCount + 1\n"
 						+ "WHERE ID = ? AND CheckedOutMemberID = ? AND CheckedOut = TRUE AND RenewCount < 2 AND\n"
 						+ "OnHold = FALSE;";
-
-				// create the prepared statement
 				PreparedStatement ps = con.prepareStatement(query);
 				ps.setInt(1, book.getId());
 				ps.setInt(2, this.memberID);
@@ -217,8 +211,6 @@ public class Member {
 				Connection con = Database.getConnection();
 				String query = "UPDATE BOOKS\n" + "SET OnHold = TRUE, OnHoldMemberID = ?\n"
 						+ "WHERE ID = ?;";
-
-				// create the prepared statement
 				PreparedStatement ps = con.prepareStatement(query);
 				ps.setInt(1, this.memberID);
 				ps.setInt(2, book.getId());
@@ -238,7 +230,6 @@ public class Member {
 				Connection con = Database.getConnection();
 				String query = "UPDATE BOOKS\n" + "SET OnHold = FALSE, OnHoldMemberID = NULL\n"
 						+ "WHERE ID = ?;";
-				// create the prepared statement
 				PreparedStatement ps = con.prepareStatement(query);
 				ps.setInt(1, book.getId());
 				ps.executeUpdate();

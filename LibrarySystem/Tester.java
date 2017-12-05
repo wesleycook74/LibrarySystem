@@ -24,8 +24,13 @@ public class Tester {
 //		Associate associate = new Associate(4);
 //		associate.createMember("Dustin", null, "Geoghagan", "000 Null Drive, Valdosta, GA",
 //				"1234567890", "dgeoghagan", "passpass");
-		Member m1 = new Member("wicook");
-		Book book1 = new Book(1);
-		m1.checkOut(book1);
+
+//		Member m1 = new Member("atcroft");
+//		Book book2 = new Book(2);
+//		m1.checkOut(book2);
+
+		Member m1 = new Manager("wicook");
+		((Manager)m1).createAssociate("Testman", null, "Testerson", "000 Null Drive, Valdosta, GA",
+				"0123987654", "testy", "tests");
 	}
 }
