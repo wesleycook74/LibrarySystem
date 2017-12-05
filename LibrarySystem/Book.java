@@ -13,9 +13,9 @@ public class Book {
 	public Book(String isbn) {
 		this.isbn = isbn;
 		// Pulls book data from database
-		// Query to get the title and year from BOOK_DETAILS table
+		// Query to get the title and year from BOOKS table
 		Connection con = Database.getConnection();
-		String query = "SELECT Title, Year\n" + "FROM BOOK_DETAILS BD\n" + "WHERE BD.ISBN='" + this.isbn + "';";
+		String query = "SELECT Title, Year\n" + "FROM BOOKS BD\n" + "WHERE BD.ISBN='" + this.isbn + "';";
 		try {
 			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
@@ -57,7 +57,7 @@ public class Book {
 	public ArrayList<Copy> getAllCopies() {
 		ArrayList<Copy> copies = new ArrayList<>();
 		Connection con = Database.getConnection();
-		String query = "SELECT ID \n" + "FROM BOOKS B\n" + "WHERE B.ISBN='" + this.isbn + "';";
+		String query = "SELECT ID \n" + "FROM COPIES B\n" + "WHERE B.ISBN='" + this.isbn + "';";
 		try {
 			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
@@ -86,7 +86,7 @@ public class Book {
 		Copy b = null;
 		Connection con = Database.getConnection();
 		String query = "SELECT ID " +
-				       "FROM BOOKS " +
+				       "FROM COPIES " +
 				       "WHERE ISBN=? AND CheckedOut=FALSE AND OnHold=FALSE";
 		try {
 			// create the prepared statement
@@ -107,7 +107,7 @@ public class Book {
 		Copy b = null;
 		Connection con = Database.getConnection();
 		String query = "SELECT ID " +
-				       "FROM BOOKS " +
+				       "FROM COPIES " +
 				       "WHERE ISBN=? AND CheckedOut=TRUE AND OnHold=FALSE";
 		try {
 			// create the prepared statement
@@ -126,7 +126,7 @@ public class Book {
 
 	private void extractCount() {
 		Connection con = Database.getConnection();
-		String query = "SELECT COUNT(ID) AS 'count'" + "FROM BOOKS B\n" + "WHERE B.ISBN='" + this.isbn + "';";
+		String query = "SELECT COUNT(ID) AS 'count'" + "FROM COPIES B\n" + "WHERE B.ISBN='" + this.isbn + "';";
 		try {
 			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);

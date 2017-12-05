@@ -9,7 +9,7 @@ public class Search {
 	public static ArrayList<Book> searchBooksByTitle(String title) {
 		ArrayList<Book> books = new ArrayList<>();
 		Connection con = Database.getConnection();
-		String query = "SELECT ISBN\n" + "FROM BOOK_DETAILS BD\n" + "WHERE BD.Title LIKE '%" + title + "%'";
+		String query = "SELECT ISBN\n" + "FROM BOOKS BD\n" + "WHERE BD.Title LIKE '%" + title + "%'";
 		try {
 			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
@@ -29,7 +29,7 @@ public class Search {
 	public static ArrayList<Book> searchBooksByISBN(String isbn) {
 		ArrayList<Book> books = new ArrayList<>();
 		Connection con = Database.getConnection();
-		String query = "SELECT ISBN\n" + "FROM BOOK_DETAILS BD\n" + "WHERE BD.ISBN='" + isbn + "'";
+		String query = "SELECT ISBN\n" + "FROM BOOKS BD\n" + "WHERE BD.ISBN='" + isbn + "'";
 		try {
 			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
@@ -48,7 +48,7 @@ public class Search {
 	public static ArrayList<Book> searchBooksByYear(String year) {
 		ArrayList<Book> books = new ArrayList<>();
 		Connection con = Database.getConnection();
-		String query = "SELECT ISBN\n" + "FROM BOOK_DETAILS BD\n" + "WHERE BD.Year LIKE '%" + year + "%'";
+		String query = "SELECT ISBN\n" + "FROM BOOKS BD\n" + "WHERE BD.Year LIKE '%" + year + "%'";
 		try {
 			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);

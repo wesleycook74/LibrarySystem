@@ -108,7 +108,7 @@ public class Member {
 	public ArrayList<Copy> getCheckedOut() {
 		checkedOut = new ArrayList<Copy>();
 		Connection con = Database.getConnection();
-		String query = "SELECT ID\n" + "FROM BOOKS\n" + "WHERE CheckedOutMemberID = " + memberID;
+		String query = "SELECT ID\n" + "FROM COPIES\n" + "WHERE CheckedOutMemberID = " + memberID;
 		try {
 			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
@@ -149,7 +149,7 @@ public class Member {
 				try {
 					Connection con = Database.getConnection();
 
-					String query = "UPDATE BOOKS\n" + "SET CheckedOut = TRUE, CheckedOutMemberID = ?, DateOut = NOW(), OnHold=FALSE, OnHoldMemberID = NULL\n"
+					String query = "UPDATE COPIES\n" + "SET CheckedOut = TRUE, CheckedOutMemberID = ?, DateOut = NOW(), OnHold=FALSE, OnHoldMemberID = NULL\n"
 							+ "WHERE ID = ? AND CheckedOut = FALSE AND ((OnHold = FALSE) OR (OnHoldMemberID = ? AND OnHold = TRUE ));";
 					PreparedStatement ps = con.prepareStatement(query);
 					ps.setInt(1, this.memberID);
@@ -169,7 +169,7 @@ public class Member {
 		try {
 			checkedOut.remove(copy);
 			Connection con = Database.getConnection();
-			String query = "UPDATE BOOKS\n" + "SET CheckedOut = FALSE, CheckedOutMemberID = NULL, DateOut = NULL, RenewCount = 0\n"
+			String query = "UPDATE COPIES\n" + "SET CheckedOut = FALSE, CheckedOutMemberID = NULL, DateOut = NULL, RenewCount = 0\n"
 					+ "WHERE CheckedOut = TRUE AND ID = ?;";
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setInt(1, copy.getId());
@@ -186,7 +186,7 @@ public class Member {
 		if (isActive()) {
 			try {
 				Connection con = Database.getConnection();
-				String query = "UPDATE BOOKS\n" + "SET DateOut = NOW(), RenewCount = RenewCount + 1\n"
+				String query = "UPDATE COPIES\n" + "SET DateOut = NOW(), RenewCount = RenewCount + 1\n"
 						+ "WHERE ID = ? AND CheckedOutMemberID = ? AND CheckedOut = TRUE AND RenewCount < 2 AND\n"
 						+ "OnHold = FALSE;";
 				PreparedStatement ps = con.prepareStatement(query);
@@ -209,7 +209,7 @@ public class Member {
 		if (copy != null) {
 			try {
 				Connection con = Database.getConnection();
-				String query = "UPDATE BOOKS\n" + "SET OnHold = TRUE, OnHoldMemberID = ?\n"
+				String query = "UPDATE COPIES\n" + "SET OnHold = TRUE, OnHoldMemberID = ?\n"
 						+ "WHERE ID = ?;";
 				PreparedStatement ps = con.prepareStatement(query);
 				ps.setInt(1, this.memberID);
@@ -228,7 +228,7 @@ public class Member {
 		if (copy != null) {
 			try {
 				Connection con = Database.getConnection();
-				String query = "UPDATE BOOKS\n" + "SET OnHold = FALSE, OnHoldMemberID = NULL\n"
+				String query = "UPDATE COPIES\n" + "SET OnHold = FALSE, OnHoldMemberID = NULL\n"
 						+ "WHERE ID = ?;";
 				PreparedStatement ps = con.prepareStatement(query);
 				ps.setInt(1, copy.getId());

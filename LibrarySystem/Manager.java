@@ -116,16 +116,16 @@ public class Manager extends Associate {
 
 	public void addBookCopy(String isbn) {
 		if (isManager()) {
-			String query = "INSERT INTO BOOKS\n" +
+			String query = "INSERT INTO COPIES\n" +
 					"VALUES(DEFAULT,'" + isbn + "', FALSE, FALSE, NULL, NULL, NULL , 0);";
 			Database.executeStatement(query);
 		}
 	}
 
-	public void addBookDetail(String isbn, String title, String year, String[] authors, String[] keywords, int count) {
+	public void addBook(String isbn, String title, String year, String[] authors, String[] keywords, int count) {
 		if (isManager()) {
 			Connection con = Database.getConnection();
-			String query = "INSERT INTO BOOK_DETAILS\n" +
+			String query = "INSERT INTO BOOKS\n" +
 					"VALUES(?, ?, ?);";
 			try {
 				PreparedStatement ps = con.prepareStatement(query);
@@ -209,14 +209,14 @@ public class Manager extends Associate {
 	// Removes a physical copy of the copy from inventory
 	public void deleteBookCopy(Copy copy) {
 		if (isManager()) {
-			String query = "DELETE FROM BOOKS\n"
-					+ "WHERE BOOKS.ID = " + copy.id + ";";
+			String query = "DELETE FROM COPIES\n"
+					+ "WHERE COPIES.ID = " + copy.id + ";";
 			Database.executeStatement(query);
 		}
 	}
 
-	// Removes book detail and all corresponding books from library database
-	public void deleteBookDetail(Book book) {
+	// Removes books and all corresponding copies from library database
+	public void deleteBook(Book book) {
 		if (isManager()) {
 			ArrayList<Copy> copies = book.getAllCopies();
 			for(Copy b : copies) {
@@ -224,8 +224,8 @@ public class Manager extends Associate {
 			}
 			deleteAuthors(book);
 			deleteKeywords(book);
-			String query = "DELETE FROM BOOK_DETAILS\n"
-					+ "WHERE BOOK_DETAILS.ISBN = '" + book.getIsbn() + "';";
+			String query = "DELETE FROM BOOKS\n"
+					+ "WHERE BOOKS.ISBN = '" + book.getIsbn() + "';";
 			Database.executeStatement(query);
 		}
 	}
