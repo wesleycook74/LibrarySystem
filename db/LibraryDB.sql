@@ -11,8 +11,12 @@ CREATE TABLE MEMBERS (
     Password VARCHAR(15),
     Fines DECIMAL(5),
     IsActive BOOLEAN NOT NULL,
+    MemberLevel INT(1),
     PRIMARY KEY (MemberID)
 );
+
+INSERT INTO MEMBERS (Username, Password, IsActive, MemberLevel)
+VALUES ("admin", "admin", true, 2);
 
 CREATE TABLE BOOK_DETAILS (
     ISBN VARCHAR(13) NOT NULL,

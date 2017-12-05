@@ -8,52 +8,30 @@ public class Member {
 	private String firstName, lastName, middleInitial;
 	private int memberID;
 	private String phoneNumber;
-	private String userName, password;
+	private String username, password;
 	private ArrayList<Book> checkedOut;
 	private String address;
 	private double fines;
 
 	public Member(int memID) {
-
-		checkedOut = new ArrayList<Book>();
 		getCheckedOut();
 		Connection con = Database.getConnection();
-
-		String query = "insert into MEMBERS (Fname, Minit, Lname, Address, PhoneNumber, Username, Password, IsActive)"
-				+ " values (?, ?, ?, ?, ?, ? ,?, ?)";
-		PreparedStatement ps = null;
+		String query = "SELECT MemberID, Fname, Lname, Minit, Address, PhoneNumber, Username, Password, Fines, IsActive\n"
+				+ "FROM MEMBERS \n" + "WHERE MEMBERS.MemberID = " + memID + ";";
 		try {
-			ps = con.prepareStatement(query);
-			ps.setString(1, firstName);
-			ps.setString(2, middleInitial);
-			ps.setString(3, lastName);
-			ps.setString(4, address);
-			ps.setString(5, phoneNumber);
-			ps.setString(6, userName);
-			ps.setString(7, password);
-			ps.setBoolean(8, true);
-			ps.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		String getmemid = "SELECT MemberID\n" + "FROM MEMBERS BD\n" + "WHERE Username = '" + userName + "'";
-		try {
-			PreparedStatement mid = con.prepareStatement(getmemid);
-			ResultSet rs = mid.executeQuery();
-			// int id = ((Integer) rs.getObject(1)).intValue();
-			// int id = Integer.parseInt(rs.getObject(1).toString());
-			while (rs.next()) {
+			PreparedStatement ps = con.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
 				this.memberID = rs.getInt("MemberID");
 				this.firstName = rs.getString("Fname");
 				this.lastName = rs.getString("Lname");
 				this.middleInitial = rs.getString("Minit");
 				this.address = rs.getString("Address");
 				this.phoneNumber = rs.getString("PhoneNumber");
-				this.userName = rs.getString("Username");
+				this.username = rs.getString("Username");
 				this.password = rs.getString("Password");
 				this.fines = rs.getDouble("Fines");
 			}
-
 			rs.close();
 			ps.close();
 			con.close();
@@ -66,9 +44,8 @@ public class Member {
 	{
 		getCheckedOut();
 		Connection con = Database.getConnection();
-
 		String query = "SELECT MemberID, Fname, Lname, Minit, Address, PhoneNumber, Username, Password, Fines, IsActive\n"
-				+ "FROM MEMBERS \n" + "WHERE MEMBERS.username =" + username + ";";
+				+ "FROM MEMBERS\n" + "WHERE MEMBERS.Username = '" + username + "';";
 		try {
 			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
@@ -80,7 +57,7 @@ public class Member {
 				this.middleInitial = rs.getString("Minit");
 				this.address = rs.getString("Address");
 				this.phoneNumber = rs.getString("PhoneNumber");
-				this.userName = rs.getString("Username");
+				this.username = rs.getString("Username");
 				this.password = rs.getString("Password");
 				this.fines = rs.getDouble("Fines");
 			}
@@ -91,8 +68,6 @@ public class Member {
 			se.printStackTrace();
 		}
 	}
-
-
 
 	public String getFirstName() {
 		return firstName;
@@ -115,7 +90,7 @@ public class Member {
 	}
 
 	public String getUserName() {
-		return userName;
+		return username;
 	}
 
 	public String getPassword() {
@@ -153,7 +128,7 @@ public class Member {
 		fines -= amountpaid;
 		Connection con = Database.getConnection();
 
-		String query = "UPDATE MEMBERS\n" + "SET Fines=Fines - " + amountpaid + "\nWHERE MEMBERS.MemberID =" + memberID
+		String query = "UPDATE MEMBERS\n" + "SET Fines = Fines - " + amountpaid + "\nWHERE MEMBERS.MemberID =" + memberID
 				+ ";";
 		try {
 			// create the prepared statement
@@ -171,13 +146,11 @@ public class Member {
 			// check to see if books checked out is less than 10
 			if (getCheckedOut().size() < 10) {
 				checkedOut.add(book);
-
 				try {
 					Connection con = Database.getConnection();
 
 					String query = "UPDATE BOOKS\n" + "SET CheckedOut = TRUE, CheckedOutMemberID = ?, DateOut = NOW(), OnHold=FALSE, OnHoldMemberID = NULL\n"
 							+ "WHERE ID = ? AND CheckedOut = FALSE AND ((OnHold = FALSE) OR (OnHoldMemberID = ? AND OnHold = TRUE ));";
-					// create the prepared statement
 					PreparedStatement ps = con.prepareStatement(query);
 					ps.setInt(1, this.memberID);
 					ps.setInt(2, book.getId());
@@ -198,7 +171,6 @@ public class Member {
 			Connection con = Database.getConnection();
 			String query = "UPDATE BOOKS\n" + "SET CheckedOut = FALSE, CheckedOutMemberID = NULL, DateOut = NULL, RenewCount = 0\n"
 					+ "WHERE CheckedOut = TRUE AND ID = ?;";
-			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setInt(1, book.getId());
 			ps.executeUpdate();
@@ -217,8 +189,6 @@ public class Member {
 				String query = "UPDATE BOOKS\n" + "SET DateOut = NOW(), RenewCount = RenewCount + 1\n"
 						+ "WHERE ID = ? AND CheckedOutMemberID = ? AND CheckedOut = TRUE AND RenewCount < 2 AND\n"
 						+ "OnHold = FALSE;";
-
-				// create the prepared statement
 				PreparedStatement ps = con.prepareStatement(query);
 				ps.setInt(1, book.getId());
 				ps.setInt(2, this.memberID);
@@ -241,8 +211,6 @@ public class Member {
 				Connection con = Database.getConnection();
 				String query = "UPDATE BOOKS\n" + "SET OnHold = TRUE, OnHoldMemberID = ?\n"
 						+ "WHERE ID = ?;";
-
-				// create the prepared statement
 				PreparedStatement ps = con.prepareStatement(query);
 				ps.setInt(1, this.memberID);
 				ps.setInt(2, book.getId());
@@ -262,7 +230,6 @@ public class Member {
 				Connection con = Database.getConnection();
 				String query = "UPDATE BOOKS\n" + "SET OnHold = FALSE, OnHoldMemberID = NULL\n"
 						+ "WHERE ID = ?;";
-				// create the prepared statement
 				PreparedStatement ps = con.prepareStatement(query);
 				ps.setInt(1, book.getId());
 				ps.executeUpdate();
@@ -311,6 +278,6 @@ public class Member {
 	public String toString() {
 		return "Member [firstName=" + firstName + ", middleInitial=" + middleInitial + ", lastName=" + lastName
 				+ ", memberID=" + memberID + ", phoneNumber=" + phoneNumber + ", address=" + address + ", userName="
-				+ userName + ", checkedOut=" + checkedOut + ", fines=" + fines + "]";
+				+ username + ", checkedOut=" + checkedOut + ", fines=" + fines + "]";
 	}
 }
