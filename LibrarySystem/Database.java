@@ -18,13 +18,12 @@ public class Database {
 		return con;
 	}
 
-	public static void runUpdate(String update) {
+	public static void executeStatement(String statement) {
 		Connection con = getConnection();
-		PreparedStatement ps2 = null;
 		try {
 			// create the prepared statement
-			PreparedStatement ps = con.prepareStatement(update);
-			ps.executeUpdate();
+			PreparedStatement ps = con.prepareStatement(statement);
+			ps.execute();
 			ps.close();
 			con.close();
 		} catch (SQLException se) {

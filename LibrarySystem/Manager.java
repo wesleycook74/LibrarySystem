@@ -107,33 +107,17 @@ public class Manager extends Associate {
 
 	public void deleteMember(int memberID) {
 		if (isManager()) {
-			Connection con = Database.getConnection();
 			String query = "DELETE FROM Members\n"
 					+ "WHERE MEMBERS.MemberID = " + memberID + ";";
-			try {
-				PreparedStatement ps = con.prepareStatement(query);
-				ps.execute();
-				ps.close();
-				con.close();
-			} catch (SQLException se) {
-				se.printStackTrace();
-			}
+			Database.executeStatement(query);
 		}
 	}
 
 	public void addBookCopy(String isbn) {
 		if (isManager()) {
-			Connection con = Database.getConnection();
 			String query = "INSERT INTO BOOKS\n" +
 					"VALUES(DEFAULT,'" + isbn + "', FALSE, FALSE, NULL, NULL, NULL , 0);";
-			try {
-				PreparedStatement ps = con.prepareStatement(query);
-				ps.execute();
-				ps.close();
-				con.close();
-			} catch (SQLException se) {
-				se.printStackTrace();
-			}
+			Database.executeStatement(query);
 		}
 	}
 

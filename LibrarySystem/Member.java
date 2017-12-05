@@ -247,12 +247,12 @@ public class Member {
 
 	public void suspendAccount() {
 		String update = "UPDATE MEMBERS \n" + "SET IsActive=FALSE \n" + "WHERE MemberID=" + memberID + ";";
-		Database.runUpdate(update);
+		Database.executeStatement(update);
 	}
 
 	public void activateAccount() {
 		String update = "UPDATE MEMBERS \n" + "SET IsActive=TRUE \n" + "WHERE MemberID=" + memberID + ";";
-		Database.runUpdate(update);
+		Database.executeStatement(update);
 	}
 
 	// returns true if the member account is valid and is not suspended

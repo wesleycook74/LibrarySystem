@@ -47,7 +47,7 @@ public class Associate extends Member {
 			PreparedStatement ps = con.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				return rs.getInt("MemberLevel") == 1;
+				return rs.getInt("MemberLevel") > 1;
 			}
 			rs.close();
 			ps.close();
