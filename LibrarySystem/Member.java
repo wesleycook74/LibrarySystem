@@ -128,7 +128,7 @@ public class Member {
 		fines -= amountpaid;
 		Connection con = Database.getConnection();
 
-		String query = "UPDATE MEMBERS\n" + "SET Fines=Fines - " + amountpaid + "\nWHERE MEMBERS.MemberID =" + memberID
+		String query = "UPDATE MEMBERS\n" + "SET Fines = Fines - " + amountpaid + "\nWHERE MEMBERS.MemberID =" + memberID
 				+ ";";
 		try {
 			// create the prepared statement
