@@ -63,6 +63,13 @@ public class Manager extends Associate {
 		}
 	}
 
+
+	public void assessFines() {
+		if (isManager()) {
+
+		}
+	}
+
 	public boolean isManager(){
 		Connection con = Database.getConnection();
 		String query = "SELECT MemberLevel\n"
@@ -82,42 +89,19 @@ public class Manager extends Associate {
 		return false;
 	}
 
-	public void editMember(int memberID, String firstName, String middleInitial, String lastName, String address, String phoneNumber,
-			  String password) {
-		if (isManager()) {
-			Connection con = Database.getConnection();
-			String query = "UPDATE Members\n" +
-					"SET Fname = ?, Minit = ?, Lname = ?, Address = ?, PhoneNumber = ?, Password = ?\n" +
-					"WHERE MEMBERS.MemberID = " + memberID + ";";
-			try {
-				PreparedStatement ps = con.prepareStatement(query);
-				ps.setString(1, firstName);
-				ps.setString(2, middleInitial);
-				ps.setString(3, lastName);
-				ps.setString(4, address);
-				ps.setString(5, phoneNumber);
-				ps.setString(6, password);
-				ps.execute();
-				ps.close();
-				con.close();
-			} catch (SQLException se) {
-				se.printStackTrace();
-			}
-		}
-	}
-
-	public void deleteMember(int memberID) {
-		if (isManager()) {
-			String query = "DELETE FROM Members\n"
-					+ "WHERE MEMBERS.MemberID = " + memberID + ";";
-			Database.executeStatement(query);
-		}
-	}
-
 	public void addBookCopy(String isbn) {
 		if (isManager()) {
 			String query = "INSERT INTO COPIES\n" +
 					"VALUES(DEFAULT,'" + isbn + "', FALSE, FALSE, NULL, NULL, NULL , 0);";
+			Database.executeStatement(query);
+		}
+	}
+
+	// Removes a physical copy of the copy from inventory
+	public void deleteBookCopy(Copy copy) {
+		if (isManager()) {
+			String query = "DELETE FROM COPIES\n"
+					+ "WHERE COPIES.ID = " + copy.id + ";";
 			Database.executeStatement(query);
 		}
 	}
@@ -146,6 +130,28 @@ public class Manager extends Associate {
 		}
 	}
 
+
+	public void editBook(String title, String isbn, String year, String[] authors, String[] keywords) {
+		if (isManager()) {
+
+		}
+	}
+
+	// Removes books and all corresponding copies from library database
+	public void deleteBook(Book book) {
+		if (isManager()) {
+			ArrayList<Copy> copies = book.getAllCopies();
+			for(Copy b : copies) {
+				deleteBookCopy(b);
+			}
+			deleteAuthors(book);
+			deleteKeywords(book);
+			String query = "DELETE FROM BOOKS\n"
+					+ "WHERE BOOKS.ISBN = '" + book.getIsbn() + "';";
+			Database.executeStatement(query);
+		}
+	}
+
 	private void insertAuthors(String isbn, String[] authors) {
 		if (isManager()) {
 			try {
@@ -162,6 +168,14 @@ public class Manager extends Associate {
 			} catch (SQLException se) {
 				se.printStackTrace();
 			}
+		}
+	}
+
+	private void deleteAuthors(Book book) {
+		if (isManager()) {
+			String query = "DELETE FROM AUTHORS\n"
+					+ "WHERE AUTHORS.ISBN = '" + book.getIsbn() + "';";
+			Database.executeStatement(query);
 		}
 	}
 
@@ -184,55 +198,11 @@ public class Manager extends Associate {
 		}
 	}
 
-	private void deleteAuthors(Book book) {
-		if (isManager()) {
-			String query = "DELETE FROM AUTHORS\n"
-					+ "WHERE AUTHORS.ISBN = '" + book.getIsbn() + "';";
-			Database.executeStatement(query);
-		}
-	}
-
 	private void deleteKeywords(Book book) {
 		if (isManager()) {
 			String query = "DELETE FROM KEYWORDS\n"
 					+ "WHERE KEYWORDS.ISBN = '" + book.getIsbn() + "';";
 			Database.executeStatement(query);
-		}
-	}
-
-	public void editBookDetail(String title, String isbn, String year, String[] authors, String[] keywords) {
-		if (isManager()) {
-
-		}
-	}
-
-	// Removes a physical copy of the copy from inventory
-	public void deleteBookCopy(Copy copy) {
-		if (isManager()) {
-			String query = "DELETE FROM COPIES\n"
-					+ "WHERE COPIES.ID = " + copy.id + ";";
-			Database.executeStatement(query);
-		}
-	}
-
-	// Removes books and all corresponding copies from library database
-	public void deleteBook(Book book) {
-		if (isManager()) {
-			ArrayList<Copy> copies = book.getAllCopies();
-			for(Copy b : copies) {
-				deleteBookCopy(b);
-			}
-			deleteAuthors(book);
-			deleteKeywords(book);
-			String query = "DELETE FROM BOOKS\n"
-					+ "WHERE BOOKS.ISBN = '" + book.getIsbn() + "';";
-			Database.executeStatement(query);
-		}
-	}
-
-	public void assessFines() {
-		if (isManager()) {
-
 		}
 	}
 }

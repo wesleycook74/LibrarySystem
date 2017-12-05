@@ -39,6 +39,38 @@ public class Associate extends Member {
 		}
 	}
 
+	public void editMember(int memberID, String firstName, String middleInitial, String lastName, String address, String phoneNumber,
+						   String password) {
+		if (isAssociate()) {
+			Connection con = Database.getConnection();
+			String query = "UPDATE Members\n" +
+					"SET Fname = ?, Minit = ?, Lname = ?, Address = ?, PhoneNumber = ?, Password = ?\n" +
+					"WHERE MEMBERS.MemberID = " + memberID + ";";
+			try {
+				PreparedStatement ps = con.prepareStatement(query);
+				ps.setString(1, firstName);
+				ps.setString(2, middleInitial);
+				ps.setString(3, lastName);
+				ps.setString(4, address);
+				ps.setString(5, phoneNumber);
+				ps.setString(6, password);
+				ps.execute();
+				ps.close();
+				con.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
+	}
+
+	public void deleteMember(int memberID) {
+		if (isAssociate()) {
+			String query = "DELETE FROM Members\n"
+					+ "WHERE MEMBERS.MemberID = " + memberID + ";";
+			Database.executeStatement(query);
+		}
+	}
+
 	public boolean isAssociate(){
 		Connection con = Database.getConnection();
 		String query = "SELECT MemberLevel\n"

@@ -1,3 +1,8 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 // Represents a physical copy of a book in inventory; linked to book detail by ISBN
 // Database can store multiple books with the same ISBN
 public class Copy {
@@ -6,6 +11,21 @@ public class Copy {
 
 	public Copy(int id) {
 		this.id = id;
+		Connection con = Database.getConnection();
+		String query = "SELECT ISBN\n" + "FROM COPIES BD\n" + "WHERE C.ID=" + this.id + ";";
+		try {
+			// create the prepared statement
+			PreparedStatement ps = con.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				this.isbn = rs.getString("ISBN");
+			}
+			rs.close();
+			ps.close();
+			con.close();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
 
 	}
 
