@@ -21,7 +21,7 @@ public class Tester {
 		Member chloe = new Member("cakimble");
 		Copy book1 = new Copy(1);
 		book1.reportLost();
-		
+		chloe.payFines(2.35);
 		man.assessFines();
 		
 		
