@@ -104,6 +104,8 @@ public class Member {
 	public double getFines() {
 		return fines;
 	}
+	
+
 
 	public ArrayList<Copy> getCheckedOut() {
 		checkedOut = new ArrayList<Copy>();
@@ -239,10 +241,6 @@ public class Member {
 				se.printStackTrace();
 			}
 		}
-	}
-
-	public void reportLost(Copy copy) {
-		//to do
 	}
 
 	public void suspendAccount() {

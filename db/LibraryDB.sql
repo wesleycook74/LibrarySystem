@@ -9,7 +9,7 @@ CREATE TABLE MEMBERS (
     PhoneNumber VARCHAR(10),
     Username VARCHAR(15) UNIQUE,
     Password VARCHAR(15),
-    Fines DECIMAL(5),
+    Fines DECIMAL(5, 2) DEFAULT 0,
     IsActive BOOLEAN NOT NULL,
     MemberLevel INT(1),
     PRIMARY KEY (MemberID)
