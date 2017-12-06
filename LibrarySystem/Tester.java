@@ -32,5 +32,9 @@ public class Tester {
 //				new String[]{"Michael Crichton","Richard Preston"},
 //				new String[]{"Fiction","Adventure","Thriller"}, 4);
 //		man.deleteBook(new Book("0060853980"));
+
+		Member chloe = new Member("cakimble");
+		Copy book3 = new Copy(3);
+		chloe.checkOut(book3);
 	}
 }

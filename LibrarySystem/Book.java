@@ -74,6 +74,8 @@ public class Book {
 		return copies;
 	}
 
+
+
 	public int getCount() {
 		return count;
 	}
@@ -122,6 +124,47 @@ public class Book {
 			se.printStackTrace();
 		}
 		return b;
+	}
+
+	public void reportLost(String isbn) {
+		this.isbn = isbn;
+		Connection con = Database.getConnection();
+		String query8 = "UPDATE COPY " +
+				"SET IsLost = FALSE\n" +
+				"WHERE ISBN = " +isbn;
+		try {
+			// create the prepared statement
+			PreparedStatement ps8 = con.prepareStatement(query8);
+			ps8.setString(1, this.isbn);
+			ResultSet rs8 = ps8.executeQuery();
+			if (rs8.next()) {
+				System.out.println("Reported book lost.");
+			}
+			con.close();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+
+	}
+
+	public void assessFees() {
+		Connection con = Database.getConnection();
+		String query9 = "UPDATE MEMBERS " +
+				"SET Fines = Fines + 0.05" +
+				"WHERE CurDate()+14 > Books.DateOut";
+		try {
+			// create the prepared statement
+			PreparedStatement ps9 = con.prepareStatement(query9);
+			ps9.setString(1, this.isbn);
+			ResultSet rs9 = ps9.executeQuery();
+			if (rs9.next()) {
+				System.out.println("Assessed Overdue Fines.");
+			}
+			con.close();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+
 	}
 
 	private void extractCount() {

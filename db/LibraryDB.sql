@@ -34,6 +34,7 @@ CREATE TABLE COPIES (
     CheckedOutMemberID INT(4) UNSIGNED,
     OnHoldMemberID INT(4) UNSIGNED,
     RenewCount INT(1),
+    IsLost BOOLEAN,
     PRIMARY KEY (ID),
     FOREIGN KEY (ISBN)
         REFERENCES BOOKS (ISBN),
