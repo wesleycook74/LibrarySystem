@@ -1,6 +1,6 @@
 
-# Book
-  Book Status:
+# Copy
+  Copy Status:
       Available.
       On Hold.			
       Invalid.			[error]
@@ -13,6 +13,6 @@
       Good Standing.			
       Suspended.		[single]
       Invalid.			[error]
-  Book Posession:
-      Has Book.
-      Does Not Have Book.        [error]
+  Copy Posession:
+      Has Copy.
+      Does Not Have Copy.        [error]

@@ -1,10 +1,10 @@
 
 Test Case 1  		<error>
-   Book Status :  On Hold
+   Copy Status :  On Hold
 
 
 Test Case 2  		<error>
-   Book Status :  Invalid
+   Copy Status :  Invalid
 
 
 Test Case 3  		<single>
@@ -12,11 +12,11 @@ Test Case 3  		<single>
 
 
 Test Case 4  		(Key = 1.1.)
-   Book Status   :  Available
+   Copy Status   :  Available
    Member Status :  Good Standing
 
 
 Test Case 5  		(Key = 3.1.)
-   Book Status   :  Checked Out
+   Copy Status   :  Checked Out
    Member Status :  Good Standing
 
