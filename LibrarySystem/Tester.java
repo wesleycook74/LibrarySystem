@@ -13,7 +13,7 @@ public class Tester {
 
 		Manager man = new Manager("atcroft");
 //		man.addCopy("0060853980");
-//		man.addBook("9780060873172", "Micro", "2012",
+//		man.addBook("0000000012", "Micro", "2012",
 //				new String[]{"Michael Crichton","Richard Preston"},
 //				new String[]{"Fiction","Adventure","Thriller"}, 4);
 //		man.deleteBook(new Book("0060853980"));
@@ -21,8 +21,16 @@ public class Tester {
 		Member chloe = new Member("cakimble");
 		Copy book1 = new Copy(1);
 		book1.reportLost();
+		
+		
+		man.editBook("0000000012", "MicroManaging", "2014",
+				new String[]{"Chloe Crichton","Richard Peterson"},
+				new String[]{"Fiction","Adventure","Thriller", "Stupid"});
+		
+		
 		chloe.payFines(2.35);
 		man.assessFines();
+		
 		
 		
 	}

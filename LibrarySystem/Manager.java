@@ -99,7 +99,7 @@ public class Manager extends Associate {
 	public void addCopy(String isbn) {
 		if (isManager()) {
 			String query = "INSERT INTO COPIES\n" +
-					"VALUES(DEFAULT,'" + isbn + "', FALSE, FALSE, NULL, NULL, NULL , 0);";
+					"VALUES(DEFAULT,'" + isbn + "', FALSE, FALSE, NULL, NULL, NULL , 0, FALSE);";
 			Database.executeStatement(query);
 		}
 	}
@@ -140,7 +140,24 @@ public class Manager extends Associate {
 
 	public void editBook(String isbn, String title, String year, String[] authors, String[] keywords) {
 		if (isManager()) {
-
+			Connection con = Database.getConnection();
+			String query = "UPDATE BOOKS\n" +
+					"SET Title = ?, Year = ?\n" +
+					"WHERE BOOKS.ISBN = '" + isbn + "';";
+			try {
+				PreparedStatement ps = con.prepareStatement(query);
+				ps.setString(1, title);
+				ps.setString(2, year);
+				ps.execute();
+				ps.close();
+				con.close();
+				deleteAuthors(new Book(isbn));
+				deleteKeywords(new Book(isbn));
+				insertAuthors(isbn, authors);
+				insertKeywords(isbn, keywords);
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
 		}
 	}
 
