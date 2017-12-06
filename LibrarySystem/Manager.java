@@ -131,7 +131,7 @@ public class Manager extends Associate {
 	}
 
 
-	public void editBook(String title, String isbn, String year, String[] authors, String[] keywords) {
+	public void editBook(String isbn, String title, String year, String[] authors, String[] keywords) {
 		if (isManager()) {
 
 		}

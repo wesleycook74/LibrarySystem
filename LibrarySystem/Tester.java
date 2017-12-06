@@ -2,10 +2,7 @@ import java.util.ArrayList;
 public class Tester {
 
 	public static void main(String[] args) {
-		ArrayList<Book> books = Search.searchBooksByTitle("");
-		for(Book book : books) {
-			System.out.println(book);
-		}
+
 //		Manager manager = new Manager(1);
 //		manager.createManager("Arron", "T", "Croft", "111 Test Drive, Valdosta, GA 31602",
 //				"2295551234", "atcroft", "mypassword");
