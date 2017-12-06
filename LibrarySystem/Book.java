@@ -126,26 +126,6 @@ public class Book {
 		return b;
 	}
 
-	public void reportLost(String isbn) {
-		this.isbn = isbn;
-		Connection con = Database.getConnection();
-		String query8 = "UPDATE COPY " +
-				"SET IsLost = FALSE\n" +
-				"WHERE ISBN = " +isbn;
-		try {
-			// create the prepared statement
-			PreparedStatement ps8 = con.prepareStatement(query8);
-			ps8.setString(1, this.isbn);
-			ResultSet rs8 = ps8.executeQuery();
-			if (rs8.next()) {
-				System.out.println("Reported book lost.");
-			}
-			con.close();
-		} catch (SQLException se) {
-			se.printStackTrace();
-		}
-
-	}
 
 	public void assessFees() {
 		Connection con = Database.getConnection();

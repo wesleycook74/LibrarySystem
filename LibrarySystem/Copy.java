@@ -29,6 +29,23 @@ public class Copy {
 
 	}
 
+	public void reportLost(String id) {
+		this.isbn = isbn;
+		Connection con = Database.getConnection();
+		String update = "UPDATE COPY " +
+				"SET IsLost = TRUE\n" +
+				"WHERE ID = " + id;
+		try {
+			// create the prepared statement
+			PreparedStatement ps = con.prepareStatement(update);
+			ps.executeQuery();
+			con.close();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+
+	}
+
 	public int getId() {
 		return id;
 	}
