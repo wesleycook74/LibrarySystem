@@ -126,27 +126,6 @@ public class Book {
 		return b;
 	}
 
-
-	public void assessFees() {
-		Connection con = Database.getConnection();
-		String query9 = "UPDATE MEMBERS " +
-				"SET Fines = Fines + 0.05" +
-				"WHERE CurDate()+14 > Books.DateOut";
-		try {
-			// create the prepared statement
-			PreparedStatement ps9 = con.prepareStatement(query9);
-			ps9.setString(1, this.isbn);
-			ResultSet rs9 = ps9.executeQuery();
-			if (rs9.next()) {
-				System.out.println("Assessed Overdue Fines.");
-			}
-			con.close();
-		} catch (SQLException se) {
-			se.printStackTrace();
-		}
-
-	}
-
 	private void extractCount() {
 		Connection con = Database.getConnection();
 		String query = "SELECT COUNT(ID) AS 'count'" + "FROM COPIES B\n" + "WHERE B.ISBN='" + this.isbn + "';";

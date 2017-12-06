@@ -66,10 +66,17 @@ public class Manager extends Associate {
 
 	public void assessFines() {
 		if (isManager()) {
-
+			String query10 = "UPDATE MEMBERS " +
+							"SET Fines = Fines + 0.05 " +
+							"WHERE MemberID IN ( " +
+							"	SELECT CheckedOutMemberID " +
+							"	FROM COPIES " +
+							"	WHERE DATEDIFF(CURDATE(), Copies.DateOut) > 14 AND IsLost=FALSE " +
+							");";
+			Database.executeStatement(query10);
 		}
 	}
-
+	
 	public boolean isManager(){
 		Connection con = Database.getConnection();
 		String query = "SELECT MemberLevel\n"
