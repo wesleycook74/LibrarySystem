@@ -89,7 +89,7 @@ public class Manager extends Associate {
 		return false;
 	}
 
-	public void addBookCopy(String isbn) {
+	public void addCopy(String isbn) {
 		if (isManager()) {
 			String query = "INSERT INTO COPIES\n" +
 					"VALUES(DEFAULT,'" + isbn + "', FALSE, FALSE, NULL, NULL, NULL , 0);";
@@ -98,7 +98,7 @@ public class Manager extends Associate {
 	}
 
 	// Removes a physical copy of the copy from inventory
-	public void deleteBookCopy(Copy copy) {
+	public void deleteCopy(Copy copy) {
 		if (isManager()) {
 			String query = "DELETE FROM COPIES\n"
 					+ "WHERE COPIES.ID = " + copy.id + ";";
@@ -122,7 +122,7 @@ public class Manager extends Associate {
 				insertAuthors(isbn, authors);
 				insertKeywords(isbn, keywords);
 				for (int i = 0; i < count; i++){
-					addBookCopy(isbn);
+					addCopy(isbn);
 				}
 			} catch (SQLException se) {
 				se.printStackTrace();
@@ -142,7 +142,7 @@ public class Manager extends Associate {
 		if (isManager()) {
 			ArrayList<Copy> copies = book.getAllCopies();
 			for(Copy b : copies) {
-				deleteBookCopy(b);
+				deleteCopy(b);
 			}
 			deleteAuthors(book);
 			deleteKeywords(book);

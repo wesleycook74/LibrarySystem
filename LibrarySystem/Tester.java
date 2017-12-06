@@ -27,7 +27,7 @@ public class Tester {
 //				"0123987654", "testy", "tests");
 
 //		Manager man = new Manager("atcroft");
-//		man.addBookCopy("0060853980");
+//		man.addCopy("0060853980");
 //		man.addBook("9780060873172", "Micro", "2012",
 //				new String[]{"Michael Crichton","Richard Preston"},
 //				new String[]{"Fiction","Adventure","Thriller"}, 4);
