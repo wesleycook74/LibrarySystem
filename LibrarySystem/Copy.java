@@ -12,7 +12,7 @@ public class Copy {
 	public Copy(int id) {
 		this.id = id;
 		Connection con = Database.getConnection();
-		String query = "SELECT ISBN\n" + "FROM COPIES BD\n" + "WHERE C.ID=" + this.id + ";";
+		String query = "SELECT ISBN\n" + "FROM COPIES C\n" + "WHERE C.ID=" + this.id + ";";
 		try {
 			// create the prepared statement
 			PreparedStatement ps = con.prepareStatement(query);
@@ -29,6 +29,13 @@ public class Copy {
 
 	}
 
+	public void reportLost() {
+		String update = "UPDATE COPIES " +
+				"SET IsLost = TRUE\n" +
+				"WHERE ID = " + getId();
+		Database.executeStatement(update);
+	}
+	
 	public int getId() {
 		return id;
 	}

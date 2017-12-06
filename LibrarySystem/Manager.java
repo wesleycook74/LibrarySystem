@@ -66,10 +66,17 @@ public class Manager extends Associate {
 
 	public void assessFines() {
 		if (isManager()) {
-
+			String query10 = "UPDATE MEMBERS " +
+							"SET Fines = Fines + 0.05 " +
+							"WHERE MemberID IN ( " +
+							"	SELECT CheckedOutMemberID " +
+							"	FROM COPIES " +
+							"	WHERE DATEDIFF(CURDATE(), Copies.DateOut) > 14 AND IsLost=FALSE " +
+							");";
+			Database.executeStatement(query10);
 		}
 	}
-
+	
 	public boolean isManager(){
 		Connection con = Database.getConnection();
 		String query = "SELECT MemberLevel\n"
@@ -89,16 +96,16 @@ public class Manager extends Associate {
 		return false;
 	}
 
-	public void addBookCopy(String isbn) {
+	public void addCopy(String isbn) {
 		if (isManager()) {
 			String query = "INSERT INTO COPIES\n" +
-					"VALUES(DEFAULT,'" + isbn + "', FALSE, FALSE, NULL, NULL, NULL , 0);";
+					"VALUES(DEFAULT,'" + isbn + "', FALSE, FALSE, NULL, NULL, NULL , 0, FALSE);";
 			Database.executeStatement(query);
 		}
 	}
 
 	// Removes a physical copy of the copy from inventory
-	public void deleteBookCopy(Copy copy) {
+	public void deleteCopy(Copy copy) {
 		if (isManager()) {
 			String query = "DELETE FROM COPIES\n"
 					+ "WHERE COPIES.ID = " + copy.id + ";";
@@ -122,7 +129,7 @@ public class Manager extends Associate {
 				insertAuthors(isbn, authors);
 				insertKeywords(isbn, keywords);
 				for (int i = 0; i < count; i++){
-					addBookCopy(isbn);
+					addCopy(isbn);
 				}
 			} catch (SQLException se) {
 				se.printStackTrace();
@@ -131,9 +138,26 @@ public class Manager extends Associate {
 	}
 
 
-	public void editBook(String title, String isbn, String year, String[] authors, String[] keywords) {
+	public void editBook(String isbn, String title, String year, String[] authors, String[] keywords) {
 		if (isManager()) {
-
+			Connection con = Database.getConnection();
+			String query = "UPDATE BOOKS\n" +
+					"SET Title = ?, Year = ?\n" +
+					"WHERE BOOKS.ISBN = '" + isbn + "';";
+			try {
+				PreparedStatement ps = con.prepareStatement(query);
+				ps.setString(1, title);
+				ps.setString(2, year);
+				ps.execute();
+				ps.close();
+				con.close();
+				deleteAuthors(new Book(isbn));
+				deleteKeywords(new Book(isbn));
+				insertAuthors(isbn, authors);
+				insertKeywords(isbn, keywords);
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
 		}
 	}
 
@@ -142,7 +166,7 @@ public class Manager extends Associate {
 		if (isManager()) {
 			ArrayList<Copy> copies = book.getAllCopies();
 			for(Copy b : copies) {
-				deleteBookCopy(b);
+				deleteCopy(b);
 			}
 			deleteAuthors(book);
 			deleteKeywords(book);

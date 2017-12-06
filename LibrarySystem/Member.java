@@ -104,6 +104,8 @@ public class Member {
 	public double getFines() {
 		return fines;
 	}
+	
+
 
 	public ArrayList<Copy> getCheckedOut() {
 		checkedOut = new ArrayList<Copy>();
@@ -128,16 +130,8 @@ public class Member {
 		fines -= amountpaid;
 		Connection con = Database.getConnection();
 
-		String query = "UPDATE MEMBERS\n" + "SET Fines = Fines - " + amountpaid + "\nWHERE MEMBERS.MemberID =" + memberID
-				+ ";";
-		try {
-			// create the prepared statement
-			PreparedStatement ps = con.prepareStatement(query);
-			ps.close();
-			con.close();
-		} catch (SQLException se) {
-			se.printStackTrace();
-		}
+		String query = "UPDATE MEMBERS " + "SET Fines = Fines - " + amountpaid + " WHERE MEMBERS.MemberID = " + memberID+ ";";
+		Database.executeStatement(query);
 	}
 
 	public void checkOut(Copy copy) {
@@ -239,10 +233,6 @@ public class Member {
 				se.printStackTrace();
 			}
 		}
-	}
-
-	public void reportLost(Copy copy) {
-		//to do
 	}
 
 	public void suspendAccount() {
