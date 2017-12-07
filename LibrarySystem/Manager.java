@@ -71,11 +71,13 @@ public class Manager extends Associate {
 							"WHERE MemberID IN ( " +
 							"	SELECT CheckedOutMemberID " +
 							"	FROM COPIES " +
-							"	WHERE DATEDIFF(CURDATE(), Copies.DateOut) > 14 AND IsLost=FALSE " +
+							"	WHERE DATEDIFF(CURDATE(), COPIES.DateOut) >= 14 AND IsLost=FALSE " +
 							"); ";
-//							"UPDATE MEMBERS " +
-//							"SET IsActive = False " +
-//							"WHERE IsActive = True AND Fines >= 25.00;";
+			Database.executeStatement(query);
+
+			query = "UPDATE MEMBERS " +
+					"SET IsActive = False " +
+					"WHERE IsActive = True AND Fines >= 25.00;";
 			Database.executeStatement(query);
 		}
 	}
