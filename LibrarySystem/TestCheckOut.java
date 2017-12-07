@@ -5,7 +5,7 @@ public class TestCheckOut {
 		Member ac = new Member("atcroft");
 
 		//1 Test Checkout
-//		ck.checkOut(new Copy(2));
+		ck.checkOut(new Copy(2));
 
 		//2 Test Renew
 //		ck.renewBook(new Copy(2));
@@ -24,6 +24,10 @@ public class TestCheckOut {
 		//6 Test checkout with on hold
 //		ac.checkOut(new Copy(12));
 //		wc.checkOut(new Copy(12));
+
+		//7
+//		wc.suspendAccount();
+//		wc.checkOut(new Copy(3));
 
 	}
 }

@@ -12,10 +12,14 @@ public class TestFines {
 		//2 Test Pay fines
 //		Member min = new Member(1);
 //		min.payFines(0.25);
-//
-		//3 Stop accruing fines after reported lost
+
+		//3 Suspend Account with fines over $25
+//		for(int i=0; i<250; i++) { man.assessFines(); }
+
+		//4 Stop accruing fines after reported lost
 //		Copy book1 = new Copy(1);
 //		book1.reportLost();
 //		man.assessFines();
+
 	}
 }

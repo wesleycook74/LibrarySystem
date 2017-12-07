@@ -5,9 +5,9 @@ public class TestEditBooklist {
 		Manager man = new Manager("atcroft");
 
 		//1 Test adding books
-//		man.addBook("000000009", "Micro", "2012",
-//				new String[]{"Michael Crichton","Richard Preston"},
-//				new String[]{"Fiction","Adventure","Thriller"}, 2);
+		man.addBook("000000009", "Micro", "2012",
+				new String[]{"Michael Crichton","Richard Preston"},
+				new String[]{"Fiction","Adventure","Thriller"}, 2);
 				// Note: two copies of added book ^^^
 
 		//2 Test Adding copy of a book
