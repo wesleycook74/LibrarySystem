@@ -67,6 +67,42 @@ public class Search {
 	}
 
 	public static ArrayList<Book> searchBooksByAuthor(String author) {
-		return null;
+		ArrayList<Book> books = new ArrayList<>();
+		Connection con = Database.getConnection();
+		String query = "SELECT DISTINCT(B.ISBN)\n" + "FROM BOOKS B, AUTHORS A\n" + "WHERE B.ISBN = A.ISBN AND A.AName LIKE '%" + author + "%'";
+		try {
+			// create the prepared statement
+			PreparedStatement ps = con.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				books.add(new Book(rs.getString("ISBN")));
+			}
+			rs.close();
+			ps.close();
+			con.close();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+		return books;
+	}
+
+	public static ArrayList<Book> searchBooksByKeyword(String keyword) {
+		ArrayList<Book> books = new ArrayList<>();
+		Connection con = Database.getConnection();
+		String query = "SELECT DISTINCT(B.ISBN)\n" + "FROM BOOKS B, KEYWORDS K\n" + "WHERE B.ISBN = K.ISBN AND K.Keyword LIKE '%" + keyword + "%'";
+		try {
+			// create the prepared statement
+			PreparedStatement ps = con.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				books.add(new Book(rs.getString("ISBN")));
+			}
+			rs.close();
+			ps.close();
+			con.close();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		}
+		return books;
 	}
 }

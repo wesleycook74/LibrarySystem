@@ -66,17 +66,20 @@ public class Manager extends Associate {
 
 	public void assessFines() {
 		if (isManager()) {
-			String query10 = "UPDATE MEMBERS " +
-							"SET Fines = Fines + 0.05 " +
+			String query =  "UPDATE MEMBERS " +
+							"SET Fines = Fines + 0.10 " +
 							"WHERE MemberID IN ( " +
 							"	SELECT CheckedOutMemberID " +
 							"	FROM COPIES " +
 							"	WHERE DATEDIFF(CURDATE(), Copies.DateOut) > 14 AND IsLost=FALSE " +
-							");";
-			Database.executeStatement(query10);
+							"); ";
+//							"UPDATE MEMBERS " +
+//							"SET IsActive = False " +
+//							"WHERE IsActive = True AND Fines >= 25.00;";
+			Database.executeStatement(query);
 		}
 	}
-	
+
 	public boolean isManager(){
 		Connection con = Database.getConnection();
 		String query = "SELECT MemberLevel\n"
@@ -104,7 +107,6 @@ public class Manager extends Associate {
 		}
 	}
 
-	// Removes a physical copy of the copy from inventory
 	public void deleteCopy(Copy copy) {
 		if (isManager()) {
 			String query = "DELETE FROM COPIES\n"
@@ -136,7 +138,6 @@ public class Manager extends Associate {
 			}
 		}
 	}
-
 
 	public void editBook(String isbn, String title, String year, String[] authors, String[] keywords) {
 		if (isManager()) {

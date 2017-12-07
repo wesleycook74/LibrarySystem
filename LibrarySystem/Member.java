@@ -104,8 +104,6 @@ public class Member {
 	public double getFines() {
 		return fines;
 	}
-	
-
 
 	public ArrayList<Copy> getCheckedOut() {
 		checkedOut = new ArrayList<Copy>();
@@ -126,11 +124,11 @@ public class Member {
 		return checkedOut;
 	}
 
-	public void payFines(double amountpaid) {
-		fines -= amountpaid;
+	public void payFines(double amountPaid) {
+		fines -= amountPaid;
 		Connection con = Database.getConnection();
-
-		String query = "UPDATE MEMBERS " + "SET Fines = Fines - " + amountpaid + " WHERE MEMBERS.MemberID = " + memberID+ ";";
+		String query = "UPDATE MEMBERS " + "SET Fines = Fines - " + amountPaid +
+				" WHERE MEMBERS.MemberID = " + memberID+ ";";
 		Database.executeStatement(query);
 	}
 
