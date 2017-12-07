@@ -66,13 +66,16 @@ public class Manager extends Associate {
 
 	public void assessFines() {
 		if (isManager()) {
-			String query = "UPDATE MEMBERS " +
+			String query =  "UPDATE MEMBERS " +
 							"SET Fines = Fines + 0.10 " +
 							"WHERE MemberID IN ( " +
 							"	SELECT CheckedOutMemberID " +
 							"	FROM COPIES " +
 							"	WHERE DATEDIFF(CURDATE(), Copies.DateOut) > 14 AND IsLost=FALSE " +
-							");";
+							"); ";
+//							"UPDATE MEMBERS " +
+//							"SET IsActive = False " +
+//							"WHERE IsActive = True AND Fines >= 25.00;";
 			Database.executeStatement(query);
 		}
 	}
