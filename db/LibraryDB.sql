@@ -15,8 +15,8 @@ CREATE TABLE MEMBERS (
     PRIMARY KEY (MemberID)
 );
 
-INSERT INTO MEMBERS (Username, Password, IsActive, MemberLevel)
-VALUES ("admin", "admin", true, 2);
+INSERT INTO MEMBERS (Fname, Username, Password, IsActive, MemberLevel)
+VALUES ("Administrator","admin", "admin", true, 2);
 
 CREATE TABLE BOOKS (
     ISBN VARCHAR(13) NOT NULL,

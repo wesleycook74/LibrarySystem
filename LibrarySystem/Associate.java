@@ -43,7 +43,7 @@ public class Associate extends Member {
 						   String password) {
 		if (isAssociate()) {
 			Connection con = Database.getConnection();
-			String query = "UPDATE Members\n" +
+			String query = "UPDATE MEMBERS\n" +
 					"SET Fname = ?, Minit = ?, Lname = ?, Address = ?, PhoneNumber = ?, Password = ?\n" +
 					"WHERE MEMBERS.MemberID = " + memberID + ";";
 			try {
