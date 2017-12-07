@@ -4,8 +4,7 @@ public class TestFines {
 	public static void main(String[] args) {
 
 //		Manager man = new Manager("atcroft");
-		Manager man = new Manager(0);
-
+		Manager man = new Manager(1);
 //		for(int i = 0; i < 10; i++)
 //			man.assessFines();
 //
