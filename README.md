@@ -1,6 +1,1 @@
-# group2
-Arron Croft  
-Wesley Cook  
-Chloe Kimble  
-Dustin Geoghagan
-
+Backend Library API developed for Software Engineering Course at Valdosta State University
